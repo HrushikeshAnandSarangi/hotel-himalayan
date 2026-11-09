@@ -264,6 +264,16 @@ h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
   animation: windowReflectionFloat 12s ease-in-out infinite;
 }
 
+/* High-Contrast Typographic Luminescence (Readable without any overlay box) */
+.text-contrast-crisp {
+  text-shadow:
+    0 0 32px #ffffff,
+    0 0 20px #ffffff,
+    0 0 12px #ffffff,
+    0 1px 4px rgba(255, 255, 255, 1),
+    0 2px 8px rgba(255, 255, 255, 0.95);
+}
+
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

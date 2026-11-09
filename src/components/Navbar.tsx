@@ -28,7 +28,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/85 backdrop-blur-md border-b border-blue-100/80 py-3 sm:py-3.5 shadow-[0_4px_20px_rgba(30,58,138,0.06)] transition-all duration-300">
+    <header className="relative z-50 w-full bg-white border-b border-blue-100 py-3 sm:py-3.5 shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Official Hotel Himalayan Brand Mark with the Uploaded Logo */}

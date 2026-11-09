@@ -36,7 +36,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
       id="hero"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative h-screen w-screen max-w-[100vw] overflow-hidden flex flex-col justify-end items-center bg-[#f0f7ff] select-none pt-24 sm:pt-28 pb-8 sm:pb-12"
+      className="relative h-screen w-screen max-w-[100vw] overflow-hidden flex flex-col justify-end items-center bg-[#f0f7ff] select-none pb-10 sm:pb-14"
     >
       {/* =========================================================================
           FULL 100VH MOUNTAIN & CLOUD ANIMATION
@@ -188,6 +188,20 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               <stop offset="75%" stopColor="#0f172a" />
               <stop offset="100%" stopColor="#080e1a" />
             </linearGradient>
+
+            {/* Natural Luminous Morning Valley Mist for natural contrast */}
+            <radialGradient
+              id="valleyMorningMist"
+              cx="0.5"
+              cy="0.72"
+              r="0.5"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
+              <stop offset="40%" stopColor="#f0f7ff" stopOpacity="0.6" />
+              <stop offset="75%" stopColor="#dbeafe" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+            </radialGradient>
 
             {/* Volumetric Cloud Gradients */}
             <linearGradient
@@ -581,12 +595,13 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             d="M0,1080 L0,880 Q320,830 720,870 T1480,840 T1920,880 L1920,1080 Z"
             fill="#0b192c"
           />
-          <path
-            d="M0,880 Q320,830 720,870 T1480,840 T1920,880"
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth="2"
-            strokeOpacity="0.35"
+          {/* Natural Morning Mist Amphitheater providing luminous contrast behind the text */}
+          <ellipse
+            cx="960"
+            cy="760"
+            rx="750"
+            ry="250"
+            fill="url(#valleyMorningMist)"
           />
         </svg>
       </div>
@@ -595,16 +610,16 @@ export default function Hero({ onOpenBooking }: HeroProps) {
           CONTENT: DIRECTLY ON SCENE (ZERO GLASS EFFECT, ZERO OVERLAY BOX)
           - Starts from mid-mountain level down
           - Symmetrical typography, action buttons, and small subscript rating
-          - Fully unobstructed view of the mountains and moving clouds
+          - Natural contrast via luminous morning valley wash + crisp typographic halo
          ========================================================================= */}
       <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
         {/* Exact Layout Hook Line */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-950 mb-4 max-w-3xl leading-[1.15] font-serif drop-shadow-[0_2px_12px_rgba(255,255,255,0.95)]">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-950 mb-4 max-w-3xl leading-[1.15] font-serif text-contrast-crisp">
           Experience the Himalayas up close, right from your morning tea.
         </h1>
 
         {/* Exact Layout Sub-Lines */}
-        <p className="text-base sm:text-lg md:text-xl text-slate-800 max-w-2xl mx-auto leading-relaxed mb-8 font-serif drop-shadow-[0_1px_8px_rgba(255,255,255,0.95)]">
+        <p className="text-base sm:text-lg md:text-xl text-slate-950 font-medium max-w-2xl mx-auto leading-relaxed mb-8 font-serif text-contrast-crisp">
           Out on this ridge in Pelling, Kanchenjunga doesn&apos;t feel like a
           distant backdrop. She sits right in front of you, shedding her coat
           of morning mist and catching the first amber light while the rest of
@@ -615,7 +630,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
           <button
             onClick={onOpenBooking}
-            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs uppercase tracking-widest shadow-[0_8px_25px_rgba(37,99,235,0.35)] border border-blue-500/80 transition-all duration-300 cursor-pointer hover:shadow-[0_12px_32px_rgba(37,99,235,0.45)] flex items-center justify-center gap-2"
+            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs uppercase tracking-widest shadow-[0_8px_25px_rgba(37,99,235,0.4)] border border-blue-500 transition-all duration-300 cursor-pointer hover:shadow-[0_12px_32px_rgba(37,99,235,0.5)] flex items-center justify-center gap-2"
           >
             <CalendarCheck className="w-4 h-4 text-white" />
             <span>Check Availability</span>
@@ -623,7 +638,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
 
           <a
             href="#rooms"
-            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl border border-blue-300 bg-white hover:bg-blue-50 active:scale-95 text-blue-900 font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-sm hover:border-blue-400 flex items-center justify-center gap-2"
+            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl border-2 border-blue-600 bg-white hover:bg-blue-50 active:scale-95 text-blue-900 font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md hover:border-blue-700 flex items-center justify-center gap-2"
           >
             <BedDouble className="w-4 h-4 text-blue-600" />
             <span>View Rooms</span>
@@ -636,17 +651,17 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             href={gmapsLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs text-slate-800 hover:text-blue-700 transition-colors cursor-pointer group font-serif drop-shadow-[0_1px_6px_rgba(255,255,255,0.9)]"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-950 hover:text-blue-700 transition-colors cursor-pointer group font-serif text-contrast-crisp font-semibold"
           >
             <div className="flex text-blue-600">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-3 h-3 fill-blue-600 text-blue-600" />
               ))}
             </div>
-            <span className="font-semibold text-slate-900 ml-0.5">
+            <span className="font-bold text-slate-950 ml-0.5">
               4.2 / 5.0 on Google Maps
             </span>
-            <span className="text-slate-400">•</span>
+            <span className="text-slate-500">•</span>
             <span className="group-hover:underline">
               100+ verified traveler reviews
             </span>
