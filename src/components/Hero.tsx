@@ -1,245 +1,449 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useState, useEffect } from "react";
 import {
-  MapPin,
-  Calendar,
-  Users,
-  BedDouble,
-  ArrowRight,
-  ShieldCheck,
   Star,
-  MountainSnow,
-  UtensilsCrossed,
-  Flame,
-  Coffee,
-  CheckCircle2,
+  MapPin,
+  ExternalLink,
+  CalendarCheck,
+  BedDouble,
 } from "lucide-react";
-import TiltCard from "./TiltCard";
 
 interface HeroProps {
   onOpenBooking: () => void;
   onOpenBookingWithRoom?: (roomName: string) => void;
 }
 
-export default function Hero({ onOpenBooking, onOpenBookingWithRoom }: HeroProps) {
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
-  const [roomType, setRoomType] = useState("Mountain-View Deluxe Double");
-  const [guests, setGuests] = useState("2 Guests");
+export default function Hero({ onOpenBooking }: HeroProps) {
+  // Mouse position normalized (-1 to 1) for physics-based parallax depth
+  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (onOpenBookingWithRoom) {
-      onOpenBookingWithRoom(roomType);
-    } else {
-      onOpenBooking();
-    }
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { clientWidth, clientHeight } = e.currentTarget;
+    const x = (e.clientX / clientWidth - 0.5) * 2;
+    const y = (e.clientY / clientHeight - 0.5) * 2;
+    setMouseOffset({ x, y });
   };
 
-  return (
-    <section className="relative min-h-[95vh] pt-32 pb-20 flex items-center justify-center overflow-hidden bg-gradient-to-b from-white via-[#f5f9ff] to-white">
-      {/* Spatial Atmospheric Depth Layers (Ethereal Blue and White Gradients) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Soft radial blue atmosphere glow in center */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-blue-200/30 via-blue-100/20 to-transparent rounded-full blur-[110px]" />
-        
-        {/* Floating background decorative orbs with subtle blue glow */}
-        <div className="absolute top-24 left-[10%] w-72 h-72 bg-blue-100/40 rounded-full blur-[90px] animate-pulse-glow" />
-        <div className="absolute bottom-20 right-[12%] w-96 h-96 bg-blue-100/50 rounded-full blur-[100px] animate-pulse-glow" />
+  const handleMouseLeave = () => {
+    setMouseOffset({ x: 0, y: 0 });
+  };
 
-        {/* Multi-layered Stylized Mountain Contours in Shades of Blue with Spatial Depth */}
-        <div className="absolute bottom-0 left-0 right-0 h-80 opacity-40">
-          <svg
-            viewBox="0 0 1440 320"
-            className="w-full h-full object-cover"
-            preserveAspectRatio="none"
+  const gmapsLink =
+    "https://www.google.com/maps/place/Hotel+Himalayan/@27.3053852,88.2382925,17z/data=!4m9!3m8!1s0x39e6867ddebfa319:0xb0fe9695a65fb77d!5m2!4m1!1i2!8m2!3d27.305437!4d88.241066!16s%2Fg%2F1ptx4vh9y";
+
+  return (
+    <section
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative h-screen w-screen max-w-[100vw] overflow-hidden flex flex-col justify-center items-center bg-white px-4 sm:px-6 lg:px-8 select-none"
+    >
+      {/* =========================================================================
+          SVG MOUNTAIN MOTION DESIGN SYSTEM
+          - Layered vector parallax (Kanchenjunga Massif, Singalila Ridge, Chumbong foothills)
+          - Multi-stop linear & radial gradients (color-interpolation="linearRGB")
+          - Continuous ambient mist drift loops (motion-design principle)
+          - Breathing summit glow reflecting the first amber dawn light
+         ========================================================================= */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
+        <svg
+          viewBox="0 0 1920 1080"
+          preserveAspectRatio="xMidYMax slice"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <defs>
+            {/* Sky Background: Pure white transitioning to ethereal high-altitude ice blue */}
+            <linearGradient
+              id="himalayanSky"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="45%" stopColor="#f8fbff" />
+              <stop offset="75%" stopColor="#eaf2fc" />
+              <stop offset="100%" stopColor="#dbeafe" />
+            </linearGradient>
+
+            {/* Amber Dawn Aura behind Kanchenjunga Central Summit */}
+            <radialGradient
+              id="dawnAura"
+              cx="0.5"
+              cy="0.38"
+              r="0.45"
+              fx="0.5"
+              fy="0.35"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#fef3c7" stopOpacity="0.45" />
+              <stop offset="35%" stopColor="#dbeafe" stopOpacity="0.3" />
+              <stop offset="70%" stopColor="#eff6ff" stopOpacity="0.1" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+            </radialGradient>
+
+            {/* Back Mountain: Kanchenjunga Lit Snow Face (Left Facet) */}
+            <linearGradient
+              id="peakSnowLit"
+              x1="0.3"
+              y1="0"
+              x2="0.7"
+              y2="1"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="40%" stopColor="#f0f7ff" />
+              <stop offset="75%" stopColor="#dbeafe" />
+              <stop offset="100%" stopColor="#bfdbfe" />
+            </linearGradient>
+
+            {/* Back Mountain: Kanchenjunga Shaded Face (Right Facet) */}
+            <linearGradient
+              id="peakSnowShaded"
+              x1="0"
+              y1="0"
+              x2="1"
+              y2="1"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#dbeafe" />
+              <stop offset="45%" stopColor="#93c5fd" />
+              <stop offset="80%" stopColor="#60a5fa" />
+              <stop offset="100%" stopColor="#3b82f6" />
+            </linearGradient>
+
+            {/* Mid-Ground Mountain Ridge: Alpine Cobalt Gradients */}
+            <linearGradient
+              id="midRidgeLit"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#93c5fd" />
+              <stop offset="30%" stopColor="#60a5fa" />
+              <stop offset="70%" stopColor="#2563eb" />
+              <stop offset="100%" stopColor="#1d4ed8" />
+            </linearGradient>
+
+            <linearGradient
+              id="midRidgeDark"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#60a5fa" />
+              <stop offset="40%" stopColor="#2563eb" />
+              <stop offset="85%" stopColor="#1e40af" />
+              <stop offset="100%" stopColor="#1e3a8a" />
+            </linearGradient>
+
+            {/* Foreground Chumbong Ridge: Deep Slate/Navy Silhouette */}
+            <linearGradient
+              id="foregroundRidge"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#1e40af" />
+              <stop offset="35%" stopColor="#1e3a8a" />
+              <stop offset="75%" stopColor="#0f172a" />
+              <stop offset="100%" stopColor="#020617" />
+            </linearGradient>
+
+            {/* Mist Layer 1 Gradient */}
+            <linearGradient
+              id="mistGrad1"
+              x1="0"
+              y1="0"
+              x2="1"
+              y2="0"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0" />
+              <stop offset="25%" stopColor="#f0f7ff" stopOpacity="0.4" />
+              <stop offset="50%" stopColor="#e0f2fe" stopOpacity="0.75" />
+              <stop offset="75%" stopColor="#dbeafe" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+            </linearGradient>
+
+            {/* Mist Layer 2 Gradient */}
+            <linearGradient
+              id="mistGrad2"
+              x1="0"
+              y1="0"
+              x2="1"
+              y2="0"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#e0effe" stopOpacity="0" />
+              <stop offset="20%" stopColor="#ffffff" stopOpacity="0.6" />
+              <stop offset="50%" stopColor="#f8fbff" stopOpacity="0.8" />
+              <stop offset="80%" stopColor="#e0f2fe" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#e0effe" stopOpacity="0" />
+            </linearGradient>
+
+            {/* Summit Specular Filter */}
+            <filter
+              id="summitGlow"
+              x="-20%"
+              y="-20%"
+              width="140%"
+              height="140%"
+              colorInterpolationFilters="linearRGB"
+            >
+              <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          {/* Canvas Background */}
+          <rect width="1920" height="1080" fill="url(#himalayanSky)" />
+
+          {/* Amber/Golden Dawn Radiance behind High Summits */}
+          <circle cx="960" cy="420" r="480" fill="url(#dawnAura)" />
+
+          {/* =========================================================
+              LAYER 1: DISTANT MT. KANCHENJUNGA MASSIF (8,586m)
+              Slight parallax factor (0.02x)
+             ========================================================= */}
+          <g
+            style={{
+              transform: `translate3d(${mouseOffset.x * 12}px, ${
+                mouseOffset.y * 6
+              }px, 0)`,
+              transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+            className="animate-mountain-enter"
           >
+            {/* Distant Left Satellites (Kabru & Pandim peaks) */}
             <polygon
-              points="0,320 160,190 320,240 490,130 670,260 840,110 1020,230 1200,150 1440,320"
-              fill="#bfdbfe"
-              fillOpacity="0.45"
+              points="140,780 320,530 460,780"
+              fill="url(#peakSnowLit)"
             />
             <polygon
-              points="0,320 220,170 420,250 640,120 830,230 1050,110 1260,210 1440,320"
-              fill="#93c5fd"
-              fillOpacity="0.4"
+              points="320,530 460,780 430,780"
+              fill="url(#peakSnowShaded)"
+            />
+
+            <polygon
+              points="360,780 540,460 710,780"
+              fill="url(#peakSnowLit)"
             />
             <polygon
-              points="0,320 280,220 520,280 760,180 970,270 1230,190 1440,320"
-              fill="#60a5fa"
-              fillOpacity="0.25"
+              points="540,460 710,780 620,780"
+              fill="url(#peakSnowShaded)"
             />
-          </svg>
-        </div>
+
+            {/* Central Towering Kanchenjunga Crest */}
+            {/* Main Western Face (Lit by first morning sun) */}
+            <polygon
+              points="680,780 960,320 960,780"
+              fill="url(#peakSnowLit)"
+            />
+            {/* Main Eastern Face (Shaded alpine crest) */}
+            <polygon
+              points="960,320 1240,780 960,780"
+              fill="url(#peakSnowShaded)"
+            />
+
+            {/* Summit Golden Sheen Tip with Breathing Glow */}
+            <polygon
+              points="960,320 910,400 960,390 1010,400"
+              fill="#ffffff"
+              filter="url(#summitGlow)"
+              className="animate-summit-glow"
+            />
+
+            {/* Distant Right Satellites (Siniolchu & Simvo peaks) */}
+            <polygon
+              points="1210,780 1380,480 1540,780"
+              fill="url(#peakSnowLit)"
+            />
+            <polygon
+              points="1380,480 1540,780 1460,780"
+              fill="url(#peakSnowShaded)"
+            />
+
+            <polygon
+              points="1480,780 1650,560 1820,780"
+              fill="url(#peakSnowLit)"
+            />
+            <polygon
+              points="1650,560 1820,780 1740,780"
+              fill="url(#peakSnowShaded)"
+            />
+          </g>
+
+          {/* =========================================================
+              LAYER 2: AMBIENT HIGH-ALTITUDE MIST (Back Drift)
+             ========================================================= */}
+          <g className="animate-mist-slow opacity-85">
+            <path
+              d="M-200,680 Q280,620 760,670 T1720,630 T2200,690 L2200,830 L-200,830 Z"
+              fill="url(#mistGrad1)"
+            />
+          </g>
+
+          {/* =========================================================
+              LAYER 3: MID-GROUND SINGALILA RIDGELINE & FOOTHILLS
+              Medium parallax factor (0.05x)
+             ========================================================= */}
+          <g
+            style={{
+              transform: `translate3d(${mouseOffset.x * 24}px, ${
+                mouseOffset.y * 12
+              }px, 0)`,
+              transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+          >
+            {/* Mid Ridge Left Flank */}
+            <polygon
+              points="0,860 0,690 260,610 520,740 780,590 1020,720 1020,860"
+              fill="url(#midRidgeLit)"
+              fillOpacity="0.9"
+            />
+            {/* Mid Ridge Right Flank */}
+            <polygon
+              points="960,860 960,710 1220,580 1490,720 1730,620 1920,670 1920,860"
+              fill="url(#midRidgeDark)"
+              fillOpacity="0.9"
+            />
+            {/* Interlaced Ridge Crest Highlights */}
+            <polyline
+              points="0,690 260,610 520,740 780,590 1220,580 1490,720 1730,620 1920,670"
+              fill="none"
+              stroke="#bfdbfe"
+              strokeWidth="2.5"
+              strokeOpacity="0.6"
+            />
+          </g>
+
+          {/* =========================================================
+              LAYER 4: VALLEY DRIFTING CLOUDS & MIST (Opposite Drift)
+             ========================================================= */}
+          <g className="animate-mist-fast opacity-90">
+            <path
+              d="M-300,740 Q220,680 720,730 T1680,690 T2300,750 L2300,910 L-300,910 Z"
+              fill="url(#mistGrad2)"
+            />
+          </g>
+
+          {/* =========================================================
+              LAYER 5: FOREGROUND CHUMBONG RIDGE SILHOUETTE
+              Full grounding parallax factor (0.08x)
+             ========================================================= */}
+          <g
+            style={{
+              transform: `translate3d(${mouseOffset.x * 38}px, ${
+                mouseOffset.y * 16
+              }px, 0)`,
+              transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+          >
+            {/* Chumbong Ridge Contour framing the lower canvas */}
+            <path
+              d="M0,1080 L0,840 Q180,780 420,820 T960,770 T1500,810 Q1740,770 1920,830 L1920,1080 Z"
+              fill="url(#foregroundRidge)"
+            />
+            {/* Subtle Top Skyline Rim Lighting on Front Ridge */}
+            <path
+              d="M0,840 Q180,780 420,820 T960,770 T1500,810 Q1740,770 1920,830"
+              fill="none"
+              stroke="#60a5fa"
+              strokeWidth="3"
+              strokeOpacity="0.45"
+            />
+          </g>
+
+          {/* Bottom Atmosphere Fade (soft blend into the white page) */}
+          <rect
+            y="940"
+            width="1920"
+            height="140"
+            fill="url(#himalayanSky)"
+            fillOpacity="0.25"
+          />
+        </svg>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full text-center flex flex-col items-center">
-        {/* Floating Location Badge */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/90 border border-blue-200/90 shadow-[0_8px_25px_rgba(30,58,138,0.08)] text-blue-900 text-xs sm:text-sm mb-6 backdrop-blur-md animate-levitate">
-          <MapPin className="w-4 h-4 text-blue-600 shrink-0" />
-          <span className="font-semibold tracking-wide">
-            Chumbong, Pelling • West Sikkim • 7,200 Ft Elevation
-          </span>
-          <span className="w-2 h-2 rounded-full bg-blue-500 animate-ping" />
-        </div>
-
-        {/* Spatial 3D Hero Brand Showcase with the Uploaded Logo */}
-        <TiltCard
-          maxTilt={10}
-          perspective={1200}
-          className="mb-8 p-6 sm:p-8 rounded-3xl bg-white/80 backdrop-blur-xl border border-blue-200/80 shadow-[0_20px_60px_-15px_rgba(30,58,138,0.12),0_0_0_1px_rgba(255,255,255,0.9)_inset] max-w-lg w-full flex flex-col items-center"
-        >
-          <div className="relative w-full max-w-[340px] sm:max-w-[400px] h-36 sm:h-44 mb-2 flex items-center justify-center transform translate-z-20 transition-transform">
-            <Image
-              src="/logo.png"
-              alt="Hotel Himalayan Official Logo"
-              width={420}
-              height={240}
-              className="w-full h-full object-contain filter drop-shadow-[0_8px_20px_rgba(30,58,138,0.14)]"
-              priority
-            />
-          </div>
-          <div className="flex items-center gap-3 pt-2 border-t border-blue-100 w-full justify-center transform translate-z-10">
-            <div className="h-px w-10 sm:w-16 bg-gradient-to-r from-transparent to-blue-300" />
-            <span className="text-[11px] sm:text-xs tracking-[0.3em] uppercase text-blue-800 font-semibold">
-              PELLING • SIKKIM • BASECAMP
-            </span>
-            <div className="h-px w-10 sm:w-16 bg-gradient-to-l from-transparent to-blue-300" />
-          </div>
-        </TiltCard>
-
-        {/* Exact Layout Headline */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-950 mb-5 max-w-4xl leading-tight">
+      {/* =========================================================================
+          SYMMETRICAL HERO CONTENT OVERLAY (STRICTLY REQUESTED ELEMENTS ONLY)
+          1. Hook Line
+          2. Sub Lines
+          3. Two CTA Buttons: [ Check Availability ] [ View Rooms ]
+          4. Google Reviews Strip
+         ========================================================================= */}
+      <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center justify-center text-center pt-16 sm:pt-20">
+        {/* Exact Layout Hook Line */}
+        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[64px] font-bold tracking-tight text-slate-950 mb-6 max-w-4xl leading-[1.15] font-serif filter drop-shadow-[0_2px_12px_rgba(255,255,255,0.95)]">
           Experience the Himalayas up close, right from your morning tea.
         </h1>
 
-        {/* Exact Layout Paragraph */}
-        <p className="text-base sm:text-lg md:text-xl text-slate-700 max-w-3xl leading-relaxed mb-9">
-          Out on this ridge in Pelling, Kanchenjunga doesn&apos;t feel like a distant backdrop. She sits right in front of you, shedding her coat of morning mist and catching the first amber light while the rest of the valley is still asleep.
+        {/* Exact Layout Sub-Lines */}
+        <p className="text-base sm:text-lg md:text-xl text-slate-800 max-w-3xl leading-relaxed mb-10 font-serif filter drop-shadow-[0_1px_8px_rgba(255,255,255,0.95)]">
+          Out on this ridge in Pelling, Kanchenjunga doesn&apos;t feel like a
+          distant backdrop. She sits right in front of you, shedding her coat of
+          morning mist and catching the first amber light while the rest of the
+          valley is still asleep.
         </p>
 
-        {/* Exact Layout Buttons: [ Check Availability ] [ View Rooms ] */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+        {/* Symmetrical Dual Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 mb-10 w-full sm:w-auto">
           <button
             onClick={onOpenBooking}
-            className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-sm uppercase tracking-wider shadow-[0_8px_25px_rgba(37,99,235,0.35)] border border-blue-500 transition-all cursor-pointer hover:shadow-[0_12px_32px_rgba(37,99,235,0.45)]"
+            className="w-full sm:w-60 py-4 px-8 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs sm:text-sm uppercase tracking-widest shadow-[0_10px_30px_rgba(37,99,235,0.38)] border border-blue-500/80 transition-all duration-300 cursor-pointer hover:shadow-[0_14px_36px_rgba(37,99,235,0.48)] flex items-center justify-center gap-2"
           >
-            Check Availability
+            <CalendarCheck className="w-4 h-4 text-white" />
+            <span>Check Availability</span>
           </button>
 
           <a
             href="#rooms"
-            className="w-full sm:w-auto px-8 py-4 rounded-2xl border border-blue-300 bg-white hover:bg-blue-50/80 active:scale-95 text-blue-900 font-bold text-sm uppercase tracking-wider transition-all shadow-sm hover:border-blue-400"
+            className="w-full sm:w-60 py-4 px-8 rounded-2xl border border-blue-300 bg-white/95 hover:bg-blue-50/90 active:scale-95 text-blue-900 font-bold text-xs sm:text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_6px_20px_rgba(30,58,138,0.08)] hover:border-blue-400 flex items-center justify-center gap-2"
           >
-            View Rooms
+            <BedDouble className="w-4 h-4 text-blue-600" />
+            <span>View Rooms</span>
           </a>
         </div>
 
-        {/* 3D Glassmorphic Fast Booking Bar with Blue Detailing */}
-        <TiltCard
-          maxTilt={5}
-          perspective={1200}
-          className="w-full max-w-4xl bg-white/90 backdrop-blur-2xl border border-blue-200/90 rounded-3xl p-5 sm:p-6 shadow-[0_25px_65px_-15px_rgba(30,58,138,0.12),0_0_0_1px_rgba(255,255,255,1)_inset]"
-        >
-          <div className="flex items-center justify-between border-b border-blue-100 pb-3.5 mb-4.5">
-            <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-blue-900 font-bold">
-              <Calendar className="w-4 h-4 text-blue-600" />
-              <span>Direct Reservation & Inquiry Desk</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-xs text-blue-700 font-semibold">
-              <ShieldCheck className="w-4 h-4 text-blue-600" />
-              <span>Best Tariff Guarantee</span>
-            </div>
-          </div>
-
-          <form
-            onSubmit={handleBookingSubmit}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-left"
-          >
-            {/* Check-in */}
-            <div className="bg-blue-50/60 p-3 rounded-2xl border border-blue-200/70 focus-within:border-blue-500 focus-within:bg-white transition-all">
-              <label className="block text-[11px] uppercase tracking-wider text-blue-900 font-semibold mb-1">
-                Check-In Date
-              </label>
-              <input
-                type="date"
-                value={checkIn}
-                onChange={(e) => setCheckIn(e.target.value)}
-                className="w-full bg-transparent text-sm text-slate-900 font-medium focus:outline-none"
-              />
-            </div>
-
-            {/* Check-out */}
-            <div className="bg-blue-50/60 p-3 rounded-2xl border border-blue-200/70 focus-within:border-blue-500 focus-within:bg-white transition-all">
-              <label className="block text-[11px] uppercase tracking-wider text-blue-900 font-semibold mb-1">
-                Check-Out Date
-              </label>
-              <input
-                type="date"
-                value={checkOut}
-                onChange={(e) => setCheckOut(e.target.value)}
-                className="w-full bg-transparent text-sm text-slate-900 font-medium focus:outline-none"
-              />
-            </div>
-
-            {/* Room Category */}
-            <div className="bg-blue-50/60 p-3 rounded-2xl border border-blue-200/70 focus-within:border-blue-500 focus-within:bg-white transition-all">
-              <label className="block text-[11px] uppercase tracking-wider text-blue-900 font-semibold mb-1">
-                Room Category
-              </label>
-              <select
-                value={roomType}
-                onChange={(e) => setRoomType(e.target.value)}
-                className="w-full bg-transparent text-sm text-slate-900 font-medium focus:outline-none cursor-pointer"
-              >
-                <option value="Mountain-View Deluxe Double">
-                  Mountain-View Deluxe Double
-                </option>
-                <option value="Standard Valley-View Room">
-                  Standard Valley-View Room
-                </option>
-                <option value="Family Suite">
-                  Family Suite (2 Rooms)
-                </option>
-              </select>
-            </div>
-
-            {/* Submit Action */}
-            <div className="flex items-end">
-              <button
-                type="submit"
-                className="w-full h-[54px] px-4 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_8px_25px_rgba(37,99,235,0.35)] border border-blue-500 transition-all cursor-pointer hover:shadow-[0_12px_30px_rgba(37,99,235,0.45)]"
-              >
-                <span>Check Rates</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </form>
-        </TiltCard>
-
-        {/* Google Maps Real Review Strip */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5 text-xs sm:text-sm text-slate-700">
+        {/* Verified Google Reviews Rating Strip */}
+        <div className="inline-flex flex-wrap items-center justify-center gap-3 px-5 py-2.5 rounded-full bg-white/90 backdrop-blur-md border border-blue-200/90 shadow-[0_8px_25px_rgba(30,58,138,0.08)] text-xs sm:text-sm text-slate-800">
           <div className="flex items-center gap-1.5">
             <div className="flex text-blue-600">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-blue-600 text-blue-600" />
+                <Star
+                  key={i}
+                  className="w-4 h-4 fill-blue-600 text-blue-600"
+                />
               ))}
             </div>
             <span className="font-bold text-slate-950 ml-1">4.2 / 5.0</span>
           </div>
-          <span className="text-blue-300">•</span>
-          <span className="font-medium">100+ Verified Traveler Reviews</span>
-          <span className="text-blue-300">•</span>
+
+          <span className="text-blue-300 hidden sm:inline">•</span>
+          <span className="font-medium text-slate-700">
+            100+ Verified Traveler Reviews
+          </span>
+
+          <span className="text-blue-300 hidden sm:inline">•</span>
           <a
-            href="https://www.google.com/maps/place/Hotel+Himalayan/@27.3053852,88.2382925,17z/data=!4m9!3m8!1s0x39e6867ddebfa319:0xb0fe9695a65fb77d!5m2!4m1!1i2!8m2!3d27.305437!4d88.241066!16s%2Fg%2F1ptx4vh9y"
+            href={gmapsLink}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-700 hover:text-blue-900 font-semibold underline decoration-blue-400 underline-offset-4 flex items-center gap-1 transition-colors"
           >
             <span>Verified on Google Maps</span>
-            <MapPin className="w-3.5 h-3.5 text-blue-600" />
+            <ExternalLink className="w-3.5 h-3.5 text-blue-600" />
           </a>
         </div>
       </div>

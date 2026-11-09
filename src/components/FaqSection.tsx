@@ -37,21 +37,32 @@ export default function FaqSection() {
   ];
 
   return (
-    <section id="faq" className="py-24 bg-[#f8fbff] relative">
+    <section id="faq" className="py-24 bg-white relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
+        {/* Symmetrical Section Header */}
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-900 text-xs uppercase tracking-widest mb-3 font-semibold shadow-sm">
             <HelpCircle className="w-3.5 h-3.5 text-blue-600" />
             <span>Traveler Guide</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-950 tracking-tight mb-4 font-serif">
+
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-950 tracking-tight mb-4 font-serif">
             Frequently Asked Questions
           </h2>
-          <div className="h-0.5 w-24 bg-gradient-to-r from-blue-300 via-blue-600 to-blue-300 mx-auto mb-6" />
+
+          {/* Symmetrical Divider Line with Center Blue Anchor */}
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-blue-300" />
+            <div className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-blue-300" />
+          </div>
+
+          <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-serif">
+            Everything you need to know about your stay on the quiet slopes of Chumbong.
+          </p>
         </div>
 
-        {/* Accordions with Blue Detailing */}
+        {/* Symmetrical Accordions with Blue Detailing */}
         <div className="space-y-4">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
@@ -59,13 +70,13 @@ export default function FaqSection() {
             return (
               <div
                 key={idx}
-                className="rounded-3xl bg-white border border-blue-200/90 overflow-hidden shadow-[0_8px_25px_rgba(30,58,138,0.05)] transition-all duration-200"
+                className="rounded-3xl bg-white border border-blue-200/90 overflow-hidden shadow-[0_8px_25px_rgba(30,58,138,0.05)] transition-all duration-200 hover:border-blue-300"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-blue-50/50 transition-colors"
+                  className="w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-blue-50/40 transition-colors"
                 >
-                  <div className="flex items-center gap-3.5">
+                  <div className="flex items-center gap-4">
                     <div className="p-2.5 rounded-2xl bg-blue-50 border border-blue-200 text-blue-600 shrink-0 shadow-sm">
                       <Icon className="w-4 h-4" />
                     </div>
@@ -81,7 +92,7 @@ export default function FaqSection() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-6 text-sm text-slate-700 leading-relaxed border-t border-blue-100 pt-4 bg-blue-50/20">
+                  <div className="px-6 pb-6 text-sm sm:text-base text-slate-700 leading-relaxed border-t border-blue-100 pt-4 bg-blue-50/20 font-serif">
                     {faq.a}
                   </div>
                 )}

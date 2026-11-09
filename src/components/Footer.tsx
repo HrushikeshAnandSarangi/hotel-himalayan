@@ -18,10 +18,10 @@ export default function Footer() {
 
   return (
     <footer className="bg-white border-t border-blue-200/90 text-slate-800 relative overflow-hidden">
-      {/* Top Banner on Soft Blue Surface */}
+      {/* Symmetrical Top Banner */}
       <div className="border-b border-blue-100 py-10 bg-gradient-to-r from-blue-50/70 via-white to-blue-50/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
             <div className="h-16 w-auto relative shrink-0">
               <Image
                 src="/logo.png"
@@ -35,13 +35,13 @@ export default function Footer() {
               <h3 className="text-xl sm:text-2xl font-bold text-slate-950 font-serif">
                 Experience the Himalayas up close, right from your morning tea.
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
+              <p className="text-xs sm:text-sm text-slate-600 mt-0.5 font-serif">
                 Chumbong Road, Pelling, West Sikkim, 737113
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             <a
               href="tel:+919304957835"
               className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-2"
@@ -62,24 +62,22 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main Footer Links */}
+      {/* Symmetrical 3-Column Footer Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
-          {/* Brand Column */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="h-12 w-auto relative">
-                <Image
-                  src="/logo.png"
-                  alt="Hotel Himalayan Logo"
-                  width={140}
-                  height={60}
-                  className="h-11 w-auto object-contain"
-                />
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {/* Brand & Reviews Column */}
+          <div className="space-y-4">
+            <div className="h-12 w-auto relative">
+              <Image
+                src="/logo.png"
+                alt="Hotel Himalayan Logo"
+                width={140}
+                height={60}
+                className="h-11 w-auto object-contain"
+              />
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-sm">
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-serif">
               Perched on the quiet slopes of Chumbong in Pelling, we offer honest mountain hospitality without unnecessary noise.
             </p>
 
@@ -103,53 +101,58 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links matching User Plan */}
-          <div className="lg:col-span-3 space-y-3">
+          {/* Symmetrical Center Column: Quick Links */}
+          <div className="space-y-3">
             <h4 className="text-xs uppercase tracking-widest text-blue-900 font-bold mb-3">
               Quick Links
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm">
+            <ul className="space-y-2 text-xs sm:text-sm font-serif">
               <li>
                 <a href="#rooms" className="text-slate-600 hover:text-blue-600 transition-colors">
-                  Rooms
+                  Rooms & Amenities
                 </a>
               </li>
               <li>
                 <a href="#location" className="text-slate-600 hover:text-blue-600 transition-colors">
-                  Location
+                  Location & Transit
                 </a>
               </li>
               <li>
                 <a href="#nearby" className="text-slate-600 hover:text-blue-600 transition-colors">
-                  Sightseeing
+                  Sightseeing Circuits
                 </a>
               </li>
               <li>
                 <a href="#contact" className="text-slate-600 hover:text-blue-600 transition-colors">
-                  Contact Us
+                  Contact Us & Reservations
+                </a>
+              </li>
+              <li>
+                <a href="#faq" className="text-slate-600 hover:text-blue-600 transition-colors">
+                  Frequently Asked Questions
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Contact Info matching User Plan */}
-          <div className="lg:col-span-4 space-y-3 text-xs sm:text-sm">
+          {/* Symmetrical Right Column: Contact Details */}
+          <div className="space-y-3 text-xs sm:text-sm">
             <h4 className="text-xs uppercase tracking-widest text-blue-900 font-bold mb-3">
               Hotel Himalayan
             </h4>
-            <div className="flex items-start gap-2.5 text-slate-700">
+            <div className="flex items-start gap-2.5 text-slate-700 font-serif">
               <MapPin className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
               <span>
                 Chumbong Road, Pelling, West Sikkim, 737113
               </span>
             </div>
-            <div className="flex items-center gap-2.5 text-slate-700">
+            <div className="flex items-center gap-2.5 text-slate-700 font-serif">
               <PhoneCall className="w-4 h-4 text-blue-600 shrink-0" />
               <a href="tel:+919304957835" className="hover:text-blue-600 font-medium transition-colors">
                 Phone: +91 9304957835 / +91 7942288960
               </a>
             </div>
-            <div className="flex items-center gap-2.5 text-slate-700">
+            <div className="flex items-center gap-2.5 text-slate-700 font-serif">
               <Mail className="w-4 h-4 text-blue-600 shrink-0" />
               <a href="mailto:contact@hotelhimalayan.com" className="hover:text-blue-600 font-medium transition-colors">
                 Email: contact@hotelhimalayan.com
@@ -170,7 +173,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Copyright matching User Plan */}
+        {/* Symmetrical Bottom Copyright */}
         <div className="mt-14 pt-8 border-t border-blue-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>© 2026 Hotel Himalayan. All rights reserved.</p>
           <div className="flex items-center gap-4">
