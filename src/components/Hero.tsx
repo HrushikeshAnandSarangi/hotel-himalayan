@@ -36,27 +36,25 @@ export default function Hero({ onOpenBooking }: HeroProps) {
       id="hero"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative h-screen w-screen max-w-[100vw] overflow-hidden flex flex-col justify-end items-center bg-white select-none pb-12 sm:pb-16"
+      className="relative h-screen w-screen max-w-[100vw] overflow-hidden flex flex-col justify-end items-center bg-[#f0f7ff] select-none pt-24 sm:pt-28 pb-8 sm:pb-12"
     >
       {/* =========================================================================
-          FULL 100VH SVG MOUNTAIN MOTION ANIMATION (SHADES OF BLUE & ICY TIPS)
-          - Spans the complete 100vh canvas from summit sky to basecamp slopes
-          - Pure shades of blue, white, and icy cyan (zero brown, zero gray patch)
-          - Razor-sharp icy snow-caps & tips with breathing luminescence
-          - Multi-altitude moving clouds (high wisps, volumetric cumulus, valley mist)
-          - Natural interactive mouse-tracking parallax depth
+          FULL 100VH MOUNTAIN & CLOUD ANIMATION
+          - Fills the ENTIRE 100vh space from top to bottom (no empty white gaps)
+          - Textured purely in SHADES OF BLUE with ICY TIPS (zero brown)
+          - Multiple layers of moving clouds (high wisps, volumetric cumulus, valley mist)
+          - Foothills and ridges extend all the way down to y=1080 (bottom of screen)
          ========================================================================= */}
-
       <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
         <svg
           viewBox="0 0 1920 1080"
-          preserveAspectRatio="xMidYMax slice"
-          className="absolute inset-0 w-full h-full object-cover"
+          preserveAspectRatio="none"
+          className="absolute inset-0 w-full h-full"
         >
           <defs>
-            {/* Morning High-Altitude Sky: Soft Azure-to-Ice Dawn */}
+            {/* Full 100vh Sky: Morning Dawn Blue Gradient */}
             <linearGradient
-              id="alpineSkyBlue"
+              id="fullSkyBlue"
               x1="0"
               y1="0"
               x2="0"
@@ -66,29 +64,28 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               <stop offset="0%" stopColor="#bfdbfe" />
               <stop offset="35%" stopColor="#dbeafe" />
               <stop offset="70%" stopColor="#eff6ff" />
-              <stop offset="100%" stopColor="#ffffff" />
+              <stop offset="100%" stopColor="#f8fbff" />
             </linearGradient>
 
-            {/* Subtle Amber Morning Radiance behind Central Kanchenjunga */}
+            {/* Morning Sun Disc & Amber Radiance behind central Kanchenjunga */}
             <radialGradient
-              id="summitDawnGlow"
+              id="sunAura"
               cx="0.5"
               cy="0.22"
-              r="0.48"
+              r="0.45"
               colorInterpolation="linearRGB"
             >
-              <stop offset="0%" stopColor="#fef3c7" stopOpacity="0.5" />
-              <stop offset="35%" stopColor="#dbeafe" stopOpacity="0.25" />
-              <stop offset="70%" stopColor="#eff6ff" stopOpacity="0.1" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+              <stop offset="0%" stopColor="#fef3c7" stopOpacity="0.6" />
+              <stop offset="30%" stopColor="#fed7aa" stopOpacity="0.3" />
+              <stop offset="65%" stopColor="#dbeafe" stopOpacity="0.15" />
+              <stop offset="100%" stopColor="#eff6ff" stopOpacity="0" />
             </radialGradient>
 
             {/* =========================================================
                 ICE & SNOW GRADIENTS FOR SUMMIT PEAKS
                ========================================================= */}
-            {/* Sunlit Glacial Ice-Tip */}
             <linearGradient
-              id="iceTipLit"
+              id="iceCapLit"
               x1="0.2"
               y1="0"
               x2="0.8"
@@ -96,14 +93,13 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               colorInterpolation="linearRGB"
             >
               <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="30%" stopColor="#f0fdff" />
-              <stop offset="65%" stopColor="#cffafe" />
+              <stop offset="35%" stopColor="#f0fdff" />
+              <stop offset="70%" stopColor="#cffafe" />
               <stop offset="100%" stopColor="#a5f3fc" />
             </linearGradient>
 
-            {/* Shaded Glacial Ice */}
             <linearGradient
-              id="iceTipShade"
+              id="iceCapShade"
               x1="0"
               y1="0"
               x2="1"
@@ -117,86 +113,85 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             </linearGradient>
 
             {/* =========================================================
-                NATURAL ALPINE EARTHY BROWN & SLATE MOUNTAIN ROCK STRATA
-                (Crags, couloirs, and cliffs with razor-sharp icy tips)
+                SHADES OF BLUE FOR MOUNTAIN ROCK FACES & CRAGS (NO BROWN)
                ========================================================= */}
-            {/* Sunlit Rock Ridge: Warm Rocky Sienna / Earthy Umber */}
+            {/* Sunlit Rock Ridge: Brilliant Royal Blue / Cobalt */}
             <linearGradient
-              id="rockBlueLit"
+              id="rockCobaltLit"
               x1="0.3"
               y1="0"
               x2="0.7"
               y2="1"
               colorInterpolation="linearRGB"
             >
-              <stop offset="0%" stopColor="#7a5c48" />
-              <stop offset="35%" stopColor="#634836" />
-              <stop offset="75%" stopColor="#4d3627" />
-              <stop offset="100%" stopColor="#38261b" />
+              <stop offset="0%" stopColor="#60a5fa" />
+              <stop offset="35%" stopColor="#3b82f6" />
+              <stop offset="70%" stopColor="#2563eb" />
+              <stop offset="100%" stopColor="#1d4ed8" />
             </linearGradient>
 
-            {/* Shaded Rock Ridge: Deep Alpine Slate-Brown & Shadow Stone */}
+            {/* Shaded Rock Ridge: Deep Alpine Navy / Midnight Blue */}
             <linearGradient
-              id="rockBlueDark"
+              id="rockNavyDark"
               x1="0"
               y1="0"
               x2="1"
               y2="1"
               colorInterpolation="linearRGB"
             >
-              <stop offset="0%" stopColor="#4a372c" />
-              <stop offset="40%" stopColor="#36261d" />
-              <stop offset="75%" stopColor="#241913" />
-              <stop offset="100%" stopColor="#1a1e28" />
+              <stop offset="0%" stopColor="#1e40af" />
+              <stop offset="40%" stopColor="#1e3a8a" />
+              <stop offset="75%" stopColor="#172554" />
+              <stop offset="100%" stopColor="#0f172a" />
             </linearGradient>
 
-            {/* Secondary Rock Strata (Crags & Couloirs) */}
+            {/* Mountain Strata & Couloir Infill */}
             <linearGradient
-              id="rockBlueStrata"
+              id="rockStrataBlue"
               x1="0"
               y1="0"
               x2="0"
               y2="1"
               colorInterpolation="linearRGB"
             >
-              <stop offset="0%" stopColor="#8c6a53" />
-              <stop offset="50%" stopColor="#543c2d" />
-              <stop offset="100%" stopColor="#2c1e16" />
+              <stop offset="0%" stopColor="#93c5fd" />
+              <stop offset="45%" stopColor="#2563eb" />
+              <stop offset="100%" stopColor="#1e3a8a" />
             </linearGradient>
 
-            {/* Midground Ridge Slopes: Earthy Alpine Ridge & Foothills */}
+            {/* Midground Ridge: Cobalt to Deep Navy */}
             <linearGradient
-              id="midRidgeBlue"
+              id="midRidgeCobalt"
               x1="0"
               y1="0"
               x2="0"
               y2="1"
               colorInterpolation="linearRGB"
             >
-              <stop offset="0%" stopColor="#5a4233" />
-              <stop offset="35%" stopColor="#443023" />
-              <stop offset="70%" stopColor="#312219" />
-              <stop offset="100%" stopColor="#1e1814" />
+              <stop offset="0%" stopColor="#3b82f6" />
+              <stop offset="30%" stopColor="#2563eb" />
+              <stop offset="70%" stopColor="#1e40af" />
+              <stop offset="100%" stopColor="#172554" />
             </linearGradient>
 
-            {/* Seamless Lower Valley Fade into Pure White (Zero Gray Patch) */}
+            {/* Foreground Slopes: Deep Midnight Blue extending to y=1080 */}
             <linearGradient
-              id="valleyBlueClean"
+              id="foregroundDeepBlue"
               x1="0"
               y1="0"
               x2="0"
               y2="1"
               colorInterpolation="linearRGB"
             >
-              <stop offset="0%" stopColor="#3d2c22" stopOpacity="0.8" />
-              <stop offset="30%" stopColor="#574235" stopOpacity="0.5" />
-              <stop offset="70%" stopColor="#94a3b8" stopOpacity="0.2" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+              <stop offset="0%" stopColor="#1e3a8a" />
+              <stop offset="35%" stopColor="#172554" />
+              <stop offset="75%" stopColor="#0f172a" />
+              <stop offset="100%" stopColor="#080e1a" />
             </linearGradient>
 
             {/* Volumetric Cloud Gradients */}
             <linearGradient
-              id="cloudShadeWhite"
+              id="cloudPureWhite"
               x1="0"
               y1="0"
               x2="0"
@@ -209,7 +204,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             </linearGradient>
 
             <linearGradient
-              id="cloudShadeAmber"
+              id="cloudAmberTouch"
               x1="0"
               y1="0"
               x2="0"
@@ -222,7 +217,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             </linearGradient>
 
             <linearGradient
-              id="mistDriftGrad"
+              id="mistWaveGrad"
               x1="0"
               y1="0"
               x2="1"
@@ -238,7 +233,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
 
             {/* Summit Specular Filter */}
             <filter
-              id="summitIceGlow"
+              id="iceGlowSpec"
               x="-20%"
               y="-20%"
               width="140%"
@@ -252,10 +247,10 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               </feMerge>
             </filter>
 
-            {/* Cloud Soft Shadow Filter */}
-            <filter id="cloudSoftShadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="7" />
-              <feOffset dx="0" dy="7" />
+            {/* Cloud Soft Shadow */}
+            <filter id="cloudShadowSoft" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="8" />
+              <feOffset dx="0" dy="8" />
               <feComponentTransfer>
                 <feFuncA type="linear" slope="0.08" />
               </feComponentTransfer>
@@ -266,28 +261,28 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             </filter>
           </defs>
 
-          {/* 1. Full-Height Alpine Sky (Spans 100vh) */}
-          <rect width="1920" height="1080" fill="url(#alpineSkyBlue)" />
+          {/* 1. Full 100vh Sky Canvas */}
+          <rect width="1920" height="1080" fill="url(#fullSkyBlue)" />
 
-          {/* 2. Morning Sun Dawn Radiance behind High Summits */}
-          <circle cx="960" cy="240" r="440" fill="url(#summitDawnGlow)" />
+          {/* 2. Morning Sun Glow behind the Central Kanchenjunga Summit */}
+          <circle cx="960" cy="220" r="420" fill="url(#sunAura)" />
 
           {/* =========================================================
               3. HIGH-ALTITUDE MOVING CLOUDS (DRIFTING SLOW)
              ========================================================= */}
           <g className="animate-cloud-slow opacity-85">
-            <g filter="url(#cloudSoftShadow)" transform="translate(160, 60)">
-              <ellipse cx="260" cy="90" rx="145" ry="44" fill="url(#cloudShadeWhite)" />
-              <ellipse cx="340" cy="75" rx="115" ry="54" fill="url(#cloudShadeWhite)" />
-              <ellipse cx="190" cy="95" rx="95" ry="38" fill="url(#cloudShadeWhite)" />
-              <ellipse cx="420" cy="98" rx="85" ry="34" fill="url(#cloudShadeWhite)" />
+            <g filter="url(#cloudShadowSoft)" transform="translate(180, 50)">
+              <ellipse cx="260" cy="90" rx="145" ry="44" fill="url(#cloudPureWhite)" />
+              <ellipse cx="340" cy="75" rx="115" ry="54" fill="url(#cloudPureWhite)" />
+              <ellipse cx="190" cy="95" rx="95" ry="38" fill="url(#cloudPureWhite)" />
+              <ellipse cx="420" cy="98" rx="85" ry="34" fill="url(#cloudPureWhite)" />
             </g>
 
-            <g filter="url(#cloudSoftShadow)" transform="translate(1140, 90)">
-              <ellipse cx="240" cy="85" rx="155" ry="46" fill="url(#cloudShadeAmber)" />
-              <ellipse cx="320" cy="68" rx="125" ry="56" fill="url(#cloudShadeWhite)" />
-              <ellipse cx="160" cy="90" rx="98" ry="40" fill="url(#cloudShadeWhite)" />
-              <ellipse cx="410" cy="94" rx="88" ry="34" fill="url(#cloudShadeWhite)" />
+            <g filter="url(#cloudShadowSoft)" transform="translate(1120, 70)">
+              <ellipse cx="240" cy="85" rx="155" ry="46" fill="url(#cloudAmberTouch)" />
+              <ellipse cx="320" cy="68" rx="125" ry="56" fill="url(#cloudPureWhite)" />
+              <ellipse cx="160" cy="90" rx="98" ry="40" fill="url(#cloudPureWhite)" />
+              <ellipse cx="410" cy="94" rx="88" ry="34" fill="url(#cloudPureWhite)" />
             </g>
           </g>
 
@@ -295,32 +290,31 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               4. CONTINUOUS VOLUMETRIC CUMULUS CLOUDS (DRIFTING RIGHT)
              ========================================================= */}
           <g className="animate-cloud-continuous opacity-90">
-            <g filter="url(#cloudSoftShadow)" transform="translate(700, 140)">
-              <ellipse cx="120" cy="70" rx="90" ry="40" fill="url(#cloudShadeWhite)" />
-              <ellipse cx="185" cy="55" rx="100" ry="48" fill="url(#cloudShadeAmber)" />
-              <ellipse cx="255" cy="62" rx="85" ry="42" fill="url(#cloudShadeWhite)" />
-              <ellipse cx="320" cy="72" rx="70" ry="34" fill="url(#cloudShadeWhite)" />
+            <g filter="url(#cloudShadowSoft)" transform="translate(680, 120)">
+              <ellipse cx="120" cy="70" rx="90" ry="40" fill="url(#cloudPureWhite)" />
+              <ellipse cx="185" cy="55" rx="100" ry="48" fill="url(#cloudAmberTouch)" />
+              <ellipse cx="255" cy="62" rx="85" ry="42" fill="url(#cloudPureWhite)" />
+              <ellipse cx="320" cy="72" rx="70" ry="34" fill="url(#cloudPureWhite)" />
             </g>
 
-            <g filter="url(#cloudSoftShadow)" transform="translate(-60, 170)">
-              <ellipse cx="160" cy="65" rx="115" ry="44" fill="url(#cloudShadeWhite)" />
-              <ellipse cx="245" cy="50" rx="130" ry="54" fill="url(#cloudShadeWhite)" />
-              <ellipse cx="340" cy="62" rx="100" ry="42" fill="url(#cloudShadeAmber)" />
+            <g filter="url(#cloudShadowSoft)" transform="translate(-70, 140)">
+              <ellipse cx="160" cy="65" rx="115" ry="44" fill="url(#cloudPureWhite)" />
+              <ellipse cx="245" cy="50" rx="130" ry="54" fill="url(#cloudPureWhite)" />
+              <ellipse cx="340" cy="62" rx="100" ry="42" fill="url(#cloudAmberTouch)" />
             </g>
 
-            <g filter="url(#cloudSoftShadow)" transform="translate(1460, 150)">
-              <ellipse cx="140" cy="60" rx="105" ry="40" fill="url(#cloudShadeWhite)" />
-              <ellipse cx="215" cy="48" rx="115" ry="50" fill="url(#cloudShadeWhite)" />
-              <ellipse cx="295" cy="62" rx="90" ry="38" fill="url(#cloudShadeAmber)" />
+            <g filter="url(#cloudShadowSoft)" transform="translate(1440, 130)">
+              <ellipse cx="140" cy="60" rx="105" ry="40" fill="url(#cloudPureWhite)" />
+              <ellipse cx="215" cy="48" rx="115" ry="50" fill="url(#cloudPureWhite)" />
+              <ellipse cx="295" cy="62" rx="90" ry="38" fill="url(#cloudAmberTouch)" />
             </g>
           </g>
 
           {/* =========================================================================
-              5. THE KANCHENJUNGA RANGE (8,586m) - DETAILED IN SHADES OF BLUE & ICY TIPS
-              - Soaring icy crystalline peaks reaching into the upper viewport
-              - Rock strata, couloirs, and ridges textured in rich shades of blue
-              - Zero brown
-              - Mouse parallax depth
+              5. THE HIGH KANCHENJUNGA ALPINE MASSIF (8,586m)
+              - Textured in pure SHADES OF BLUE with ICY TIPS
+              - Continuous mountain ridges spanning the width
+              - Parallax tracking (0.02x)
              ========================================================================= */}
           <g
             style={{
@@ -330,138 +324,103 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           >
-            {/* -----------------------------------------------------------
-                LEFT FLANK SUMMITS (Yalung Kang & Kabru Massif: x=120 to 740)
-               ----------------------------------------------------------- */}
-            {/* Western Satellite Ridge (Shades of Blue) */}
+            {/* Western Satellite Flank (Yalung Kang & Kabru: x=0 to 760) */}
             <polygon
-              points="120,780 290,420 440,780"
-              fill="url(#rockBlueLit)"
+              points="0,850 0,620 180,510 320,380 480,560 620,340 780,620 780,850"
+              fill="url(#rockCobaltLit)"
             />
             <polygon
-              points="290,420 440,780 390,780"
-              fill="url(#rockBlueDark)"
+              points="320,380 480,560 440,850 320,850"
+              fill="url(#rockNavyDark)"
             />
-            {/* Deep Blue Rock Strata Couloirs */}
+            <polygon
+              points="620,340 780,620 720,850 620,850"
+              fill="url(#rockNavyDark)"
+            />
+
+            {/* Blue Strata Couloirs & Arrêtes on Western Ridge */}
             <polyline
-              points="290,420 280,520 250,610 210,780"
+              points="320,380 300,500 260,650 210,850"
               stroke="#0f172a"
-              strokeWidth="4"
+              strokeWidth="4.5"
               fill="none"
               strokeLinecap="round"
             />
             <polyline
-              points="290,420 320,530 350,640 370,780"
-              stroke="#1e3a8a"
-              strokeWidth="3.5"
-              fill="none"
-            />
-
-            {/* Icy Tip: Western Satellite Summit */}
-            <polygon
-              points="210,510 290,420 340,490 310,480 270,510 250,490"
-              fill="url(#iceTipLit)"
-              filter="url(#summitIceGlow)"
-            />
-            <polygon
-              points="290,420 340,490 320,490 290,440"
-              fill="url(#iceTipShade)"
-            />
-
-            {/* Secondary Left Pyramid (Kabru North: Peak at y=320) */}
-            <polygon
-              points="380,780 570,320 740,780"
-              fill="url(#rockBlueLit)"
-            />
-            <polygon
-              points="570,320 740,780 660,780"
-              fill="url(#rockBlueDark)"
-            />
-            <polygon
-              points="510,480 570,440 620,490 560,510"
-              fill="url(#rockBlueStrata)"
-            />
-            <polygon
-              points="480,580 570,540 650,600 550,620"
-              fill="url(#rockBlueDark)"
-            />
-            <polyline
-              points="570,320 540,430 490,560 440,780"
+              points="620,340 590,470 540,630 490,850"
               stroke="#0f172a"
               strokeWidth="5"
               fill="none"
             />
             <polyline
-              points="570,320 600,440 640,580 680,780"
+              points="620,340 650,490 690,660 730,850"
               stroke="#1e3a8a"
               strokeWidth="4"
               fill="none"
             />
 
-            {/* Icy Snow-Cap & Tips: Kabru Summit */}
+            {/* Icy Snow-Cap on Kabru Summit (x=620, y=340) */}
             <polygon
-              points="480,430 570,320 640,410 610,400 580,440 540,400 510,430"
-              fill="url(#iceTipLit)"
-              filter="url(#summitIceGlow)"
+              points="530,440 620,340 690,420 660,410 630,450 590,410 560,440"
+              fill="url(#iceCapLit)"
+              filter="url(#iceGlowSpec)"
             />
             <polygon
-              points="570,320 640,410 620,410 575,340"
-              fill="url(#iceTipShade)"
+              points="620,340 690,420 670,420 625,360"
+              fill="url(#iceCapShade)"
             />
-            {/* Glacial Couloir (Snow Chute) */}
+            {/* Glacial Chute */}
             <polygon
-              points="550,410 565,470 555,540 540,480"
+              points="600,420 615,480 605,550 590,490"
               fill="#e0f2fe"
               opacity="0.9"
             />
 
-            {/* -----------------------------------------------------------
-                CENTRAL MASSIVE KANCHENJUNGA MAIN SUMMIT (8,586m)
-                Soars majestically to (x: 960, y: 190) in upper viewport!
-               ----------------------------------------------------------- */}
+            {/* Central Towering Kanchenjunga Main Summit (8,586m)
+                Rises majestically to (x: 960, y: 150) */}
             <polygon
-              points="640,820 960,190 960,820"
-              fill="url(#rockBlueLit)"
+              points="580,880 960,150 960,880"
+              fill="url(#rockCobaltLit)"
             />
             <polygon
-              points="960,190 1280,820 960,820"
-              fill="url(#rockBlueDark)"
+              points="960,150 1340,880 960,880"
+              fill="url(#rockNavyDark)"
             />
 
-            {/* Rock Strata & Crags on Central Face (Shades of Blue) */}
+            {/* Intricate Blue Rock Strata on Central Face */}
             <polygon
-              points="840,410 960,360 960,450 870,470"
-              fill="url(#rockBlueStrata)"
+              points="820,380 960,320 960,430 860,450"
+              fill="url(#rockStrataBlue)"
             />
             <polygon
-              points="960,360 1080,420 1040,480 960,450"
+              points="960,320 1100,390 1060,460 960,430"
               fill="#0f172a"
             />
             <polygon
-              points="780,540 960,480 960,590 820,610"
-              fill="url(#rockBlueLit)"
+              points="760,530 960,460 960,580 810,600"
+              fill="url(#rockCobaltLit)"
             />
             <polygon
-              points="960,480 1140,560 1100,630 960,590"
-              fill="url(#rockBlueDark)"
+              points="960,460 1160,540 1120,620 960,580"
+              fill="url(#rockNavyDark)"
             />
 
             {/* Central Razor Spine & Ridges */}
             <polyline
-              points="960,190 955,340 965,490 960,650 960,820"
+              points="960,150 955,320 965,480 960,650 960,880"
               stroke="#020617"
               strokeWidth="6"
               fill="none"
               strokeLinecap="round"
             />
             <polyline
-              points="960,190 880,380 790,560 710,820"
+              points="960,150 870,360 770,550 680,850"
               stroke="#1e3a8a"
               strokeWidth="4"
               fill="none"
             />
             <polyline
-              points="960,190 1040,390 1130,580 1210,820"
+              points="960,150 1050,370 1150,570 1240,850"
               stroke="#0f172a"
               strokeWidth="4.5"
               fill="none"
@@ -469,92 +428,74 @@ export default function Hero({ onOpenBooking }: HeroProps) {
 
             {/* GLISTENING ICY TIPS & SUMMIT SNOW-CAP (MAIN PEAK) */}
             <polygon
-              points="820,380 960,190 960,340 920,320 890,370 850,350"
-              fill="url(#iceTipLit)"
+              points="810,360 960,150 960,320 920,295 885,350 845,330"
+              fill="url(#iceCapLit)"
               className="animate-summit-glow"
             />
             <polygon
-              points="960,190 1090,370 1050,360 1020,390 980,340 960,340"
-              fill="url(#iceTipShade)"
+              points="960,150 1110,350 1070,340 1040,370 990,320 960,320"
+              fill="url(#iceCapShade)"
             />
 
             {/* Gleaming Razor Crest Tip with Ice Glow */}
             <polygon
-              points="960,190 930,240 960,235 990,240"
+              points="960,150 925,210 960,205 995,210"
               fill="#ffffff"
-              filter="url(#summitIceGlow)"
+              filter="url(#iceGlowSpec)"
               className="animate-summit-glow"
             />
 
-            {/* Glacial Chutes cascading down the blue rock face */}
+            {/* Cascading Snow Couloirs running down the blue rock face */}
             <polygon
-              points="910,340 930,420 915,510 895,430"
+              points="910,320 930,410 915,500 895,420"
               fill="#ffffff"
               opacity="0.95"
             />
             <polygon
-              points="980,350 1010,440 995,530 975,430"
+              points="980,330 1010,430 995,520 975,420"
               fill="#bae6fd"
               opacity="0.85"
             />
             <polygon
-              points="860,460 885,550 865,630 845,540"
+              points="850,450 880,540 860,620 835,530"
               fill="#f0f9ff"
               opacity="0.9"
             />
 
-            {/* -----------------------------------------------------------
-                RIGHT FLANK SUMMITS (Pandim & Siniolchu: x=1140 to 1820)
-               ----------------------------------------------------------- */}
+            {/* Eastern Satellite Flank (Pandim & Siniolchu: x=1160 to 1920) */}
             <polygon
-              points="1140,780 1330,290 1520,780"
-              fill="url(#rockBlueLit)"
+              points="1140,850 1330,280 1540,540 1660,350 1820,530 1920,460 1920,850"
+              fill="url(#rockCobaltLit)"
             />
             <polygon
-              points="1330,290 1520,780 1440,780"
-              fill="url(#rockBlueDark)"
+              points="1330,280 1540,540 1480,850 1330,850"
+              fill="url(#rockNavyDark)"
             />
-            <polyline
-              points="1330,290 1300,420 1260,560 1220,780"
-              stroke="#1e3a8a"
-              strokeWidth="4"
-              fill="none"
-            />
-            <polyline
-              points="1330,290 1370,440 1410,590 1460,780"
-              stroke="#0f172a"
-              strokeWidth="4.5"
-              fill="none"
+            <polygon
+              points="1660,350 1820,530 1760,850 1660,850"
+              fill="url(#rockNavyDark)"
             />
 
-            {/* Icy Snow-Cap: Pandim Peak */}
+            {/* Pandim Peak Icy Snow-Cap (x=1330, y=280) */}
             <polygon
-              points="1260,400 1330,290 1410,380 1370,370 1340,410 1300,370"
-              fill="url(#iceTipLit)"
-              filter="url(#summitIceGlow)"
+              points="1250,380 1330,280 1410,370 1375,360 1340,400 1300,360"
+              fill="url(#iceCapLit)"
+              filter="url(#iceGlowSpec)"
             />
             <polygon
-              points="1330,290 1410,380 1380,380 1335,310"
-              fill="url(#iceTipShade)"
+              points="1330,280 1410,370 1385,370 1335,300"
+              fill="url(#iceCapShade)"
             />
 
-            {/* Far Eastern Needle Peak (Siniolchu) */}
+            {/* Siniolchu Needle Icy Snow-Cap (x=1660, y=350) */}
             <polygon
-              points="1420,780 1610,370 1800,780"
-              fill="url(#rockBlueLit)"
+              points="1590,440 1660,350 1720,420 1690,410 1660,450 1625,420"
+              fill="url(#iceCapLit)"
+              filter="url(#iceGlowSpec)"
             />
             <polygon
-              points="1610,370 1800,780 1730,780"
-              fill="url(#rockBlueDark)"
-            />
-            <polygon
-              points="1540,460 1610,370 1670,440 1640,430 1610,470 1575,440"
-              fill="url(#iceTipLit)"
-              filter="url(#summitIceGlow)"
-            />
-            <polygon
-              points="1610,370 1670,440 1650,440 1615,390"
-              fill="url(#iceTipShade)"
+              points="1660,350 1720,420 1700,420 1665,370"
+              fill="url(#iceCapShade)"
             />
           </g>
 
@@ -563,15 +504,15 @@ export default function Hero({ onOpenBooking }: HeroProps) {
              ========================================================= */}
           <g className="animate-mist-slow opacity-80">
             <path
-              d="M-200,560 Q260,510 740,550 T1680,520 T2200,570 L2200,680 L-200,680 Z"
-              fill="url(#mistDriftGrad)"
+              d="M-200,560 Q260,510 740,550 T1680,520 T2200,570 L2200,700 L-200,700 Z"
+              fill="url(#mistWaveGrad)"
             />
           </g>
 
           {/* =========================================================
-              7. MIDGROUND SINGALILA & PELLING FOOTHILL RIDGES
-              - Textured in shades of blue
+              7. MIDGROUND SINGALILA & PELLING RIDGES (SHADES OF BLUE)
               - Parallax factor (0.05x)
+              - Rugged continuous mountain ridgelines
              ========================================================= */}
           <g
             style={{
@@ -582,17 +523,24 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             }}
           >
             <polygon
-              points="0,880 0,660 280,570 580,690 860,560 1050,680 1050,880"
-              fill="url(#midRidgeBlue)"
+              points="0,960 0,640 280,550 580,670 860,540 1080,660 1340,530 1620,650 1920,560 1920,960"
+              fill="url(#midRidgeCobalt)"
               fillOpacity="0.95"
+            />
+            {/* Shaded Mountain Ridge Creases */}
+            <polygon
+              points="860,540 1080,660 1020,960 860,960"
+              fill="url(#rockNavyDark)"
+              fillOpacity="0.8"
             />
             <polygon
-              points="980,880 980,670 1260,550 1520,680 1760,590 1920,650 1920,880"
-              fill="url(#rockBlueDark)"
-              fillOpacity="0.95"
+              points="1340,530 1620,650 1560,960 1340,960"
+              fill="url(#rockNavyDark)"
+              fillOpacity="0.8"
             />
+            {/* Mountain Ridge Rim Lighting */}
             <polyline
-              points="0,660 280,570 580,690 860,560 1260,550 1520,680 1760,590 1920,650"
+              points="0,640 280,550 580,670 860,540 1080,660 1340,530 1620,650 1920,560"
               fill="none"
               stroke="#93c5fd"
               strokeWidth="2.5"
@@ -605,53 +553,61 @@ export default function Hero({ onOpenBooking }: HeroProps) {
              ========================================================= */}
           <g className="animate-cloud-opposite opacity-85">
             <path
-              d="M-300,670 Q240,620 740,660 T1660,630 T2280,680 L2280,780 L-300,780 Z"
-              fill="url(#mistDriftGrad)"
+              d="M-300,680 Q240,630 740,670 T1660,640 T2280,690 L2280,820 L-300,820 Z"
+              fill="url(#mistWaveGrad)"
             />
           </g>
 
           {/* =========================================================
-              9. CLEAN LOWER VALLEY SLOPE (NO GRAY PATCH)
-              - Softly dissolves into pure white at 100vh base
+              9. FOREGROUND CHUMBONG SLOPES EXTENDING TO Y=1080
+              - Fills the ENTIRE bottom space (no empty white gaps)
+              - Textured in deep midnight blue & navy
              ========================================================= */}
           <path
-            d="M0,1080 L0,780 Q240,730 520,770 T1120,720 T1680,760 Q1820,730 1920,770 L1920,1080 Z"
-            fill="url(#valleyBlueClean)"
+            d="M0,1080 L0,740 Q220,690 480,730 T1040,690 T1580,730 Q1780,690 1920,740 L1920,1080 Z"
+            fill="url(#foregroundDeepBlue)"
+          />
+          {/* Ridge Rim Accent */}
+          <path
+            d="M0,740 Q220,690 480,730 T1040,690 T1580,730 Q1780,690 1920,740"
+            fill="none"
+            stroke="#60a5fa"
+            strokeWidth="3"
+            strokeOpacity="0.5"
           />
 
-          {/* 10. Delicate Panoramic Picture-Window Diagonal Sheen */}
-          <polygon
-            points="280,0 440,0 120,1080 0,1080"
-            fill="#ffffff"
-            className="animate-window-reflection"
+          {/* Secondary Foothill Layer down to 1080 */}
+          <path
+            d="M0,1080 L0,880 Q320,830 720,870 T1480,840 T1920,880 L1920,1080 Z"
+            fill="#0b192c"
           />
-          <polygon
-            points="780,0 960,0 460,1080 320,1080"
-            fill="#ffffff"
-            className="animate-window-reflection"
+          <path
+            d="M0,880 Q320,830 720,870 T1480,840 T1920,880"
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth="2"
+            strokeOpacity="0.35"
           />
         </svg>
       </div>
 
-      {/* Picture-Window Architectural Perimeter */}
-      <div className="absolute inset-2 sm:inset-4 lg:inset-6 rounded-3xl sm:rounded-[2.5rem] border border-blue-200/40 pointer-events-none shadow-[inset_0_0_80px_rgba(255,255,255,0.7)]" />
-
       {/* =========================================================================
           CONTENT OVERLAY: STARTS FROM MID-MOUNTAIN (AS REQUESTED)
-          - Upper half is open, showcasing the soaring icy summits and moving clouds
-          - Starts at mid-mountain down with clean readability and bilateral symmetry
-          - Hook line -> Sub lines -> Two buttons -> Small subscript Google rating
+          - Icy summits and moving clouds soar proudly in the upper half of the viewport
+          - Content starts from mid-mountain level down
+          - Symmetrical typography, action buttons, and small subscript rating
+          - Semi-translucent frosted glass plate lets the mountain artwork shine through
          ========================================================================= */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 pb-8 sm:pb-12 text-center flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
         {/* Soft Glassmorphic Frosted Reading Surface */}
-        <div className="w-full bg-white/75 backdrop-blur-md rounded-3xl p-6 sm:p-9 border border-white/90 shadow-[0_20px_50px_-10px_rgba(30,58,138,0.08),0_0_0_1px_rgba(255,255,255,0.95)_inset]">
+        <div className="w-full bg-white/70 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/80 shadow-[0_16px_40px_rgba(30,58,138,0.08),0_0_0_1px_rgba(255,255,255,0.95)_inset]">
           {/* Exact Layout Hook Line */}
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold tracking-tight text-slate-950 mb-4 leading-[1.18] font-serif">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[50px] font-bold tracking-tight text-slate-950 mb-3.5 leading-[1.18] font-serif">
             Experience the Himalayas up close, right from your morning tea.
           </h1>
 
           {/* Exact Layout Sub-Lines */}
-          <p className="text-sm sm:text-base md:text-lg text-slate-700 max-w-2xl mx-auto leading-relaxed mb-8 font-serif">
+          <p className="text-sm sm:text-base md:text-lg text-slate-700 max-w-2xl mx-auto leading-relaxed mb-6 font-serif">
             Out on this ridge in Pelling, Kanchenjunga doesn&apos;t feel like a
             distant backdrop. She sits right in front of you, shedding her coat
             of morning mist and catching the first amber light while the rest of
@@ -678,7 +634,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
           </div>
 
           {/* Small Subscript Google Rating Mention (As Requested) */}
-          <div className="mt-4 pt-2">
+          <div className="mt-4 pt-1">
             <a
               href={gmapsLink}
               target="_blank"

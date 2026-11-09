@@ -28,7 +28,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-y border-blue-100/90 py-3 sm:py-3.5 shadow-[0_4px_25px_rgba(30,58,138,0.06)] transition-all duration-300">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/85 backdrop-blur-md border-b border-blue-100/80 py-3 sm:py-3.5 shadow-[0_4px_20px_rgba(30,58,138,0.06)] transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Official Hotel Himalayan Brand Mark with the Uploaded Logo */}
@@ -36,13 +36,13 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             href="#"
             className="group flex items-center gap-3.5 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-xl p-1 transition-transform hover:scale-[1.01]"
           >
-            <div className="relative flex items-center justify-center h-12 w-auto">
+            <div className="relative flex items-center justify-center h-11 sm:h-12 w-auto">
               <Image
                 src="/logo.png"
                 alt="Hotel Himalayan Logo"
                 width={120}
                 height={55}
-                className="h-11 sm:h-12 w-auto object-contain drop-shadow-[0_2px_8px_rgba(30,58,138,0.12)] group-hover:scale-105 transition-transform duration-300"
+                className="h-10 sm:h-11 w-auto object-contain drop-shadow-[0_2px_8px_rgba(30,58,138,0.12)] group-hover:scale-105 transition-transform duration-300"
                 priority
               />
             </div>

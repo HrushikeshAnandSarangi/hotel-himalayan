@@ -31,16 +31,16 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white text-[#020617] flex flex-col font-serif selection:bg-blue-600 selection:text-white">
+      {/* Fixed Navigation at the very top */}
+      <Navbar onOpenBooking={handleOpenBooking} />
+
       {/* Main Content Layout */}
       <main className="flex-1">
-        {/* 1. Hero Section - Full 100vh unobstructed (zero navbar overlap) */}
+        {/* 1. Hero Section - Full 100vh with moving mountain animation in pure shades of blue */}
         <Hero
           onOpenBooking={handleOpenBooking}
           onOpenBookingWithRoom={handleOpenBookingWithRoom}
         />
-
-        {/* Sticky Navbar - Situated right below Hero, sticks to the top as you scroll */}
-        <Navbar onOpenBooking={handleOpenBooking} />
 
         {/* 2. About the Hotel */}
         <AboutSection />
