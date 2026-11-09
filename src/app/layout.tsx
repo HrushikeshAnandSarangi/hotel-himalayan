@@ -67,7 +67,6 @@ export default function RootLayout({
                 longitude: 88.241066,
               },
               telephone: "+919304957835",
-              priceRange: "₹1999 - ₹3499",
               aggregateRating: {
                 "@type": "AggregateRating",
                 ratingValue: "4.2",

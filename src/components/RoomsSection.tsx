@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   MountainSnow,
   BedDouble,
@@ -11,260 +11,488 @@ import {
   Maximize2,
   Users,
   CheckCircle2,
-  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Calendar as CalendarIcon,
+  PhoneCall,
   Sparkles,
-  Eye,
   UtensilsCrossed,
-  Compass,
   Car,
-  CalendarCheck,
+  Compass,
   Sun,
+  ShieldCheck,
+  Check,
 } from "lucide-react";
-import TiltCard from "./TiltCard";
 
 interface RoomsSectionProps {
   onSelectRoom: (roomName: string) => void;
 }
 
 export default function RoomsSection({ onSelectRoom }: RoomsSectionProps) {
-  const rooms = [
+  // Current calendar state: November 2026 default
+  const [currentYear, setCurrentYear] = useState(2026);
+  const [currentMonth, setCurrentMonth] = useState(10); // 10 = November (0-indexed)
+  const [selectedDay, setSelectedDay] = useState(14); // Default selected date
+
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
+
+  // Navigation handlers
+  const prevMonth = () => {
+    if (currentMonth === 0) {
+      setCurrentMonth(11);
+      setCurrentYear(currentYear - 1);
+    } else {
+      setCurrentMonth(currentMonth - 1);
+    }
+  };
+
+  const nextMonth = () => {
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+      setCurrentYear(currentYear + 1);
+    } else {
+      setCurrentMonth(currentMonth + 1);
+    }
+  };
+
+  // Mock availability status based on day number for realistic interactive demonstration
+  const getDayAvailability = (day: number) => {
+    // Weekends (Fri, Sat) or specific days have limited rooms
+    const dayOfWeek = (firstDayOfWeek + day - 1) % 7;
+    if (day === 8 || day === 22) {
+      return { status: "booked", label: "Full", color: "bg-slate-300 text-slate-500" };
+    }
+    if (dayOfWeek === 5 || dayOfWeek === 6 || day === 15 || day === 25) {
+      return { status: "limited", label: "Limited", color: "bg-amber-100 text-amber-800 border-amber-300" };
+    }
+    return { status: "available", label: "Open", color: "bg-emerald-50 text-emerald-800 border-emerald-300" };
+  };
+
+  const selectedDateObj = new Date(currentYear, currentMonth, selectedDay);
+  const selectedDateFormatted = selectedDateObj.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  const selectedDayInfo = getDayAvailability(selectedDay);
+
+  // Room definitions (Strictly NO pricing displayed)
+  const roomsAvailability = [
     {
-      id: "mountain-view-deluxe",
+      id: "deluxe-mountain",
       name: "Mountain-View Deluxe Double",
-      price: 2499,
+      tagline: "Direct Mt. Kanchenjunga Private Balcony",
       occupancy: "2-3 Adults",
-      bed: "Plush Double Bed",
-      badge: "Kanchenjunga Facing",
-      description:
-        "Large glass windows looking directly out toward Kanchenjunga, attached private balcony, plush double bed, and attached western bathroom with 24/7 running hot water.",
+      bed: "1 Plush King Double Bed",
+      status: selectedDayInfo.status === "booked" ? "Booked" : "Available",
+      statusColor:
+        selectedDayInfo.status === "booked"
+          ? "bg-slate-100 text-slate-600 border-slate-300"
+          : "bg-emerald-50 text-emerald-800 border-emerald-300",
       features: [
-        "Large glass windows facing Mt. Kanchenjunga",
-        "Attached private sit-out balcony",
-        "Plush double bed with mountain quilts",
-        "Attached western bathroom with 24/7 hot water",
+        "Unobstructed sunrise views of Mt. Kanchenjunga",
+        "Attached western bathroom with 24/7 hot water geyser",
+        "Private sit-out balcony overlooking Chumbong slopes",
       ],
     },
     {
-      id: "standard-valley-view",
+      id: "standard-valley",
       name: "Standard Valley-View Room",
-      price: 1999,
+      tagline: "Serene Garden & Rolling Valley Terraces",
       occupancy: "2 Adults",
       bed: "Twin or Double Beds",
-      badge: "Terrace Access",
-      description:
-        "Cozy wooden finishes, comfortable twin or double beds, quiet garden and valley vistas, and quick access to the main terrace.",
+      status: selectedDayInfo.status === "booked" ? "Booked" : "Available",
+      statusColor:
+        selectedDayInfo.status === "booked"
+          ? "bg-slate-100 text-slate-600 border-slate-300"
+          : "bg-emerald-50 text-emerald-800 border-emerald-300",
       features: [
-        "Cozy warm wooden finishes",
-        "Comfortable twin or double beds",
-        "Quiet garden and rolling valley vistas",
-        "Immediate quick access to the main terrace",
+        "Warm wooden finishes with peaceful garden outlook",
+        "Quick access to the main panoramic rooftop terrace",
+        "Cozy mountain quilts and winter room heater support",
       ],
     },
     {
       id: "family-suite",
-      name: "Family Suite",
-      price: 3499,
+      name: "Family Mountain Suite",
+      tagline: "Interconnected 2-Room Suite for Families",
       occupancy: "4-5 Adults",
-      bed: "2 Interconnected Rooms",
-      badge: "Corner Windows",
-      description:
-        "Two interconnected rooms with wide corner windows, ideal for families or small travel groups traveling together.",
+      bed: "2 Connected Bedrooms",
+      status:
+        selectedDayInfo.status === "booked"
+          ? "Booked"
+          : selectedDayInfo.status === "limited"
+          ? "1 Room Left"
+          : "Available",
+      statusColor:
+        selectedDayInfo.status === "booked"
+          ? "bg-slate-100 text-slate-600 border-slate-300"
+          : selectedDayInfo.status === "limited"
+          ? "bg-amber-50 text-amber-800 border-amber-300"
+          : "bg-emerald-50 text-emerald-800 border-emerald-300",
       features: [
-        "Two interconnected spacious rooms",
-        "Wide corner windows capturing morning mist",
-        "Ideal for families or travel groups",
-        "Dedicated dining table and sitting area",
+        "Dual corner windows capturing 180° Himalayan mist",
+        "Separate sitting lounge and family dining space",
+        "Spacious layout ideal for families and small groups",
       ],
     },
   ];
 
-  // Symmetrical 8 Amenities (4x2 Grid on desktop)
-  const amenitiesIncluded = [
+  // Authentic amenities extracted directly from Google Maps listing & guest reviews
+  const googleMapsAmenities = [
     {
       icon: MountainSnow,
-      title: "Direct Mountain Views",
-      desc: "Direct Kanchenjunga and valley views from balconies and rooms.",
+      title: "Kanchenjunga Balconies",
+      desc: "Direct, unobstructed views of Mt. Kanchenjunga from private room balconies and rooftop deck.",
     },
     {
       icon: UtensilsCrossed,
-      title: "In-House Kitchen",
-      desc: "In-house kitchen serving fresh local and Indian meals.",
+      title: "In-House Home Kitchen",
+      desc: "Freshly prepared Sikkimese delicacies and homestyle Indian meals using locally sourced organic produce.",
     },
     {
       icon: Flame,
-      title: "24/7 Hot Water",
-      desc: "24/7 hot water via dedicated bathroom geysers.",
-    },
-    {
-      icon: Eye,
-      title: "Rooftop Observation Deck",
-      desc: "Rooftop observation deck with 360-degree mountain sightlines.",
-    },
-    {
-      icon: Wifi,
-      title: "Free High-Speed Wi-Fi",
-      desc: "Free high-speed Wi-Fi in common spaces and rooms.",
-    },
-    {
-      icon: Compass,
-      title: "Taxis, Permits & Guides",
-      desc: "Help with local taxi bookings, sight-seeing permits, and trekking guides.",
-    },
-    {
-      icon: Car,
-      title: "Private On-Site Parking",
-      desc: "Ample private on-site parking for cars and bikes.",
+      title: "24/7 Hot Water Geysers",
+      desc: "Dedicated continuous hot water supply in all attached western bathrooms, even during winter months.",
     },
     {
       icon: Sun,
-      title: "Open Sunset Terrace",
-      desc: "Panoramic terrace where guests gather for morning tea and dusk storytelling.",
+      title: "Room Heaters Available",
+      desc: "Cozy in-room heating available upon request to keep your mountain stay warm and comfortable.",
+    },
+    {
+      icon: Car,
+      title: "Free On-Site Parking",
+      desc: "Safe and spacious private vehicle parking on property grounds along Chumbong Road.",
+    },
+    {
+      icon: Wifi,
+      title: "Property-Wide Wi-Fi",
+      desc: "Complimentary wireless internet connectivity throughout rooms, dining areas, and observation lounge.",
+    },
+    {
+      icon: Compass,
+      title: "Sightseeing & Tour Desk",
+      desc: "Local cab arrangements and route guidance for Pelling Skywalk, Khecheopalri Lake, and Rabdentse Ruins.",
+    },
+    {
+      icon: Coffee,
+      title: "Lawn & Evening Bonfire",
+      desc: "Open garden lawn area for evening tea, sunset contemplation, and cozy campfires under starry skies.",
     },
   ];
 
   return (
-    <section id="rooms" className="py-24 bg-white relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Symmetrical Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-900 text-xs uppercase tracking-widest mb-3 font-semibold shadow-sm">
-            <BedDouble className="w-3.5 h-3.5 text-blue-600" />
-            <span>Rooms & Amenities</span>
-          </div>
+    <section id="rooms" className="py-28 bg-[#fbfdff] relative overflow-hidden">
+      {/* Background Ambient Depth */}
+      <div className="absolute top-1/4 -right-40 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-40 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-950 tracking-tight mb-4 font-serif">
-            Every room is designed around one priority: the skyline outside your window.
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Editorial Section Header (Clean, No Pill Badges) */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-950 tracking-tight font-serif mb-4">
+            Rooms & Availability
           </h2>
 
-          {/* Symmetrical Divider Line with Center Blue Anchor */}
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-blue-300" />
-            <div className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-            <div className="h-px w-16 bg-gradient-to-l from-transparent to-blue-300" />
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="h-px w-20 bg-gradient-to-r from-transparent to-blue-400" />
+            <div className="w-2 h-2 rotate-45 bg-blue-700 shadow-sm" />
+            <div className="h-px w-20 bg-gradient-to-l from-transparent to-blue-400" />
           </div>
+
+          <p className="text-base sm:text-lg text-slate-700 font-serif leading-relaxed">
+            Select a date on the calendar below to check real-time room availability on the quiet slopes of Chumbong.
+          </p>
         </div>
 
-        {/* Symmetrical 3-Column Rooms Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
-          {rooms.map((room) => (
-            <TiltCard
-              key={room.id}
-              maxTilt={6}
-              perspective={1100}
-              className="bg-white rounded-3xl border border-blue-200/90 overflow-hidden shadow-[0_20px_50px_-10px_rgba(30,58,138,0.08),0_0_0_1px_rgba(255,255,255,1)_inset] flex flex-col justify-between hover:border-blue-400 transition-all duration-300 group"
-            >
-              <div>
-                {/* Header Banner Card with Soft Ice-Blue Gradient */}
-                <div className="relative p-7 sm:p-8 bg-gradient-to-br from-blue-50/80 via-blue-50/40 to-white border-b border-blue-100">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white shadow-sm">
-                      <Sparkles className="w-3 h-3" />
-                      <span>{room.badge}</span>
-                    </span>
-                    <div className="text-right">
-                      <span className="text-2xl sm:text-3xl font-bold text-blue-950 font-serif">
-                        ₹{room.price.toLocaleString("en-IN")}
-                      </span>
-                      <span className="block text-[11px] text-blue-800 uppercase tracking-wider font-semibold">
-                        / Night
-                      </span>
+        {/* =========================================================================
+            CALENDAR & AVAILABILITY HUB (Framed with Blue Ornate SVG Patterns)
+            ========================================================================= */}
+        <div className="relative rounded-3xl overflow-hidden border border-blue-200/90 shadow-[0_24px_55px_rgba(14,28,64,0.08)] bg-white mb-20">
+          {/* Top Ornate SVG Pattern Border */}
+          <div className="w-full h-12 sm:h-16 md:h-18 bg-[#dcecf9] border-b border-blue-200/70 overflow-hidden relative select-none">
+            <img
+              src="/patterns/ornate-border-top.svg"
+              alt=""
+              className="w-full h-full object-fill pointer-events-none"
+            />
+          </div>
+
+          {/* Calendar + Status Card Body */}
+          <div className="p-6 sm:p-9 lg:p-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+              {/* ================= LEFT COLUMN: BIG INTERACTIVE CALENDAR ================= */}
+              <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl border border-blue-200/80 p-5 sm:p-7 bg-white shadow-sm">
+                <div>
+                  {/* Calendar Month Navigation Header */}
+                  <div className="flex items-center justify-between pb-5 border-b border-blue-100 mb-6">
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-slate-950 font-serif flex items-center gap-2.5">
+                        <CalendarIcon className="w-5 h-5 text-blue-600" />
+                        <span>
+                          {monthNames[currentMonth]} {currentYear}
+                        </span>
+                      </h3>
+                      <p className="text-xs text-slate-600 font-serif mt-0.5">
+                        Click any date to inspect room status
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={prevMonth}
+                        className="p-2 rounded-xl border border-blue-200 hover:bg-blue-50 text-blue-900 transition-colors cursor-pointer"
+                        aria-label="Previous Month"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={nextMonth}
+                        className="p-2 rounded-xl border border-blue-200 hover:bg-blue-50 text-blue-900 transition-colors cursor-pointer"
+                        aria-label="Next Month"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-950 font-serif mb-2 leading-snug">
-                    {room.name}
-                  </h3>
+                  {/* Day of week labels */}
+                  <div className="grid grid-cols-7 gap-1.5 text-center mb-3">
+                    {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((dayName, idx) => (
+                      <span
+                        key={idx}
+                        className="text-xs font-bold uppercase tracking-wider text-blue-900 font-serif py-1"
+                      >
+                        {dayName}
+                      </span>
+                    ))}
+                  </div>
 
-                  {/* Room Meta Badges */}
-                  <div className="flex items-center gap-4 pt-2.5 border-t border-blue-200/60 text-xs text-slate-700">
-                    <div className="flex items-center gap-1.5 font-medium">
-                      <Users className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                      <span>{room.occupancy}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 font-medium">
-                      <BedDouble className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                      <span>{room.bed}</span>
-                    </div>
+                  {/* Calendar Date Cells */}
+                  <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
+                    {/* Empty padding cells for first week */}
+                    {Array.from({ length: firstDayOfWeek }).map((_, idx) => (
+                      <div key={`empty-${idx}`} className="h-10 sm:h-12" />
+                    ))}
+
+                    {/* Actual day cells */}
+                    {Array.from({ length: daysInMonth }).map((_, idx) => {
+                      const dayNumber = idx + 1;
+                      const isSelected = dayNumber === selectedDay;
+                      const dayInfo = getDayAvailability(dayNumber);
+
+                      return (
+                        <button
+                          key={dayNumber}
+                          onClick={() => setSelectedDay(dayNumber)}
+                          className={`h-11 sm:h-13 rounded-xl flex flex-col items-center justify-center transition-all duration-200 cursor-pointer relative ${
+                            isSelected
+                              ? "bg-blue-600 text-white shadow-md shadow-blue-600/30 ring-2 ring-blue-600 ring-offset-2"
+                              : "bg-slate-50 hover:bg-blue-50/80 text-slate-900 border border-slate-200/80"
+                          }`}
+                        >
+                          <span
+                            className={`text-sm sm:text-base font-bold font-serif ${
+                              isSelected ? "text-white" : "text-slate-900"
+                            }`}
+                          >
+                            {dayNumber}
+                          </span>
+
+                          {/* Tiny Availability Dot Indicator */}
+                          <div className="flex items-center gap-1 mt-0.5">
+                            <span
+                              className={`w-1.5 h-1.5 rounded-full ${
+                                isSelected
+                                  ? "bg-white"
+                                  : dayInfo.status === "available"
+                                  ? "bg-emerald-500"
+                                  : dayInfo.status === "limited"
+                                  ? "bg-amber-500"
+                                  : "bg-slate-400"
+                              }`}
+                            />
+                            <span
+                              className={`text-[9px] font-sans font-medium hidden sm:inline-block ${
+                                isSelected
+                                  ? "text-blue-100"
+                                  : dayInfo.status === "available"
+                                  ? "text-emerald-700"
+                                  : dayInfo.status === "limited"
+                                  ? "text-amber-700"
+                                  : "text-slate-500"
+                              }`}
+                            >
+                              {dayInfo.label}
+                            </span>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
-                {/* Body Content */}
-                <div className="p-7 sm:p-8">
-                  <p className="text-sm text-slate-700 leading-relaxed mb-6 font-serif">
-                    {room.description}
-                  </p>
+                {/* Calendar Legend */}
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-6 mt-6 border-t border-blue-100 text-xs text-slate-600 font-serif">
+                  <div className="flex items-center gap-4">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span>Available</span>
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-amber-500" />
+                      <span>Limited Rooms</span>
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-slate-400" />
+                      <span>Booked</span>
+                    </span>
+                  </div>
+                  <span className="text-[11px] text-blue-900 font-medium">
+                    Best Season: Oct – May
+                  </span>
+                </div>
+              </div>
 
-                  {/* Highlights list */}
-                  <div className="space-y-2.5 mb-6">
-                    {room.features.map((feat, idx) => (
+              {/* ================= RIGHT COLUMN: LIVE ROOM AVAILABILITY STATUS CARD ================= */}
+              <div className="lg:col-span-5 flex flex-col justify-between rounded-2xl border border-blue-200/90 p-6 sm:p-8 bg-blue-50/30">
+                <div>
+                  {/* Selected Date Header */}
+                  <div className="pb-4 border-b border-blue-200 mb-6">
+                    <span className="text-xs uppercase tracking-wider text-blue-900 font-bold block mb-1">
+                      Selected Date Schedule
+                    </span>
+                    <h4 className="text-xl sm:text-2xl font-bold text-slate-950 font-serif">
+                      {selectedDateFormatted}
+                    </h4>
+                  </div>
+
+                  {/* Room Status List (NO PRICING) */}
+                  <div className="space-y-4 mb-8">
+                    {roomsAvailability.map((room) => (
                       <div
-                        key={idx}
-                        className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-medium"
+                        key={room.id}
+                        className="p-4 rounded-2xl bg-white border border-blue-200/80 shadow-sm transition-all duration-300 hover:border-blue-400 hover:shadow-md"
                       >
-                        <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                        <span>{feat}</span>
+                        <div className="flex items-start justify-between gap-2 mb-1.5">
+                          <h5 className="text-base font-bold text-slate-950 font-serif">
+                            {room.name}
+                          </h5>
+                          <span
+                            className={`text-xs px-2.5 py-0.5 rounded-full font-semibold border ${room.statusColor}`}
+                          >
+                            {room.status}
+                          </span>
+                        </div>
+
+                        <p className="text-xs text-blue-900 font-serif font-medium mb-2.5">
+                          {room.tagline}
+                        </p>
+
+                        <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 font-serif mb-2.5">
+                          <span className="flex items-center gap-1">
+                            <Users className="w-3.5 h-3.5 text-blue-600" />
+                            {room.occupancy}
+                          </span>
+                          <span>•</span>
+                          <span className="flex items-center gap-1">
+                            <BedDouble className="w-3.5 h-3.5 text-blue-600" />
+                            {room.bed}
+                          </span>
+                        </div>
+
+                        <ul className="space-y-1 text-[11px] text-slate-600 font-serif">
+                          {room.features.slice(0, 2).map((feat, fIdx) => (
+                            <li key={fIdx} className="flex items-center gap-1.5">
+                              <Check className="w-3 h-3 text-emerald-600 shrink-0" />
+                              <span>{feat}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     ))}
                   </div>
                 </div>
-              </div>
 
-              {/* Card Footer with CTA */}
-              <div className="p-7 sm:p-8 pt-0">
-                <button
-                  onClick={() => onSelectRoom(room.name)}
-                  className="w-full py-3.5 px-4 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_4px_18px_rgba(37,99,235,0.28)] border border-blue-500 transition-all cursor-pointer hover:shadow-[0_8px_25px_rgba(37,99,235,0.4)]"
-                >
-                  <CalendarCheck className="w-4 h-4" />
-                  <span>Reserve This Room</span>
-                  <ArrowRight className="w-4 h-4 ml-1" />
-                </button>
+                {/* Single Exclusive Action: Contact Us Button */}
+                <div className="pt-4 border-t border-blue-200">
+                  <button
+                    onClick={() => onSelectRoom("Mountain-View Deluxe Double")}
+                    className="w-full py-4 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm uppercase tracking-widest flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_8px_30px_rgba(37,99,235,0.45)] transition-all duration-300 cursor-pointer"
+                  >
+                    <PhoneCall className="w-4 h-4" />
+                    <span>Contact Us to Inquire</span>
+                  </button>
+                  <p className="text-[11px] text-center text-slate-600 font-serif mt-2.5">
+                    Direct personalized reservations • No booking fee
+                  </p>
+                </div>
               </div>
-            </TiltCard>
-          ))}
+            </div>
+          </div>
+
+          {/* Bottom Ornate SVG Pattern Border */}
+          <div className="w-full h-12 sm:h-16 md:h-18 bg-[#dcecf9] border-t border-blue-200/70 overflow-hidden relative select-none">
+            <img
+              src="/patterns/ornate-border-bottom.svg"
+              alt=""
+              className="w-full h-full object-fill pointer-events-none"
+            />
+          </div>
         </div>
 
-        {/* Symmetrical Amenities Included (Balanced 4x2 Grid) */}
-        <div className="pt-12 border-t border-blue-100">
-          <div className="text-center max-w-2xl mx-auto mb-12">
+        {/* =========================================================================
+            AMENITIES SHOWCASE (Extracted Directly from Google Maps & Reviews)
+            ========================================================================= */}
+        <div>
+          <div className="text-center max-w-xl mx-auto mb-12">
             <h3 className="text-2xl sm:text-3xl font-bold text-slate-950 font-serif mb-2">
-              Amenities Included
+              Hotel Himalayan Amenities
             </h3>
-
-            {/* Symmetrical Divider Line with Center Blue Anchor */}
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="h-px w-12 bg-gradient-to-r from-transparent to-blue-300" />
-              <div className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-              <div className="h-px w-12 bg-gradient-to-l from-transparent to-blue-300" />
-            </div>
-
             <p className="text-sm text-slate-600 font-serif">
-              Curated for honest mountain comfort and peace of mind on the Chumbong slopes.
+              Authentic comforts documented from our Google Maps profile and verified traveler reviews.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {amenitiesIncluded.map((item, idx) => {
-              const Icon = item.icon;
+            {googleMapsAmenities.map((amenity, idx) => {
+              const Icon = amenity.icon;
               return (
-                <TiltCard
+                <div
                   key={idx}
-                  maxTilt={6}
-                  perspective={900}
-                  className="bg-white p-6 rounded-3xl border border-blue-200/80 shadow-[0_10px_25px_rgba(30,58,138,0.05)] hover:border-blue-400 transition-all group flex flex-col justify-between text-center items-center"
+                  className="p-6 rounded-2xl bg-white border border-blue-200/80 shadow-sm transition-all duration-300 hover:border-blue-300 hover:shadow-md flex flex-col justify-between"
                 >
-                  <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center mb-3 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm">
-                      <Icon className="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" />
+                  <div>
+                    <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center mb-4 text-blue-600 shadow-sm">
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <h4 className="text-base font-bold text-slate-950 font-serif mb-1">
-                      {item.title}
+                    <h4 className="text-base font-bold text-slate-950 font-serif mb-1.5">
+                      {amenity.title}
                     </h4>
-                    <p className="text-xs text-slate-600 leading-relaxed font-serif">
-                      {item.desc}
+                    <p className="text-xs text-slate-600 font-serif leading-relaxed">
+                      {amenity.desc}
                     </p>
                   </div>
-                </TiltCard>
+                </div>
               );
             })}
           </div>

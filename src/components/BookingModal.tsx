@@ -122,13 +122,13 @@ export default function BookingModal({
                 className="w-full p-3 rounded-2xl bg-blue-50/50 border border-blue-200 text-sm text-slate-950 font-medium focus:border-blue-500 focus:bg-white focus:outline-none cursor-pointer"
               >
                 <option value="Mountain-View Deluxe Double">
-                  Mountain-View Deluxe Double (₹2,499 / Night)
+                  Mountain-View Deluxe Double (Kanchenjunga Balcony)
                 </option>
                 <option value="Standard Valley-View Room">
-                  Standard Valley-View Room (₹1,999 / Night)
+                  Standard Valley-View Room (Terrace & Garden View)
                 </option>
                 <option value="Family Suite">
-                  Family Suite (₹3,499 / Night)
+                  Family Mountain Suite (Interconnected)
                 </option>
               </select>
             </div>

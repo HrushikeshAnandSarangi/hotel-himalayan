@@ -8,7 +8,6 @@ import SightseeingSection from "@/components/SightseeingSection";
 import ReviewsSection from "@/components/ReviewsSection";
 import LocationSection from "@/components/LocationSection";
 import RoomsSection from "@/components/RoomsSection";
-import BookingInquirySection from "@/components/BookingInquirySection";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
@@ -56,9 +55,6 @@ export default function Home() {
 
         {/* 6. Rooms & Amenities */}
         <RoomsSection onSelectRoom={handleOpenBookingWithRoom} />
-
-        {/* Direct Availability & Tariff Calculation */}
-        <BookingInquirySection initialRoom={selectedRoomForModal} />
 
         {/* 7. Frequently Asked Questions */}
         <FaqSection />

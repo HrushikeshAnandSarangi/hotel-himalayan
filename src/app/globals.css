@@ -367,6 +367,15 @@ h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
   );
 }
 
+@keyframes patternDrift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 680px 0;
+  }
+}
+
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
