@@ -36,7 +36,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
       id="hero"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative h-screen w-screen max-w-[100vw] overflow-hidden flex flex-col justify-end items-center bg-[#f0f7ff] select-none pb-10 sm:pb-14"
+      className="relative h-screen w-full overflow-hidden flex flex-col justify-end items-center bg-[#f0f7ff] select-none pb-12 sm:pb-16"
     >
       {/* =========================================================================
           FULL 100VH MOUNTAIN & CLOUD ANIMATION
@@ -189,20 +189,6 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               <stop offset="100%" stopColor="#080e1a" />
             </linearGradient>
 
-            {/* Natural Luminous Morning Valley Mist for natural contrast */}
-            <radialGradient
-              id="valleyMorningMist"
-              cx="0.5"
-              cy="0.72"
-              r="0.5"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
-              <stop offset="40%" stopColor="#f0f7ff" stopOpacity="0.6" />
-              <stop offset="75%" stopColor="#dbeafe" stopOpacity="0.25" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-            </radialGradient>
-
             {/* Volumetric Cloud Gradients */}
             <linearGradient
               id="cloudPureWhite"
@@ -244,22 +230,6 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               <stop offset="75%" stopColor="#f0f9ff" stopOpacity="0.45" />
               <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
             </linearGradient>
-
-            {/* Summit Specular Filter */}
-            <filter
-              id="iceGlowSpec"
-              x="-20%"
-              y="-20%"
-              width="140%"
-              height="140%"
-              colorInterpolationFilters="linearRGB"
-            >
-              <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
 
             {/* Cloud Soft Shadow */}
             <filter id="cloudShadowSoft" x="-20%" y="-20%" width="140%" height="140%">
@@ -377,7 +347,6 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             <polygon
               points="530,440 620,340 690,420 660,410 630,450 590,410 560,440"
               fill="url(#iceCapLit)"
-              filter="url(#iceGlowSpec)"
             />
             <polygon
               points="620,340 690,420 670,420 625,360"
@@ -444,19 +413,16 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             <polygon
               points="810,360 960,150 960,320 920,295 885,350 845,330"
               fill="url(#iceCapLit)"
-              className="animate-summit-glow"
             />
             <polygon
               points="960,150 1110,350 1070,340 1040,370 990,320 960,320"
               fill="url(#iceCapShade)"
             />
 
-            {/* Gleaming Razor Crest Tip with Ice Glow */}
+            {/* Gleaming Razor Crest Tip */}
             <polygon
               points="960,150 925,210 960,205 995,210"
               fill="#ffffff"
-              filter="url(#iceGlowSpec)"
-              className="animate-summit-glow"
             />
 
             {/* Cascading Snow Couloirs running down the blue rock face */}
@@ -494,7 +460,6 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             <polygon
               points="1250,380 1330,280 1410,370 1375,360 1340,400 1300,360"
               fill="url(#iceCapLit)"
-              filter="url(#iceGlowSpec)"
             />
             <polygon
               points="1330,280 1410,370 1385,370 1335,300"
@@ -505,7 +470,6 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             <polygon
               points="1590,440 1660,350 1720,420 1690,410 1660,450 1625,420"
               fill="url(#iceCapLit)"
-              filter="url(#iceGlowSpec)"
             />
             <polygon
               points="1660,350 1720,420 1700,420 1665,370"
@@ -595,31 +559,23 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             d="M0,1080 L0,880 Q320,830 720,870 T1480,840 T1920,880 L1920,1080 Z"
             fill="#0b192c"
           />
-          {/* Natural Morning Mist Amphitheater providing luminous contrast behind the text */}
-          <ellipse
-            cx="960"
-            cy="760"
-            rx="750"
-            ry="250"
-            fill="url(#valleyMorningMist)"
-          />
         </svg>
       </div>
 
       {/* =========================================================================
-          CONTENT: DIRECTLY ON SCENE (ZERO GLASS EFFECT, ZERO OVERLAY BOX)
+          CONTENT: DIRECTLY ON SCENE (ZERO GLASS EFFECT, ZERO OVERLAY BOX, ZERO GLOW)
           - Starts from mid-mountain level down
-          - Symmetrical typography, action buttons, and small subscript rating
-          - Natural contrast via luminous morning valley wash + crisp typographic halo
+          - Symmetrical typography: White fill outlined with solid black
+          - Action buttons and small subscript rating directly below
          ========================================================================= */}
       <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
-        {/* Exact Layout Hook Line */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-950 mb-4 max-w-3xl leading-[1.15] font-serif text-contrast-crisp">
+        {/* Exact Layout Hook Line: White fill with solid black outline */}
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 max-w-3xl leading-[1.15] font-serif text-outlined-black">
           Experience the Himalayas up close, right from your morning tea.
         </h1>
 
-        {/* Exact Layout Sub-Lines */}
-        <p className="text-base sm:text-lg md:text-xl text-slate-950 font-medium max-w-2xl mx-auto leading-relaxed mb-8 font-serif text-contrast-crisp">
+        {/* Exact Layout Sub-Lines: White fill with solid black outline */}
+        <p className="text-base sm:text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed mb-8 font-serif text-outlined-black-sub">
           Out on this ridge in Pelling, Kanchenjunga doesn&apos;t feel like a
           distant backdrop. She sits right in front of you, shedding her coat
           of morning mist and catching the first amber light while the rest of
@@ -651,21 +607,24 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             href={gmapsLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs text-slate-950 hover:text-blue-700 transition-colors cursor-pointer group font-serif text-contrast-crisp font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs transition-colors cursor-pointer group font-serif text-outlined-black-sub font-semibold"
           >
-            <div className="flex text-blue-600">
+            <div className="flex text-blue-400">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3 h-3 fill-blue-600 text-blue-600" />
+                <Star
+                  key={i}
+                  className="w-3.5 h-3.5 fill-blue-500 text-blue-500 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+                />
               ))}
             </div>
-            <span className="font-bold text-slate-950 ml-0.5">
+            <span className="font-bold ml-0.5">
               4.2 / 5.0 on Google Maps
             </span>
-            <span className="text-slate-500">•</span>
+            <span>•</span>
             <span className="group-hover:underline">
               100+ verified traveler reviews
             </span>
-            <ExternalLink className="w-2.5 h-2.5 text-blue-600 ml-0.5 opacity-80" />
+            <ExternalLink className="w-3 h-3 text-white ml-0.5" />
           </a>
         </div>
       </div>

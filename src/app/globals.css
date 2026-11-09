@@ -214,17 +214,6 @@ h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
   }
 }
 
-@keyframes summitGlowPulse {
-  0%, 100% {
-    opacity: 0.7;
-    filter: drop-shadow(0 0 10px rgba(186, 230, 253, 0.6));
-  }
-  50% {
-    opacity: 1;
-    filter: drop-shadow(0 0 24px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 15px rgba(56, 189, 248, 0.5));
-  }
-}
-
 @keyframes windowReflectionFloat {
   0%, 100% {
     opacity: 0.04;
@@ -256,22 +245,41 @@ h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
   animation: mistDriftFast 15s ease-in-out infinite;
 }
 
-.animate-summit-glow {
-  animation: summitGlowPulse 6s ease-in-out infinite;
-}
-
 .animate-window-reflection {
   animation: windowReflectionFloat 12s ease-in-out infinite;
 }
 
-/* High-Contrast Typographic Luminescence (Readable without any overlay box) */
-.text-contrast-crisp {
+/* Crisp Typographic Black Outline with White Fill (Zero Glow, Zero Blur) */
+.text-outlined-black {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-text-stroke: 1.5px #000000;
+  paint-order: stroke fill;
   text-shadow:
-    0 0 32px #ffffff,
-    0 0 20px #ffffff,
-    0 0 12px #ffffff,
-    0 1px 4px rgba(255, 255, 255, 1),
-    0 2px 8px rgba(255, 255, 255, 0.95);
+    -1.5px -1.5px 0 #000000,
+     1.5px -1.5px 0 #000000,
+    -1.5px  1.5px 0 #000000,
+     1.5px  1.5px 0 #000000,
+     0px -1.5px 0 #000000,
+     0px  1.5px 0 #000000,
+    -1.5px  0px 0 #000000,
+     1.5px  0px 0 #000000;
+}
+
+.text-outlined-black-sub {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-text-stroke: 1px #000000;
+  paint-order: stroke fill;
+  text-shadow:
+    -1px -1px 0 #000000,
+     1px -1px 0 #000000,
+    -1px  1px 0 #000000,
+     1px  1px 0 #000000,
+     0px -1px 0 #000000,
+     0px  1px 0 #000000,
+    -1px  0px 0 #000000,
+     1px  0px 0 #000000;
 }
 
 /* Reduced motion preference */
