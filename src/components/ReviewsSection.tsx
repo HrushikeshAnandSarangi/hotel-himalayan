@@ -86,25 +86,25 @@ export default function ReviewsSection() {
   const duplicatedReviews = [...reviews, ...reviews];
 
   return (
-    <section id="reviews" className="py-24 bg-white relative overflow-hidden select-none">
+    <section id="reviews" className="py-28 lg:py-32 bg-white relative overflow-hidden select-none">
       {/* Ethereal / Crystalline Ambient Glows (Taste Skill: Ethereal Divine Aura) */}
       <div className="absolute top-1/4 left-[-140px] w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-[-140px] w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-12 sm:mb-14">
         {/* =====================================================================
-            CLEAN CENTERED HEADER
+            CLEAN CENTERED HEADER (Strictly Enforced Standards)
            ===================================================================== */}
-        <div className="text-center max-w-3xl mx-auto">
+        <div className="text-center max-w-2xl mx-auto">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-950 tracking-tight mb-4 font-serif">
             What Guests Say
           </h2>
 
-          {/* Symmetrical Center Anchor Divider */}
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-px w-20 bg-gradient-to-r from-transparent to-blue-300" />
-            <div className="h-1.5 w-1.5 rounded-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.8)]" />
-            <div className="h-px w-20 bg-gradient-to-l from-transparent to-blue-300" />
+          {/* Symmetrical Ornamental Diamond Anchor */}
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="h-px w-20 bg-gradient-to-r from-transparent to-blue-400" />
+            <div className="w-2 h-2 rotate-45 bg-blue-700 shadow-sm" />
+            <div className="h-px w-20 bg-gradient-to-l from-transparent to-blue-400" />
           </div>
 
           <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-serif">

@@ -237,8 +237,19 @@ export default function RoomsSection({ onSelectRoom }: RoomsSectionProps) {
             />
           </div>
 
-          {/* Calendar + Status Card Body */}
-          <div className="p-6 sm:p-9 lg:p-12">
+          {/* Middle Body with Left and Right Ornate SVG Borders */}
+          <div className="relative flex flex-row items-stretch">
+            {/* Left Ornate SVG Border */}
+            <div className="w-3 sm:w-5 md:w-8 shrink-0 bg-[#dcecf9] border-r border-blue-200/70 overflow-hidden relative select-none">
+              <img
+                src="/patterns/ornate-border-left.svg"
+                alt=""
+                className="w-full h-full object-fill pointer-events-none"
+              />
+            </div>
+
+            {/* Calendar + Status Card Body */}
+            <div className="flex-1 p-4 sm:p-7 lg:p-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
               {/* ================= LEFT COLUMN: BIG INTERACTIVE CALENDAR ================= */}
               <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl border border-blue-200/80 p-5 sm:p-7 bg-white shadow-sm">
@@ -449,6 +460,16 @@ export default function RoomsSection({ onSelectRoom }: RoomsSectionProps) {
               </div>
             </div>
           </div>
+
+          {/* Right Ornate SVG Border */}
+          <div className="w-3 sm:w-5 md:w-8 shrink-0 bg-[#dcecf9] border-l border-blue-200/70 overflow-hidden relative select-none">
+            <img
+              src="/patterns/ornate-border-right.svg"
+              alt=""
+              className="w-full h-full object-fill pointer-events-none"
+            />
+          </div>
+        </div>
 
           {/* Bottom Ornate SVG Pattern Border */}
           <div className="w-full h-12 sm:h-16 md:h-18 bg-[#dcecf9] border-t border-blue-200/70 overflow-hidden relative select-none">

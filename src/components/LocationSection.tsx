@@ -90,8 +90,8 @@ export default function LocationSection() {
 
           {/* Middle Body with Left and Right Ornate SVG Borders */}
           <div className="relative flex flex-row items-stretch">
-            {/* Left Ornate SVG Border (Tablets & Desktops) */}
-            <div className="hidden md:block w-8 lg:w-10 xl:w-12 shrink-0 bg-[#dcecf9] border-r border-blue-200/70 overflow-hidden relative select-none">
+            {/* Left Ornate SVG Border (All viewports: mobile to desktop) */}
+            <div className="w-3.5 sm:w-6 md:w-8 lg:w-10 xl:w-12 shrink-0 bg-[#dcecf9] border-r border-blue-200/70 overflow-hidden relative select-none">
               <img
                 src="/patterns/ornate-border-left.svg"
                 alt="Ornate Blue Left Border"
@@ -100,7 +100,7 @@ export default function LocationSection() {
             </div>
 
             {/* Center Core: The Map & Location Hub */}
-            <div className="flex-1 p-6 sm:p-9 lg:p-11 bg-white">
+            <div className="flex-1 p-4 sm:p-7 lg:p-10 bg-white">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
                 {/* Left: The Interactive Google Map Window */}
                 <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl overflow-hidden border border-blue-200 shadow-sm bg-white min-h-[380px] sm:min-h-[440px] group transition-all duration-300 hover:border-blue-400">
@@ -196,8 +196,8 @@ export default function LocationSection() {
               </div>
             </div>
 
-            {/* Right Ornate SVG Border (Tablets & Desktops) */}
-            <div className="hidden md:block w-8 lg:w-10 xl:w-12 shrink-0 bg-[#dcecf9] border-l border-blue-200/70 overflow-hidden relative select-none">
+            {/* Right Ornate SVG Border (All viewports: mobile to desktop) */}
+            <div className="w-3.5 sm:w-6 md:w-8 lg:w-10 xl:w-12 shrink-0 bg-[#dcecf9] border-l border-blue-200/70 overflow-hidden relative select-none">
               <img
                 src="/patterns/ornate-border-right.svg"
                 alt="Ornate Blue Right Border"

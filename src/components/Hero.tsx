@@ -628,6 +628,9 @@ export default function Hero({ onOpenBooking }: HeroProps) {
           </a>
         </div>
       </div>
+
+      {/* Topographical Mountain Foothill Seam to About Section */}
+      <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-b from-transparent to-[#0b192c] pointer-events-none z-20" />
     </section>
   );
 }

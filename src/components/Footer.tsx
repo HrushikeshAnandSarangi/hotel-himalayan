@@ -173,8 +173,17 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Decorative Delicate Filigree Ribbon Accent */}
+        <div className="w-full flex justify-center mt-12 mb-6 overflow-hidden opacity-40 select-none pointer-events-none">
+          <img
+            src="/patterns/blue-filigree-border.png"
+            alt=""
+            className="h-6 w-auto object-contain"
+          />
+        </div>
+
         {/* Symmetrical Bottom Copyright */}
-        <div className="mt-14 pt-8 border-t border-blue-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-6 border-t border-blue-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-serif">
           <p>© 2026 Hotel Himalayan. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 text-blue-900 font-semibold">

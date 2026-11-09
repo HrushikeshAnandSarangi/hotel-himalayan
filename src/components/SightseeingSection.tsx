@@ -42,32 +42,45 @@ export default function SightseeingSection() {
 
   const handleScroll = (direction: "left" | "right") => {
     if (!carouselRef.current) return;
-    const scrollAmount = direction === "left" ? -360 : 360;
+    const scrollAmount = direction === "left" ? -380 : 380;
     carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
   return (
-    <section id="nearby" className="py-20 sm:py-24 bg-white relative overflow-hidden select-none">
+    <section id="nearby" className="py-28 lg:py-32 bg-white relative overflow-hidden select-none">
+      {/* Background Ambient Depth */}
+      <div className="absolute top-1/2 -left-48 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 -right-48 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* =====================================================================
-            CLEAN CENTERED TITLE (NO TAG, NO SUBTITLE, NO EXTRA CLUTTER)
+            EDITORIAL SECTION HEADER (Strictly Enforced Typography & Rhythm)
            ===================================================================== */}
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-950 tracking-tight font-serif">
+        <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-950 tracking-tight font-serif mb-4">
             Nearby Spots & Things to Do
           </h2>
+
+          {/* Symmetrical Ornamental Diamond Anchor */}
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="h-px w-20 bg-gradient-to-r from-transparent to-blue-400" />
+            <div className="w-2 h-2 rotate-45 bg-blue-700 shadow-sm" />
+            <div className="h-px w-20 bg-gradient-to-l from-transparent to-blue-400" />
+          </div>
+
+          <p className="text-base sm:text-lg text-slate-700 font-serif leading-relaxed">
+            Sacred lakes, 17th-century monastery ruins, and glass skywalks, all within a short scenic drive along the quiet ridge.
+          </p>
         </div>
 
         {/* =====================================================================
-            CIRCULAR CAROUSEL SLIDER (MATCHING ATTACHED IMAGE)
-            - Horizontal row of circular cards
-            - Left and right navigation chevron buttons
+            CIRCULAR CAROUSEL SLIDER (Smooth Spring Physics & Lottie Motion Easing)
            ===================================================================== */}
         <div className="relative flex items-center justify-center">
           {/* Left Arrow Button */}
           <button
             onClick={() => handleScroll("left")}
-            className="absolute left-0 sm:-left-3 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/95 hover:bg-white text-blue-900 shadow-[0_8px_25px_rgba(30,58,138,0.18)] border border-blue-200/90 hover:border-blue-500 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer"
+            className="absolute left-0 sm:-left-3 lg:-left-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white text-blue-900 shadow-[0_8px_25px_rgba(30,58,138,0.18)] border border-blue-200/90 hover:border-blue-500 hover:shadow-[0_12px_32px_rgba(37,99,235,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] flex items-center justify-center cursor-pointer"
             aria-label="Scroll nearby spots left"
           >
             <ChevronLeft className="w-6 h-6 text-blue-900" />
@@ -85,7 +98,7 @@ export default function SightseeingSection() {
             {spots.map((spot, idx) => (
               <div
                 key={idx}
-                className="w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full aspect-square shrink-0 overflow-hidden relative border-2 border-blue-200/90 hover:border-blue-600 shadow-[0_16px_40px_rgba(30,58,138,0.14)] hover:shadow-[0_24px_55px_rgba(37,99,235,0.25)] hover:scale-105 transition-all duration-500 group cursor-pointer snap-center flex items-center justify-center text-center"
+                className="w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full aspect-square shrink-0 overflow-hidden relative border-2 border-blue-200/90 hover:border-blue-600 shadow-[0_16px_40px_rgba(30,58,138,0.14)] hover:shadow-[0_24px_55px_rgba(37,99,235,0.28)] hover:scale-105 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group cursor-pointer snap-center flex items-center justify-center text-center"
               >
                 {/* Full-bleed Photo */}
                 <Image
@@ -102,7 +115,7 @@ export default function SightseeingSection() {
                 {/* Circular Content Overlay */}
                 <div className="relative z-10 px-5 sm:px-6 flex flex-col items-center justify-center text-center max-w-[85%]">
                   {/* Time Distance Badge */}
-                  <div className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-bold text-blue-300 mb-2 font-serif">
+                  <div className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-bold text-blue-300 mb-2 font-mono">
                     <Clock className="w-3 h-3 text-blue-400" />
                     <span>{spot.time}</span>
                   </div>
@@ -113,7 +126,7 @@ export default function SightseeingSection() {
                   </h3>
 
                   {/* Spot Description */}
-                  <p className="text-[11px] sm:text-xs text-slate-200 font-serif leading-relaxed line-clamp-3 drop-shadow">
+                  <p className="text-xs sm:text-sm text-slate-200 font-serif leading-relaxed line-clamp-3">
                     {spot.desc}
                   </p>
                 </div>
@@ -124,7 +137,7 @@ export default function SightseeingSection() {
           {/* Right Arrow Button */}
           <button
             onClick={() => handleScroll("right")}
-            className="absolute right-0 sm:-right-3 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/95 hover:bg-white text-blue-900 shadow-[0_8px_25px_rgba(30,58,138,0.18)] border border-blue-200/90 hover:border-blue-500 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer"
+            className="absolute right-0 sm:-right-3 lg:-right-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white text-blue-900 shadow-[0_8px_25px_rgba(30,58,138,0.18)] border border-blue-200/90 hover:border-blue-500 hover:shadow-[0_12px_32px_rgba(37,99,235,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] flex items-center justify-center cursor-pointer"
             aria-label="Scroll nearby spots right"
           >
             <ChevronRight className="w-6 h-6 text-blue-900" />
