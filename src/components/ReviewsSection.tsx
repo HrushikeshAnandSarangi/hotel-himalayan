@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Star,
   Quote,
@@ -8,13 +8,9 @@ import {
   ExternalLink,
   ShieldCheck,
   CheckCircle2,
-  Pause,
-  Play,
 } from "lucide-react";
 
 export default function ReviewsSection() {
-  const [isPaused, setIsPaused] = useState(false);
-
   const gmapsLink =
     "https://www.google.com/maps/place/Hotel+Himalayan/@27.3053852,88.2382925,17z/data=!4m9!3m8!1s0x39e6867ddebfa319:0xb0fe9695a65fb77d!5m2!4m1!1i2!8m2!3d27.305437!4d88.241066!16s%2Fg%2F1ptx4vh9y";
 
@@ -23,7 +19,6 @@ export default function ReviewsSection() {
     {
       id: "ananya-d",
       author: "Ananya D.",
-      initials: "AD",
       location: "Kolkata, West Bengal",
       rating: 5,
       body: "Waking up to Kanchenjunga unobstructed from our room was unreal. The food was warm, fresh, and tasted like home cooking. Highly recommend staying here if you want peace away from noisy town centers.",
@@ -32,7 +27,6 @@ export default function ReviewsSection() {
     {
       id: "marcus-t",
       author: "Marcus T.",
-      initials: "MT",
       location: "Solo Traveler",
       rating: 5,
       body: "Simple, clean rooms and outstanding hospitality. The host helped us sort out local shared cabs and gave great tips on trail walks around Chumbong. Sitting on the terrace at sunset is unbeatable.",
@@ -41,7 +35,6 @@ export default function ReviewsSection() {
     {
       id: "rohit-shreya",
       author: "Rohit & Shreya",
-      initials: "RS",
       location: "Bangalore, Karnataka",
       rating: 5,
       body: "Best balcony views in Pelling, hands down. You can literally watch the mountain turn gold while wrapped in your duvet.",
@@ -50,7 +43,6 @@ export default function ReviewsSection() {
     {
       id: "prateek-s",
       author: "Prateek Sengupta",
-      initials: "PS",
       location: "Siliguri, West Bengal",
       rating: 5,
       body: "One of the best budget-friendly mountain stays in West Sikkim with front-row views of Mt Kanchenjunga. Peaceful location, excellent hot tea, and very courteous hosts.",
@@ -59,7 +51,6 @@ export default function ReviewsSection() {
     {
       id: "debanjan-c",
       author: "Debanjan Chakraborty",
-      initials: "DC",
       location: "Kolkata",
       rating: 5,
       body: "The sunrise over the snow peaks directly from the rooftop terrace was breathtaking. Quiet hill stay, away from town hustle. Home-style freshly cooked food.",
@@ -68,7 +59,6 @@ export default function ReviewsSection() {
     {
       id: "sunil-m",
       author: "Sunil Mehra",
-      initials: "SM",
       location: "Pune, Maharashtra",
       rating: 5,
       body: "Unmatched valley stillness and direct sightlines to the snowline. The host arranged our cabs for Khecheopalri Lake and the Skywalk with complete ease.",
@@ -77,7 +67,6 @@ export default function ReviewsSection() {
     {
       id: "pooja-a",
       author: "Pooja & Abhinav",
-      initials: "PA",
       location: "Mumbai",
       rating: 5,
       body: "Cozy rooms with clear mountain vistas. Steaming tea on the balcony at 6 AM watching the golden peak is an unforgettable core memory.",
@@ -86,7 +75,6 @@ export default function ReviewsSection() {
     {
       id: "tenzing-w",
       author: "Tenzing Wangchuk",
-      initials: "TW",
       location: "Gangtok, Sikkim",
       rating: 5,
       body: "Authentic mountain hospitality in Chumbong. Clean beds, steaming hot geyser water in cold weather, and very tasty local Sikkimese meals.",
@@ -180,17 +168,11 @@ export default function ReviewsSection() {
       {/* =====================================================================
           INFINITE REVIEWS SLIDER (TASTE SKILL: ETHEREAL CONTINUOUS FLOW)
           - Hardware accelerated seamless horizontal loop
-          - Pauses on hover for comfortable reading
+          - Automatically pauses on hover for comfortable reading
           - Fade mask on edges for soft crystalline fade
          ===================================================================== */}
       <div className="w-full relative fade-mask-x overflow-hidden py-4">
-        <div
-          className={`animate-infinite-scroll flex gap-6 sm:gap-7 ${
-            isPaused ? "[animation-play-state:paused]" : ""
-          }`}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
+        <div className="animate-infinite-scroll flex gap-6 sm:gap-7">
           {duplicatedReviews.map((rev, idx) => (
             <div
               key={`${rev.id}-${idx}`}
@@ -200,11 +182,28 @@ export default function ReviewsSection() {
               <Quote className="w-8 h-8 text-blue-100 absolute top-6 right-6 pointer-events-none transition-colors group-hover:text-blue-200/60" />
 
               <div>
-                {/* Reviewer Header */}
+                {/* Reviewer Header: Official Google Review Logo + Author Info */}
                 <div className="flex items-center gap-3.5 mb-4">
-                  {/* Monogram Avatar Circle */}
-                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 text-white font-bold font-serif text-sm flex items-center justify-center shadow-md shrink-0">
-                    {rev.initials}
+                  {/* Official Google Review Logo */}
+                  <div className="w-10 h-10 rounded-2xl bg-white border border-blue-200/90 shadow-[0_4px_12px_rgba(30,58,138,0.08)] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform p-2">
+                    <svg className="w-full h-full" viewBox="0 0 24 24">
+                      <path
+                        fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"
+                      />
+                      <path
+                        fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.27 21.42 7.34 24 12 24z"
+                      />
+                      <path
+                        fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.17 0 10.03 0 12s.45 3.83 1.25 5.42l4.03-3.15z"
+                      />
+                      <path
+                        fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.27 2.58 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
+                      />
+                    </svg>
                   </div>
 
                   <div>
@@ -267,38 +266,18 @@ export default function ReviewsSection() {
       </div>
 
       {/* =====================================================================
-          CONTROLS & DIRECT GOOGLE MAPS LISTING CTA
+          SYMMETRICAL FOOTER CTA: DIRECT GOOGLE MAPS LISTING
          ===================================================================== */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 text-center flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10 font-serif">
-        {/* Play/Pause Button */}
-        <button
-          onClick={() => setIsPaused(!isPaused)}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
-          title={isPaused ? "Resume auto-scroll" : "Pause auto-scroll"}
-        >
-          {isPaused ? (
-            <>
-              <Play className="w-3.5 h-3.5 text-blue-600" />
-              <span>Resume Infinite Scroll</span>
-            </>
-          ) : (
-            <>
-              <Pause className="w-3.5 h-3.5 text-blue-600" />
-              <span>Pause on Hover</span>
-            </>
-          )}
-        </button>
-
-        {/* Read All Reviews Button */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 text-center flex items-center justify-center relative z-10 font-serif">
         <a
           href={gmapsLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs uppercase tracking-wider shadow-[0_6px_20px_rgba(37,99,235,0.3)] border border-blue-500 transition-all hover:shadow-[0_8px_25px_rgba(37,99,235,0.45)] active:scale-95"
+          className="inline-flex items-center gap-2.5 px-7 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm uppercase tracking-wider shadow-[0_6px_20px_rgba(37,99,235,0.3)] border border-blue-500 transition-all hover:shadow-[0_8px_25px_rgba(37,99,235,0.45)] active:scale-95"
         >
-          <MapPin className="w-3.5 h-3.5 text-blue-200" />
-          <span>Read All 100+ Reviews on Google Maps</span>
-          <ExternalLink className="w-3 h-3 text-blue-200" />
+          <MapPin className="w-4 h-4 text-blue-200" />
+          <span>Read All 100+ Reviews on Google Maps Listing</span>
+          <ExternalLink className="w-3.5 h-3.5 text-blue-200" />
         </a>
       </div>
     </section>
