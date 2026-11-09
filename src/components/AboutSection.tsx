@@ -185,7 +185,7 @@ export default function AboutSection() {
         </div>
 
         {/* Symmetrical 4-Pillar Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-14">
           {highlights.map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -209,6 +209,33 @@ export default function AboutSection() {
               </TiltCard>
             );
           })}
+        </div>
+
+        {/* Symmetrical Ridge Sightline Schedule Banner */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-blue-50/70 border border-blue-200/90 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_10px_30px_rgba(30,58,138,0.05)]">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-white border border-blue-200 text-blue-600 flex items-center justify-center shrink-0 shadow-sm">
+              <Sun className="w-6 h-6" />
+            </div>
+            <div>
+              <span className="text-[11px] uppercase tracking-wider text-blue-900 font-bold block mb-0.5">
+                Optimal Mountain Sightline Window
+              </span>
+              <h4 className="text-lg sm:text-xl font-bold text-slate-950 font-serif">
+                Golden Sunrise over Kanchenjunga: 05:30 AM – 07:15 AM
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-600 font-serif mt-1 max-w-2xl">
+                Peak visibility is at its clearest during crisp morning hours from October to May, unobstructed right from our observation deck and private room balconies.
+              </p>
+            </div>
+          </div>
+          <a
+            href="#rooms"
+            className="shrink-0 px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-2 cursor-pointer active:scale-95"
+          >
+            <MountainSnow className="w-4 h-4" />
+            <span>View Mountain Rooms</span>
+          </a>
         </div>
       </div>
     </section>
