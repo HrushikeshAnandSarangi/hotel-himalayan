@@ -156,67 +156,112 @@ h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
   animation: pulse-subtle-glow 8s ease-in-out infinite;
 }
 
-/* SVG Mountain Motion Keyframes (Motion-Design & SVG-Creator Principles) */
-@keyframes mistDriftSlow {
+/* SVG Mountain & Cloud Motion Keyframes (Motion-Design & SVG-Creator Principles) */
+@keyframes cloudDriftSlow {
   0% {
-    transform: translateX(-4%) translateY(0px);
+    transform: translateX(-15%);
   }
   50% {
-    transform: translateX(4%) translateY(-6px);
+    transform: translateX(15%);
   }
   100% {
-    transform: translateX(-4%) translateY(0px);
+    transform: translateX(-15%);
+  }
+}
+
+@keyframes cloudDriftContinuous {
+  0% {
+    transform: translateX(-30%);
+  }
+  100% {
+    transform: translateX(30%);
+  }
+}
+
+@keyframes cloudDriftOpposite {
+  0% {
+    transform: translateX(20%);
+  }
+  50% {
+    transform: translateX(-20%);
+  }
+  100% {
+    transform: translateX(20%);
+  }
+}
+
+@keyframes mistDriftSlow {
+  0% {
+    transform: translateX(-6%) translateY(0px);
+  }
+  50% {
+    transform: translateX(6%) translateY(-5px);
+  }
+  100% {
+    transform: translateX(-6%) translateY(0px);
   }
 }
 
 @keyframes mistDriftFast {
   0% {
-    transform: translateX(5%) translateY(-4px);
+    transform: translateX(7%) translateY(-4px);
   }
   50% {
-    transform: translateX(-5%) translateY(4px);
+    transform: translateX(-7%) translateY(4px);
   }
   100% {
-    transform: translateX(5%) translateY(-4px);
+    transform: translateX(7%) translateY(-4px);
   }
 }
 
 @keyframes summitGlowPulse {
   0%, 100% {
-    opacity: 0.55;
-    filter: drop-shadow(0 0 12px rgba(147, 197, 253, 0.45));
+    opacity: 0.7;
+    filter: drop-shadow(0 0 10px rgba(186, 230, 253, 0.6));
   }
   50% {
-    opacity: 0.95;
-    filter: drop-shadow(0 0 25px rgba(191, 219, 254, 0.85));
+    opacity: 1;
+    filter: drop-shadow(0 0 24px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 15px rgba(56, 189, 248, 0.5));
   }
 }
 
-@keyframes mountainEnter {
-  0% {
-    opacity: 0;
-    transform: translateY(35px);
+@keyframes windowReflectionFloat {
+  0%, 100% {
+    opacity: 0.04;
+    transform: translateX(0px);
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+  50% {
+    opacity: 0.07;
+    transform: translateX(8px);
   }
+}
+
+.animate-cloud-slow {
+  animation: cloudDriftSlow 38s ease-in-out infinite;
+}
+
+.animate-cloud-continuous {
+  animation: cloudDriftContinuous 55s linear infinite alternate;
+}
+
+.animate-cloud-opposite {
+  animation: cloudDriftOpposite 42s ease-in-out infinite;
 }
 
 .animate-mist-slow {
-  animation: mistDriftSlow 24s ease-in-out infinite;
+  animation: mistDriftSlow 22s ease-in-out infinite;
 }
 
 .animate-mist-fast {
-  animation: mistDriftFast 16s ease-in-out infinite;
+  animation: mistDriftFast 15s ease-in-out infinite;
 }
 
 .animate-summit-glow {
-  animation: summitGlowPulse 7s ease-in-out infinite;
+  animation: summitGlowPulse 6s ease-in-out infinite;
 }
 
-.animate-mountain-enter {
-  animation: mountainEnter 1.4s cubic-bezier(0.05, 0.7, 0.1, 1) forwards;
+.animate-window-reflection {
+  animation: windowReflectionFloat 12s ease-in-out infinite;
 }
 
 /* Reduced motion preference */
