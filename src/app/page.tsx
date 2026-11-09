@@ -11,7 +11,6 @@ import RoomsSection from "@/components/RoomsSection";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
-import CloudDivider from "@/components/CloudDivider";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,8 +41,8 @@ export default function Home() {
           onOpenBookingWithRoom={handleOpenBookingWithRoom}
         />
 
-        {/* Generous White Space & Cloud Transition After Hero Section */}
-        <div className="w-full h-12 sm:h-16 lg:h-20 bg-white" />
+        {/* Generous White Space After Hero Section */}
+        <div className="w-full h-14 sm:h-20 lg:h-28 bg-white" />
 
         {/* 2. About the Hotel */}
         <AboutSection />
@@ -54,14 +53,8 @@ export default function Home() {
         {/* 4. What Guests Say */}
         <ReviewsSection />
 
-        {/* SVG Cloud Transition into Location Section */}
-        <CloudDivider fillColor="#f8fbff" accentColor="#e2effc" />
-
         {/* 5. How to Reach Us */}
         <LocationSection />
-
-        {/* SVG Cloud Transition into Rooms Section */}
-        <CloudDivider fillColor="#ffffff" accentColor="#e2effc" />
 
         {/* 6. Rooms & Amenities */}
         <RoomsSection onSelectRoom={handleOpenBookingWithRoom} />
