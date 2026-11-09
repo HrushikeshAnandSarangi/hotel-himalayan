@@ -244,21 +244,118 @@ export default function Hero({ onOpenBooking }: HeroProps) {
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
+
+            {/* =========================================================
+                DISNEY STYLE ANIMATION DEFS (Gradients & Filters)
+               ========================================================= */}
+            {/* Disney Golden Sunbeams Gradient */}
+            <linearGradient
+              id="sunbeamGrad"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#fef08a" stopOpacity="0.45" />
+              <stop offset="30%" stopColor="#fde047" stopOpacity="0.22" />
+              <stop offset="65%" stopColor="#fed7aa" stopOpacity="0.08" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+            </linearGradient>
+
+            {/* Disney Alpenglow Summit Kiss */}
+            <linearGradient
+              id="alpenglowGold"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#fef9c3" stopOpacity="0.95" />
+              <stop offset="40%" stopColor="#fde047" stopOpacity="0.75" />
+              <stop offset="100%" stopColor="#fed7aa" stopOpacity="0.2" />
+            </linearGradient>
+
+            {/* Summit Sparkle Radial Halo */}
+            <radialGradient
+              id="summitSparkle"
+              cx="50%"
+              cy="50%"
+              r="50%"
+              colorInterpolation="linearRGB"
+            >
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+              <stop offset="40%" stopColor="#fef08a" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+            </radialGradient>
+
+            {/* Light Mote Glow Filter */}
+            <filter id="moteGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
           </defs>
 
           {/* 1. Full 100vh Sky Canvas */}
           <rect width="1920" height="1080" fill="url(#fullSkyBlue)" />
 
-          {/* 2. Morning Sun Glow behind the Central Kanchenjunga Summit */}
-          <circle cx="960" cy="220" r="420" fill="url(#sunAura)" />
+          {/* 2. Morning Sun Glow behind the Central Kanchenjunga Summit (Disney Sun Breathing) */}
+          <g className="animate-disney-sun">
+            <circle cx="960" cy="220" r="440" fill="url(#sunAura)" />
+            <circle cx="960" cy="220" r="280" fill="url(#sunAura)" opacity="0.65" />
+          </g>
+
+          {/* 3. Morning God-Rays / Sunbeams Breaking Past the Peaks (Classic Disney Golden Hour) */}
+          <g className="animate-disney-godrays pointer-events-none select-none">
+            <polygon
+              points="960,220 380,890 540,930"
+              fill="url(#sunbeamGrad)"
+            />
+            <polygon
+              points="960,220 740,960 900,980"
+              fill="url(#sunbeamGrad)"
+            />
+            <polygon
+              points="960,220 1060,980 1240,950"
+              fill="url(#sunbeamGrad)"
+            />
+            <polygon
+              points="960,220 1420,890 1590,850"
+              fill="url(#sunbeamGrad)"
+            />
+          </g>
+
+          {/* 4. Soaring Himalayan Mountain Raptors (Disney Curved Spline Thermal Flight) */}
+          <g className="animate-disney-bird-1 pointer-events-none select-none">
+            <g className="animate-disney-bird-glide">
+              <path
+                d="M0,0 C14,-9 32,-15 48,-11 C35,-2 24,7 18,15 C13,19 9,15 4,4 C-2,15 -6,19 -11,15 C-17,7 -28,-2 -41,-11 C-25,-15 -7,-9 0,0 Z"
+                fill="#0b1b3d"
+                opacity="0.92"
+              />
+            </g>
+          </g>
+          <g className="animate-disney-bird-2 pointer-events-none select-none">
+            <g className="animate-disney-bird-glide">
+              <path
+                d="M0,0 C12,-8 28,-13 42,-10 C30,-2 21,6 16,13 C11,16 8,13 3,3 C-2,13 -5,16 -10,13 C-15,6 -24,-2 -36,-10 C-22,-13 -6,-8 0,0 Z"
+                fill="#12254f"
+                opacity="0.78"
+              />
+            </g>
+          </g>
 
           {/* =========================================================
-              3. HIGH-ALTITUDE MOVING CLOUDS (DRIFTING SLOW)
+              5. HIGH-ALTITUDE MOVING CLOUDS (DISNEY ARC DRIFT WITH SQUASH & STRETCH)
              ========================================================= */}
-          <g className="animate-cloud-slow opacity-85">
+          <g className="animate-disney-cloud-slow opacity-90">
             <g filter="url(#cloudShadowSoft)" transform="translate(180, 50)">
               <ellipse cx="260" cy="90" rx="145" ry="44" fill="url(#cloudPureWhite)" />
-              <ellipse cx="340" cy="75" rx="115" ry="54" fill="url(#cloudPureWhite)" />
+              <ellipse cx="340" cy="75" rx="115" ry="54" fill="url(#cloudAmberTouch)" />
               <ellipse cx="190" cy="95" rx="95" ry="38" fill="url(#cloudPureWhite)" />
               <ellipse cx="420" cy="98" rx="85" ry="34" fill="url(#cloudPureWhite)" />
             </g>
@@ -267,31 +364,31 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               <ellipse cx="240" cy="85" rx="155" ry="46" fill="url(#cloudAmberTouch)" />
               <ellipse cx="320" cy="68" rx="125" ry="56" fill="url(#cloudPureWhite)" />
               <ellipse cx="160" cy="90" rx="98" ry="40" fill="url(#cloudPureWhite)" />
-              <ellipse cx="410" cy="94" rx="88" ry="34" fill="url(#cloudPureWhite)" />
+              <ellipse cx="410" cy="94" rx="88" ry="34" fill="url(#cloudAmberTouch)" />
             </g>
           </g>
 
           {/* =========================================================
-              4. CONTINUOUS VOLUMETRIC CUMULUS CLOUDS (DRIFTING RIGHT)
+              6. CONTINUOUS VOLUMETRIC CUMULUS CLOUDS (DISNEY WAVE ARC WITH ORGANIC BILLOW)
              ========================================================= */}
-          <g className="animate-cloud-continuous opacity-90">
-            <g filter="url(#cloudShadowSoft)" transform="translate(680, 120)">
-              <ellipse cx="120" cy="70" rx="90" ry="40" fill="url(#cloudPureWhite)" />
-              <ellipse cx="185" cy="55" rx="100" ry="48" fill="url(#cloudAmberTouch)" />
-              <ellipse cx="255" cy="62" rx="85" ry="42" fill="url(#cloudPureWhite)" />
-              <ellipse cx="320" cy="72" rx="70" ry="34" fill="url(#cloudPureWhite)" />
+          <g className="animate-disney-cloud-continuous opacity-95">
+            <g filter="url(#cloudShadowSoft)" transform="translate(680, 115)">
+              <ellipse cx="120" cy="70" rx="95" ry="42" fill="url(#cloudPureWhite)" />
+              <ellipse cx="185" cy="52" rx="105" ry="50" fill="url(#cloudAmberTouch)" />
+              <ellipse cx="255" cy="60" rx="88" ry="44" fill="url(#cloudPureWhite)" />
+              <ellipse cx="320" cy="70" rx="75" ry="36" fill="url(#cloudPureWhite)" />
             </g>
 
-            <g filter="url(#cloudShadowSoft)" transform="translate(-70, 140)">
-              <ellipse cx="160" cy="65" rx="115" ry="44" fill="url(#cloudPureWhite)" />
-              <ellipse cx="245" cy="50" rx="130" ry="54" fill="url(#cloudPureWhite)" />
-              <ellipse cx="340" cy="62" rx="100" ry="42" fill="url(#cloudAmberTouch)" />
+            <g filter="url(#cloudShadowSoft)" transform="translate(-70, 135)">
+              <ellipse cx="160" cy="65" rx="118" ry="46" fill="url(#cloudPureWhite)" />
+              <ellipse cx="245" cy="48" rx="135" ry="56" fill="url(#cloudAmberTouch)" />
+              <ellipse cx="340" cy="60" rx="105" ry="44" fill="url(#cloudAmberTouch)" />
             </g>
 
-            <g filter="url(#cloudShadowSoft)" transform="translate(1440, 130)">
-              <ellipse cx="140" cy="60" rx="105" ry="40" fill="url(#cloudPureWhite)" />
-              <ellipse cx="215" cy="48" rx="115" ry="50" fill="url(#cloudPureWhite)" />
-              <ellipse cx="295" cy="62" rx="90" ry="38" fill="url(#cloudAmberTouch)" />
+            <g filter="url(#cloudShadowSoft)" transform="translate(1440, 125)">
+              <ellipse cx="140" cy="58" rx="110" ry="42" fill="url(#cloudPureWhite)" />
+              <ellipse cx="215" cy="46" rx="120" ry="52" fill="url(#cloudPureWhite)" />
+              <ellipse cx="295" cy="60" rx="95" ry="40" fill="url(#cloudAmberTouch)" />
             </g>
           </g>
 
@@ -426,6 +523,15 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               fill="#ffffff"
             />
 
+            {/* Disney Golden Dawn Alpenglow Aura on Kanchenjunga Summit */}
+            <g className="animate-disney-alpenglow">
+              <polygon
+                points="960,150 920,225 960,220 995,230"
+                fill="url(#alpenglowGold)"
+              />
+              <circle cx="960" cy="150" r="14" fill="url(#summitSparkle)" />
+            </g>
+
             {/* Cascading Snow Couloirs running down the blue rock face */}
             <polygon
               points="910,320 930,410 915,500 895,420"
@@ -479,9 +585,37 @@ export default function Hero({ onOpenBooking }: HeroProps) {
           </g>
 
           {/* =========================================================
-              6. ATMOSPHERIC MID-PASS MIST DRIFT (ANIMATED LAYER)
+              DISNEY GOLDEN DAWN LIGHT MOTES (FLOATING SUN DUST IN MOUNTAIN PASSES)
+              - Classic Disney ambient particle magic
              ========================================================= */}
-          <g className="animate-mist-slow opacity-80">
+          <g className="pointer-events-none select-none">
+            <g className="animate-disney-mote-1" transform="translate(910, 270)">
+              <circle cx="0" cy="0" r="3.5" fill="#fef08a" opacity="0.85" filter="url(#moteGlow)" />
+            </g>
+            <g className="animate-disney-mote-2" transform="translate(1030, 230)">
+              <circle cx="0" cy="0" r="2.8" fill="#fef9c3" opacity="0.9" filter="url(#moteGlow)" />
+            </g>
+            <g className="animate-disney-mote-3" transform="translate(980, 350)">
+              <circle cx="0" cy="0" r="3.2" fill="#fde047" opacity="0.8" filter="url(#moteGlow)" />
+            </g>
+            <g className="animate-disney-mote-1" transform="translate(830, 310)">
+              <circle cx="0" cy="0" r="2.5" fill="#fef08a" opacity="0.75" filter="url(#moteGlow)" />
+            </g>
+            <g className="animate-disney-mote-2" transform="translate(1140, 300)">
+              <circle cx="0" cy="0" r="3" fill="#fde68a" opacity="0.85" filter="url(#moteGlow)" />
+            </g>
+            <g className="animate-disney-mote-3" transform="translate(680, 420)">
+              <circle cx="0" cy="0" r="2.5" fill="#fef08a" opacity="0.7" filter="url(#moteGlow)" />
+            </g>
+            <g className="animate-disney-mote-1" transform="translate(1260, 410)">
+              <circle cx="0" cy="0" r="2.8" fill="#fef9c3" opacity="0.8" filter="url(#moteGlow)" />
+            </g>
+          </g>
+
+          {/* =========================================================
+              7. ATMOSPHERIC MID-PASS MIST DRIFT (DISNEY WAVE RIVER)
+             ========================================================= */}
+          <g className="animate-disney-mist-wave opacity-80">
             <path
               d="M-200,560 Q260,510 740,550 T1680,520 T2200,570 L2200,700 L-200,700 Z"
               fill="url(#mistWaveGrad)"
@@ -489,7 +623,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
           </g>
 
           {/* =========================================================
-              7. MIDGROUND SINGALILA & PELLING RIDGES (SHADES OF BLUE)
+              8. MIDGROUND SINGALILA & PELLING RIDGES (SHADES OF BLUE)
               - Parallax factor (0.05x)
               - Rugged continuous mountain ridgelines
              ========================================================= */}
@@ -528,9 +662,9 @@ export default function Hero({ onOpenBooking }: HeroProps) {
           </g>
 
           {/* =========================================================
-              8. LOW DRIFTING VALLEY CLOUDS (ANIMATED LAYER)
+              9. LOW DRIFTING VALLEY CLOUDS (DISNEY COUNTER-MOTION)
              ========================================================= */}
-          <g className="animate-cloud-opposite opacity-85">
+          <g className="animate-disney-cloud-opposite opacity-85">
             <path
               d="M-300,680 Q240,630 740,670 T1660,640 T2280,690 L2280,820 L-300,820 Z"
               fill="url(#mistWaveGrad)"

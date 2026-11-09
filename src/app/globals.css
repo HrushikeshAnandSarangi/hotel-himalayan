@@ -156,93 +156,272 @@ h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
   animation: pulse-subtle-glow 8s ease-in-out infinite;
 }
 
-/* SVG Mountain & Cloud Motion Keyframes (Motion-Design & SVG-Creator Principles) */
-@keyframes cloudDriftSlow {
-  0% {
-    transform: translateX(-15%);
-  }
-  50% {
-    transform: translateX(15%);
-  }
-  100% {
-    transform: translateX(-15%);
-  }
-}
+/* =========================================================================
+   DISNEY-STYLE SVG MOUNTAIN & ATMOSPHERE ANIMATION SYSTEM
+   Applying Disney's 12 Principles adapted for UI (motion-design & svg-creator)
+   - Principle 1: Squash & Stretch (Organic cloud volume breathing)
+   - Principle 5: Overlapping Action & Follow-Through (Multiplane speeds)
+   - Principle 6: Slow In and Slow Out (Sine & cubic-bezier easing)
+   - Principle 7: Arcs (Natural curved flight and drift trajectories)
+   - Principle 8: Secondary Action (Wing glide, light shimmer, shadow sync)
+   - Principle 12: Appeal (Cinematic Disney golden hour atmosphere)
+   ========================================================================= */
 
-@keyframes cloudDriftContinuous {
-  0% {
-    transform: translateX(-30%);
-  }
-  100% {
-    transform: translateX(30%);
-  }
-}
-
-@keyframes cloudDriftOpposite {
-  0% {
-    transform: translateX(20%);
-  }
-  50% {
-    transform: translateX(-20%);
-  }
-  100% {
-    transform: translateX(20%);
-  }
-}
-
-@keyframes mistDriftSlow {
-  0% {
-    transform: translateX(-6%) translateY(0px);
-  }
-  50% {
-    transform: translateX(6%) translateY(-5px);
-  }
-  100% {
-    transform: translateX(-6%) translateY(0px);
-  }
-}
-
-@keyframes mistDriftFast {
-  0% {
-    transform: translateX(7%) translateY(-4px);
-  }
-  50% {
-    transform: translateX(-7%) translateY(4px);
-  }
-  100% {
-    transform: translateX(7%) translateY(-4px);
-  }
-}
-
-@keyframes windowReflectionFloat {
+/* 1. Morning Sun Corona Breathing */
+@keyframes disneySunBreathe {
   0%, 100% {
-    opacity: 0.04;
-    transform: translateX(0px);
+    transform: scale(1);
+    opacity: 0.88;
   }
   50% {
-    opacity: 0.07;
-    transform: translateX(8px);
+    transform: scale(1.08);
+    opacity: 1;
   }
 }
 
+.animate-disney-sun {
+  transform-origin: 960px 220px;
+  animation: disneySunBreathe 10s ease-in-out infinite;
+}
+
+/* 2. Morning Sunbeams / God-Rays Shimmer */
+@keyframes disneyGodRays {
+  0%, 100% {
+    opacity: 0.22;
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: rotate(1.4deg) scale(1.03);
+  }
+}
+
+.animate-disney-godrays {
+  transform-origin: 960px 220px;
+  animation: disneyGodRays 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* 3. High-Altitude Clouds Drifting on Natural Arc with Squash & Stretch */
+@keyframes disneyCloudArcSlow {
+  0% {
+    transform: translate3d(-110px, 0px, 0) scale(1, 1);
+  }
+  35% {
+    transform: translate3d(25px, -18px, 0) scale(1.03, 0.97);
+  }
+  65% {
+    transform: translate3d(150px, -6px, 0) scale(0.98, 1.02);
+  }
+  100% {
+    transform: translate3d(270px, 0px, 0) scale(1, 1);
+  }
+}
+
+.animate-disney-cloud-slow {
+  animation: disneyCloudArcSlow 48s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* 4. Mid-Altitude Volumetric Cumulus Clouds with Organic Billow */
+@keyframes disneyCloudArcContinuous {
+  0% {
+    transform: translate3d(-240px, 8px, 0) scale(0.97, 1.03);
+  }
+  40% {
+    transform: translate3d(0px, -24px, 0) scale(1.04, 0.96);
+  }
+  75% {
+    transform: translate3d(220px, -4px, 0) scale(0.98, 1.02);
+  }
+  100% {
+    transform: translate3d(360px, 10px, 0) scale(1.02, 0.98);
+  }
+}
+
+.animate-disney-cloud-continuous {
+  animation: disneyCloudArcContinuous 58s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* 5. Valley Mist River Undulating Along Mountain Pass */
+@keyframes disneyMistWave {
+  0%, 100% {
+    transform: translate3d(-90px, 0px, 0) scaleY(1);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translate3d(95px, -15px, 0) scaleY(1.14);
+    opacity: 0.94;
+  }
+}
+
+.animate-disney-mist-wave {
+  animation: disneyMistWave 24s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* 6. Counter-Motion Lower Cloud Layer */
+@keyframes disneyCloudOpposite {
+  0% {
+    transform: translate3d(160px, -10px, 0) scale(1.02, 0.98);
+  }
+  50% {
+    transform: translate3d(-140px, 12px, 0) scale(0.98, 1.02);
+  }
+  100% {
+    transform: translate3d(160px, -10px, 0) scale(1.02, 0.98);
+  }
+}
+
+.animate-disney-cloud-opposite {
+  animation: disneyCloudOpposite 44s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* 7. Soaring Himalayan Mountain Raptors (Parabolic Arc Flight) */
+@keyframes disneyBirdFlight1 {
+  0% {
+    transform: translate3d(-120px, 120px, 0) rotate(-8deg) scale(0.72);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.95;
+  }
+  40% {
+    transform: translate3d(620px, -45px, 0) rotate(5deg) scale(0.98);
+  }
+  70% {
+    transform: translate3d(1240px, -65px, 0) rotate(1deg) scale(0.92);
+  }
+  92% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate3d(2060px, 90px, 0) rotate(-10deg) scale(0.72);
+    opacity: 0;
+  }
+}
+
+.animate-disney-bird-1 {
+  animation: disneyBirdFlight1 34s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes disneyBirdFlight2 {
+  0% {
+    transform: translate3d(-180px, 160px, 0) rotate(-10deg) scale(0.55);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.78;
+  }
+  45% {
+    transform: translate3d(580px, -20px, 0) rotate(4deg) scale(0.75);
+  }
+  75% {
+    transform: translate3d(1300px, -40px, 0) rotate(-2deg) scale(0.7);
+  }
+  90% {
+    opacity: 0.78;
+  }
+  100% {
+    transform: translate3d(2080px, 120px, 0) rotate(-8deg) scale(0.55);
+    opacity: 0;
+  }
+}
+
+.animate-disney-bird-2 {
+  animation: disneyBirdFlight2 38s cubic-bezier(0.4, 0, 0.2, 1) infinite 7s;
+  will-change: transform, opacity;
+}
+
+/* Secondary Wing Glide / Bank */
+@keyframes disneyBirdGliding {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  30% {
+    transform: scaleY(0.88);
+  }
+  60% {
+    transform: scaleY(1.08);
+  }
+  85% {
+    transform: scaleY(0.92);
+  }
+}
+
+.animate-disney-bird-glide {
+  animation: disneyBirdGliding 3.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* 8. Golden Dawn Light Motes / Sun Dust (Disney Sparkle Ambient) */
+@keyframes disneyMoteRise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.7);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.85;
+  }
+  75% {
+    opacity: 0.65;
+    transform: translate3d(18px, -45px, 0) scale(1.15);
+  }
+  100% {
+    transform: translate3d(-10px, -90px, 0) scale(0.65);
+    opacity: 0;
+  }
+}
+
+.animate-disney-mote-1 {
+  animation: disneyMoteRise 8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-disney-mote-2 {
+  animation: disneyMoteRise 9.5s ease-in-out infinite 2.5s;
+  will-change: transform, opacity;
+}
+
+.animate-disney-mote-3 {
+  animation: disneyMoteRise 7s ease-in-out infinite 5s;
+  will-change: transform, opacity;
+}
+
+/* 9. Golden Alpenglow Shimmer on Summits */
+@keyframes disneyAlpenglow {
+  0%, 100% {
+    opacity: 0.75;
+    filter: drop-shadow(0 0 12px rgba(254, 240, 138, 0.45));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 28px rgba(254, 215, 170, 0.85));
+  }
+}
+
+.animate-disney-alpenglow {
+  animation: disneyAlpenglow 9s ease-in-out infinite;
+}
+
+/* Legacy utility fallbacks */
 .animate-cloud-slow {
-  animation: cloudDriftSlow 38s ease-in-out infinite;
+  animation: disneyCloudArcSlow 48s ease-in-out infinite alternate;
 }
 
 .animate-cloud-continuous {
-  animation: cloudDriftContinuous 55s linear infinite alternate;
+  animation: disneyCloudArcContinuous 58s ease-in-out infinite alternate;
 }
 
 .animate-cloud-opposite {
-  animation: cloudDriftOpposite 42s ease-in-out infinite;
+  animation: disneyCloudOpposite 44s ease-in-out infinite;
 }
 
 .animate-mist-slow {
-  animation: mistDriftSlow 22s ease-in-out infinite;
-}
-
-.animate-mist-fast {
-  animation: mistDriftFast 15s ease-in-out infinite;
+  animation: disneyMistWave 24s ease-in-out infinite;
 }
 
 .animate-window-reflection {
