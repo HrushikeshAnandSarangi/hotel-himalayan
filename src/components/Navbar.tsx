@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import {
   PhoneCall,
@@ -16,16 +16,7 @@ interface NavbarProps {
 }
 
 export default function Navbar({ onOpenBooking }: NavbarProps) {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 25);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const navLinks = [
     { label: "About", href: "#about" },
@@ -37,13 +28,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/90 backdrop-blur-md border-b border-blue-100/90 py-3 shadow-[0_8px_30px_rgba(30,58,138,0.06)]"
-          : "bg-white/70 backdrop-blur-sm border-b border-blue-50 py-4.5"
-      }`}
-    >
+    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-y border-blue-100/90 py-3 sm:py-3.5 shadow-[0_4px_25px_rgba(30,58,138,0.06)] transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Official Hotel Himalayan Brand Mark with the Uploaded Logo */}
@@ -71,20 +56,20 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             </div>
           </a>
 
-          {/* Desktop Navigation Links with Blue Detailing */}
+          {/* Desktop Navigation Links Centered with Blue Detailing */}
           <nav className="hidden lg:flex items-center gap-7">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm tracking-wide text-slate-800 font-medium hover:text-blue-600 transition-colors duration-200 relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all"
+                className="text-sm tracking-wide text-slate-800 font-medium hover:text-blue-600 transition-colors duration-200 relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all font-serif"
               >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          {/* Action Buttons with Blue Detailing on White */}
+          {/* Action Buttons on Right with Blue Detailing */}
           <div className="hidden sm:flex items-center gap-3">
             <a
               href="tel:+919304957835"
@@ -127,7 +112,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-3.5 py-2 text-sm text-slate-800 font-medium hover:text-blue-600 hover:bg-blue-50/70 rounded-xl transition-colors"
+                  className="px-3.5 py-2 text-sm text-slate-800 font-medium hover:text-blue-600 hover:bg-blue-50/70 rounded-xl transition-colors font-serif"
                 >
                   {link.label}
                 </a>
@@ -156,7 +141,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                 href="https://www.google.com/maps/place/Hotel+Himalayan/@27.3053852,88.2382925,17z/data=!4m9!3m8!1s0x39e6867ddebfa319:0xb0fe9695a65fb77d!5m2!4m1!1i2!8m2!3d27.305437!4d88.241066!16s%2Fg%2F1ptx4vh9y"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-2 px-3 text-xs text-blue-700 hover:text-blue-900 flex items-center justify-center gap-2"
+                className="w-full py-2 px-3 text-xs text-blue-700 hover:text-blue-900 flex items-center justify-center gap-2 font-serif"
               >
                 <MapPin className="w-3.5 h-3.5 text-blue-600" />
                 <span>Open in Google Maps</span>
