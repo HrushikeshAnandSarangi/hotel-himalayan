@@ -592,70 +592,66 @@ export default function Hero({ onOpenBooking }: HeroProps) {
       </div>
 
       {/* =========================================================================
-          CONTENT OVERLAY: STARTS FROM MID-MOUNTAIN (AS REQUESTED)
-          - Icy summits and moving clouds soar proudly in the upper half of the viewport
-          - Content starts from mid-mountain level down
+          CONTENT: DIRECTLY ON SCENE (ZERO GLASS EFFECT, ZERO OVERLAY BOX)
+          - Starts from mid-mountain level down
           - Symmetrical typography, action buttons, and small subscript rating
-          - Semi-translucent frosted glass plate lets the mountain artwork shine through
+          - Fully unobstructed view of the mountains and moving clouds
          ========================================================================= */}
       <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
-        {/* Soft Glassmorphic Frosted Reading Surface */}
-        <div className="w-full bg-white/70 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/80 shadow-[0_16px_40px_rgba(30,58,138,0.08),0_0_0_1px_rgba(255,255,255,0.95)_inset]">
-          {/* Exact Layout Hook Line */}
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[50px] font-bold tracking-tight text-slate-950 mb-3.5 leading-[1.18] font-serif">
-            Experience the Himalayas up close, right from your morning tea.
-          </h1>
+        {/* Exact Layout Hook Line */}
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-950 mb-4 max-w-3xl leading-[1.15] font-serif drop-shadow-[0_2px_12px_rgba(255,255,255,0.95)]">
+          Experience the Himalayas up close, right from your morning tea.
+        </h1>
 
-          {/* Exact Layout Sub-Lines */}
-          <p className="text-sm sm:text-base md:text-lg text-slate-700 max-w-2xl mx-auto leading-relaxed mb-6 font-serif">
-            Out on this ridge in Pelling, Kanchenjunga doesn&apos;t feel like a
-            distant backdrop. She sits right in front of you, shedding her coat
-            of morning mist and catching the first amber light while the rest of
-            the valley is still asleep.
-          </p>
+        {/* Exact Layout Sub-Lines */}
+        <p className="text-base sm:text-lg md:text-xl text-slate-800 max-w-2xl mx-auto leading-relaxed mb-8 font-serif drop-shadow-[0_1px_8px_rgba(255,255,255,0.95)]">
+          Out on this ridge in Pelling, Kanchenjunga doesn&apos;t feel like a
+          distant backdrop. She sits right in front of you, shedding her coat
+          of morning mist and catching the first amber light while the rest of
+          the valley is still asleep.
+        </p>
 
-          {/* Symmetrical Dual Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
-            <button
-              onClick={onOpenBooking}
-              className="w-full sm:w-56 py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs uppercase tracking-widest shadow-[0_8px_25px_rgba(37,99,235,0.35)] border border-blue-500/80 transition-all duration-300 cursor-pointer hover:shadow-[0_12px_32px_rgba(37,99,235,0.45)] flex items-center justify-center gap-2"
-            >
-              <CalendarCheck className="w-4 h-4 text-white" />
-              <span>Check Availability</span>
-            </button>
+        {/* Symmetrical Dual Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+          <button
+            onClick={onOpenBooking}
+            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs uppercase tracking-widest shadow-[0_8px_25px_rgba(37,99,235,0.35)] border border-blue-500/80 transition-all duration-300 cursor-pointer hover:shadow-[0_12px_32px_rgba(37,99,235,0.45)] flex items-center justify-center gap-2"
+          >
+            <CalendarCheck className="w-4 h-4 text-white" />
+            <span>Check Availability</span>
+          </button>
 
-            <a
-              href="#rooms"
-              className="w-full sm:w-56 py-3.5 px-6 rounded-2xl border border-blue-300 bg-white hover:bg-blue-50 active:scale-95 text-blue-900 font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-sm hover:border-blue-400 flex items-center justify-center gap-2"
-            >
-              <BedDouble className="w-4 h-4 text-blue-600" />
-              <span>View Rooms</span>
-            </a>
-          </div>
+          <a
+            href="#rooms"
+            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl border border-blue-300 bg-white hover:bg-blue-50 active:scale-95 text-blue-900 font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-sm hover:border-blue-400 flex items-center justify-center gap-2"
+          >
+            <BedDouble className="w-4 h-4 text-blue-600" />
+            <span>View Rooms</span>
+          </a>
+        </div>
 
-          {/* Small Subscript Google Rating Mention (As Requested) */}
-          <div className="mt-4 pt-1">
-            <a
-              href={gmapsLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-blue-700 transition-colors cursor-pointer group font-serif"
-            >
-              <div className="flex text-blue-600">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 fill-blue-600 text-blue-600" />
-                ))}
-              </div>
-              <span className="font-semibold text-slate-900 ml-0.5">
-                4.2 / 5.0 on Google Maps
-              </span>
-              <span className="text-slate-400">•</span>
-              <span className="group-hover:underline">
-                100+ verified traveler reviews
-              </span>
-              <ExternalLink className="w-2.5 h-2.5 text-blue-600 ml-0.5 opacity-80" />
-            </a>
-          </div>
+        {/* Small Subscript Google Rating Mention (Directly Below Buttons) */}
+        <div className="mt-4 pt-1">
+          <a
+            href={gmapsLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-800 hover:text-blue-700 transition-colors cursor-pointer group font-serif drop-shadow-[0_1px_6px_rgba(255,255,255,0.9)]"
+          >
+            <div className="flex text-blue-600">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-3 h-3 fill-blue-600 text-blue-600" />
+              ))}
+            </div>
+            <span className="font-semibold text-slate-900 ml-0.5">
+              4.2 / 5.0 on Google Maps
+            </span>
+            <span className="text-slate-400">•</span>
+            <span className="group-hover:underline">
+              100+ verified traveler reviews
+            </span>
+            <ExternalLink className="w-2.5 h-2.5 text-blue-600 ml-0.5 opacity-80" />
+          </a>
         </div>
       </div>
     </section>
