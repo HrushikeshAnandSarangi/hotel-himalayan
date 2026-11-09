@@ -1,259 +1,307 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import Image from "next/image";
+import React, { useState, useEffect, useRef } from "react";
+import VerandaSketch from "./about/VerandaSketch";
+import LoungeSketch from "./about/LoungeSketch";
+import MonasterySketch from "./about/MonasterySketch";
+import { StandingFigure, WalkingFigure } from "./about/ScaleFigures";
+import AngledFilmstrip from "./about/AngledFilmstrip";
 
 export default function AboutSection() {
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0.5);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const images = useMemo(
-    () => [
-      {
-        src: "/about/skyline-morning.jpg",
-        alt: "Kanchenjunga morning mountain skyline from Chumbong Pelling",
-      },
-      {
-        src: "/about/morning-tea.jpg",
-        alt: "Honest mountain hospitality and hot morning tea on the terrace",
-      },
-      {
-        src: "/about/homestyle-kitchen.jpg",
-        alt: "Hot home-style meals and fresh local produce from the kitchen",
-      },
-      {
-        src: "/about/sunset-terrace.jpg",
-        alt: "Open storytelling terrace and mountain basecamp at dusk",
-      },
-    ],
-    []
-  );
-
-  const paragraphTexts = useMemo(
-    () => [
-      "Hotel Himalayan started with a very simple thought: when you come to the mountains, you shouldn't have to crane your neck or hike an hour just to catch a glimpse of the skyline.",
-      "Perched on the quiet slopes of Chumbong in Pelling, we offer honest mountain hospitality without unnecessary noise.",
-      "The kettle is always ready, the kitchen serves hot home-style meals made with local produce, and the open terrace turns strangers into storytelling circles as soon as the sun dips below the snowline.",
-      "Whether you are chasing peaks with a heavy rucksack or taking a quiet break from work, this is your basecamp.",
-    ],
-    []
-  );
-
-  // Precompute word tokens with global index and paragraph index
-  const { paragraphsData, totalWords } = useMemo(() => {
-    let wordCounter = 0;
-    const data = paragraphTexts.map((text, pIdx) => {
-      const tokens = text.split(/\s+/).filter(Boolean);
-      const words = tokens.map((token) => ({
-        text: token,
-        globalIndex: wordCounter++,
-        paragraphIndex: pIdx,
-      }));
-      return { words, paragraphIndex: pIdx };
-    });
-    return { paragraphsData: data, totalWords: wordCounter };
-  }, [paragraphTexts]);
-
-  // Track scroll through the locked multi-screen runway
+  // Motion Design Skill: Smooth scroll-driven multiplane parallax
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const totalScrollable = rect.height - windowHeight;
-
-      if (totalScrollable <= 0) return;
-
-      const currentScroll = -rect.top;
-      const rawProgress = currentScroll / totalScrollable;
-      const clamped = Math.max(0, Math.min(1, rawProgress));
-      setScrollProgress(clamped);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (!sectionRef.current) return;
+          const rect = sectionRef.current.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          const totalDistance = rect.height + windowHeight;
+          const currentPos = windowHeight - rect.top;
+          const progress = Math.max(0, Math.min(1, currentPos / totalDistance));
+          setScrollProgress(progress);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Map scroll progress to word-by-word tracing
-  // Scroll 0.00 -> 0.20: Small Screen takes over full viewport
-  // Scroll 0.20 -> 0.92: Word-by-word tracing unfolds through 4 paragraphs
-  const TAKEOVER_THRESHOLD = 0.20;
-  const STORY_START = 0.20;
-  const STORY_END = 0.92;
-
-  const takeoverRatio = useMemo(() => {
-    return Math.min(1, Math.max(0, scrollProgress / TAKEOVER_THRESHOLD));
-  }, [scrollProgress]);
-
-  const currentTracedIndex = useMemo(() => {
-    if (scrollProgress < STORY_START) return -1;
-    if (scrollProgress >= STORY_END) return totalWords;
-
-    const normalized = (scrollProgress - STORY_START) / (STORY_END - STORY_START);
-    return Math.floor(normalized * totalWords);
-  }, [scrollProgress, totalWords]);
-
-  // Determine active image index based on the paragraph of the currently traced word
-  const activeImageIndex = useMemo(() => {
-    if (currentTracedIndex <= 0) return 0;
-    const allWords = paragraphsData.flatMap((p) => p.words);
-    const safeIdx = Math.min(currentTracedIndex, allWords.length - 1);
-    return allWords[safeIdx]?.paragraphIndex ?? 0;
-  }, [currentTracedIndex, paragraphsData]);
-
-  // Cubic ease-out for smooth organic window expansion
-  const ease = useMemo(() => {
-    return 1 - Math.pow(1 - takeoverRatio, 3);
-  }, [takeoverRatio]);
-
-  const isFullTakeover = takeoverRatio >= 1;
+  // Parallax Layer Offsets (Motion Personality: Premium / decel)
+  const filmstripX = (scrollProgress - 0.35) * -240;
+  const verandaY = (scrollProgress - 0.25) * -45;
+  const loungeY = (scrollProgress - 0.55) * -40;
+  const monasteryY = (scrollProgress - 0.75) * -35;
+  const walkingFigureX = (scrollProgress - 0.45) * 40;
 
   return (
     <section
       id="about"
       ref={sectionRef}
-      className="relative h-[380vh] sm:h-[420vh] bg-[#548fae] select-none"
+      className="relative bg-[#fafbfd] text-[#061d30] py-20 sm:py-28 lg:py-36 overflow-hidden select-none border-t border-sky-100"
     >
-      {/* =====================================================================
-          STICKY EXPANDING PORTAL / FULL VIEWPORT RUNWAY
-          - Continuous alpine blue background (#548fae) flowing seamlessly from Hero
-          - Starts as a framed preview screen centered on screen
-          - Expands smoothly on scroll (0.00 -> 0.20) to take over the entire viewport
-          - Once takeover is complete (0.20 -> 0.92), word-by-word tracing unfolds
-         ===================================================================== */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
-        {/* Subtle Ambient Scroll Hint during initial takeover */}
-        {takeoverRatio < 0.35 && (
-          <div
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white font-editorial-mono text-[10px] tracking-widest uppercase pointer-events-none z-30 transition-opacity duration-300"
-            style={{ opacity: Math.max(0, 1 - takeoverRatio * 3.5) }}
-          >
-            <span>SCROLL TO ENTER</span>
-            <span className="animate-bounce">↓</span>
-          </div>
-        )}
-
-        {/* ===================================================================
-            THE EXPANDING RETREAT SCREEN / WINDOW
-           =================================================================== */}
-        <div
-          className={`flex flex-col bg-white overflow-hidden transition-all duration-75 ${
-            isFullTakeover
-              ? "w-full h-full rounded-none shadow-none border-0"
-              : "border border-white/50"
-          }`}
-          style={{
-            width: isFullTakeover ? "100vw" : `clamp(320px, ${74 + ease * 26}vw, 1280px)`,
-            height: isFullTakeover ? "100vh" : `clamp(440px, ${62 + ease * 38}vh, 100vh)`,
-            borderRadius: isFullTakeover ? "0px" : `${(1 - ease) * 28}px`,
-            transform: isFullTakeover ? "none" : `scale(${0.76 + ease * 0.24})`,
-            boxShadow: isFullTakeover
-              ? "none"
-              : `0 ${30 * (1 - ease)}px ${80 * (1 - ease)}px -15px rgba(2, 14, 26, ${0.45 * (1 - ease)})`,
-            willChange: "transform, width, height, border-radius",
-          }}
+      {/* =========================================================================
+          ARCHITECTURAL PERSPECTIVE GUIDE LINES (Dashed Blueprint Projection Lines)
+         ========================================================================= */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30 select-none">
+        <svg
+          viewBox="0 0 1920 2400"
+          preserveAspectRatio="none"
+          className="w-full h-full"
         >
-          {/* Subtle Window Header Bar (fades out as it expands to full screen) */}
-          {!isFullTakeover && (
-            <div
-              className="w-full px-4 py-2 bg-slate-900/90 text-white flex items-center justify-between shrink-0 select-none border-b border-white/10"
-              style={{ opacity: Math.max(0, 1 - takeoverRatio * 1.3) }}
-            >
-              <div className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-rose-400" />
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+          {/* Main Diagonal Perspective Axis Lines */}
+          <line
+            x1="0"
+            y1="250"
+            x2="1920"
+            y2="750"
+            stroke="#0284c7"
+            strokeWidth="1.2"
+            strokeDasharray="8 6"
+          />
+          <line
+            x1="0"
+            y1="820"
+            x2="1920"
+            y2="1350"
+            stroke="#0284c7"
+            strokeWidth="1.2"
+            strokeDasharray="8 6"
+          />
+          <line
+            x1="0"
+            y1="1400"
+            x2="1920"
+            y2="1920"
+            stroke="#0284c7"
+            strokeWidth="1.2"
+            strokeDasharray="8 6"
+          />
+          <line
+            x1="1920"
+            y1="300"
+            x2="0"
+            y2="1600"
+            stroke="#061d30"
+            strokeWidth="0.8"
+            strokeDasharray="10 8"
+            opacity="0.5"
+          />
+        </svg>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 relative z-10">
+        {/* =======================================================================
+            ZONE 1: RETREAT ARCHIVES (Standing Figure, Editorial Title, Veranda Sketch)
+           ======================================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-10 sm:mb-16">
+          {/* Left Column: Human Scale Figure + Section Heading */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="flex items-center gap-3">
+              <StandingFigure />
+              <div>
+                <span className="font-editorial-mono text-[11px] uppercase tracking-[0.25em] text-[#0284c7] font-bold block">
+                  01 / RETREAT ARCHIVES
+                </span>
+                <span className="text-[10px] text-slate-500 font-serif">
+                  CHUMBONG DIARY • ELEV. 7,200 FT
+                </span>
               </div>
-              <span className="font-editorial-mono text-[10px] sm:text-[11px] tracking-wider uppercase text-sky-200">
-                HOTEL HIMALAYAN • THE CHUMBONG STORY
-              </span>
-              <span className="font-editorial-mono text-[9px] sm:text-[10px] text-slate-400">
-                WEST SIKKIM
-              </span>
-            </div>
-          )}
-
-          {/* =================================================================
-              50/50 SPLIT CONTENT (SLIDER + TRACED ESSAY)
-             ================================================================= */}
-          <div className="w-full flex-1 flex flex-col lg:flex-row bg-white overflow-hidden relative">
-            {/* SIDE 1: Full Picture Slider */}
-            <div className="w-full lg:w-1/2 h-[40%] lg:h-full relative overflow-hidden bg-slate-950 shrink-0">
-              {images.map((image, idx) => {
-                const isActive = activeImageIndex === idx;
-                return (
-                  <div
-                    key={image.src}
-                    className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-out ${
-                      isActive
-                        ? "opacity-100 scale-100 z-10"
-                        : "opacity-0 scale-108 z-0 pointer-events-none"
-                    }`}
-                    style={{
-                      willChange: "transform, opacity",
-                    }}
-                  >
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover transition-transform duration-1000 ease-out"
-                      priority={idx === 0}
-                    />
-                    {/* Subtle Cinematic Vignette for Depth */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20 pointer-events-none" />
-                  </div>
-                );
-              })}
             </div>
 
-            {/* SIDE 2: Word-by-Word Traced Story */}
-            <div className="w-full lg:w-1/2 h-[60%] lg:h-full flex flex-col justify-center px-6 sm:px-10 lg:px-14 xl:px-20 bg-white relative z-10 overflow-y-auto lg:overflow-hidden">
-              <div className="max-w-xl mx-auto lg:mx-0 w-full py-4 lg:py-0">
-                {/* The Hook Headline */}
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-950 tracking-tight font-serif mb-4 sm:mb-6 lg:mb-8 leading-[1.15]">
-                  A front-row seat to West Sikkim.
-                </h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-serif tracking-tight text-[#061d30] leading-[1.15]">
+              A front-row seat to West Sikkim.
+            </h2>
 
-                {/* Word-by-Word Traced Paragraphs */}
-                <div className="space-y-3.5 sm:space-y-5 font-serif text-sm sm:text-base lg:text-lg xl:text-[21px] leading-[1.6] sm:leading-[1.65] text-slate-900">
-                  {paragraphsData.map((para, pIdx) => (
-                    <p key={pIdx} className="leading-[1.6] sm:leading-[1.65]">
-                      {para.words.map((word) => {
-                        const isTraced = word.globalIndex <= currentTracedIndex;
-                        const isCurrent = word.globalIndex === currentTracedIndex;
+            <p className="text-xs sm:text-sm text-slate-600 font-serif leading-relaxed max-w-md">
+              Perched on the serene high ridge of Chumbong in Pelling, Hotel
+              Himalayan overlooks the unbroken Kanchenjunga massif. An honest
+              hilltop retreat designed for unhurried travelers, morning tea
+              rituals, and silent starry nights.
+            </p>
+          </div>
 
-                        return (
-                          <span
-                            key={word.globalIndex}
-                            className={`inline-block mr-[0.3em] transition-all duration-200 ${
-                              isTraced
-                                ? "text-slate-950 font-medium opacity-100"
-                                : "text-slate-300 opacity-30 font-normal"
-                            } ${
-                              isCurrent
-                                ? "text-blue-600 font-bold scale-[1.05] drop-shadow-[0_0_10px_rgba(37,99,235,0.45)]"
-                                : ""
-                            }`}
-                          >
-                            {word.text}
-                          </span>
-                        );
-                      })}
-                    </p>
-                  ))}
-                </div>
+          {/* Right Column: Hand-Drawn Veranda & Balcony Sketch with Parallax */}
+          <div
+            className="lg:col-span-7 transition-transform duration-100 ease-out"
+            style={{
+              transform: `translate3d(0, ${verandaY}px, 0)`,
+              willChange: "transform",
+            }}
+          >
+            <div className="relative p-2 sm:p-4 bg-white/70 backdrop-blur-xs rounded-2xl border border-slate-200/80 shadow-[0_15px_40px_rgba(6,29,48,0.06)]">
+              <VerandaSketch />
+              {/* Technical Caption Tag */}
+              <div className="absolute bottom-4 right-6 bg-white/90 backdrop-blur-sm border border-slate-200 px-3 py-1.5 rounded-md font-editorial-mono text-[10px] text-[#061d30]">
+                <span>ARCH. DETAIL // </span>
+                <span className="font-bold text-[#0284c7]">BALCONY VISTA</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Gentle Bottom Gradient Transition into Sightseeing Section */}
-      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-b from-transparent to-white pointer-events-none z-10" />
+        {/* =======================================================================
+            ZONE 2: ANGLED DYNAMIC FILMSTRIP (Photo Ribbon with Parallax Glide)
+           ======================================================================= */}
+        <AngledFilmstrip parallaxX={filmstripX} />
+
+        {/* =======================================================================
+            ZONE 3: HOSPITALITY PHILOSOPHY (Dark Stamp Block + Narrative + Walking Figure)
+           ======================================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-16 sm:my-24">
+          {/* Left: Solid Dark Midnight Stamp Block (Reference Style) */}
+          <div className="lg:col-span-3">
+            <div className="w-full sm:w-60 h-44 sm:h-52 bg-[#071f33] text-white p-6 rounded-xl border border-[#124a72]/50 shadow-[0_12px_32px_rgba(7,31,51,0.25)] flex flex-col justify-between">
+              <div>
+                <span className="font-editorial-mono text-[9px] uppercase tracking-[0.25em] text-sky-300 block mb-1">
+                  PHILOSOPHY
+                </span>
+                <h4 className="text-base sm:text-lg font-bold font-serif leading-tight">
+                  HONEST MOUNTAIN HOSPITALITY
+                </h4>
+              </div>
+              <div className="pt-4 border-t border-white/15">
+                <span className="font-editorial-mono text-[10px] text-slate-300 block">
+                  CHUMBONG RIDGE • 01 / 04
+                </span>
+                <span className="text-[10px] text-sky-200 font-serif">
+                  NO NOISE • JUST SKY
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Center: Refined Editorial Story Narrative */}
+          <div className="lg:col-span-7">
+            <p className="text-base sm:text-lg lg:text-xl font-serif text-[#08233a] leading-relaxed italic">
+              &ldquo;Hotel Himalayan started with a very simple thought: when
+              you come to the mountains, you shouldn&apos;t have to crane your
+              neck or hike an hour just to catch a glimpse of the skyline. Perched
+              on the quiet slopes of Chumbong in Pelling, we offer honest mountain
+              hospitality without unnecessary noise.&rdquo;
+            </p>
+          </div>
+
+          {/* Right: Architectural Walking Traveler Figure with Parallax Drift */}
+          <div
+            className="lg:col-span-2 hidden sm:flex items-center justify-center transition-transform duration-100 ease-out"
+            style={{
+              transform: `translate3d(${walkingFigureX}px, 0, 0)`,
+              willChange: "transform",
+            }}
+          >
+            <div className="flex flex-col items-center gap-2">
+              <WalkingFigure />
+              <span className="font-editorial-mono text-[9px] uppercase tracking-widest text-slate-400">
+                TRAVELER
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* =======================================================================
+            ZONE 4: THE SANCTUARY / ENVIRONMENT HEADING (Center Roman Typography)
+           ======================================================================= */}
+        <div className="text-center max-w-2xl mx-auto my-16 sm:my-24">
+          <div className="w-12 h-[1px] bg-[#0284c7] mx-auto mb-4" />
+          <span className="font-editorial-mono text-[11px] uppercase tracking-[0.3em] text-[#0284c7] font-bold block mb-1">
+            ENVIRONMENT • 02
+          </span>
+          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-serif text-[#061d30] tracking-tight">
+            THE SANCTUARY
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-600 font-serif mt-3 leading-relaxed max-w-lg mx-auto">
+            The kettle is always ready, the kitchen serves hot home-style meals
+            made with local produce, and the open terrace turns strangers into
+            storytelling circles as soon as the sun dips below the snowline.
+          </p>
+        </div>
+
+        {/* =======================================================================
+            ZONE 5: THE TEA LOUNGE & HEARTH (Hand-Drawn Interior Sketch + Basecamp Info)
+           ======================================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-14 sm:my-20">
+          {/* Left: Architectural Sketch of the Tea Lounge & Hearth */}
+          <div
+            className="lg:col-span-7 transition-transform duration-100 ease-out"
+            style={{
+              transform: `translate3d(0, ${loungeY}px, 0)`,
+              willChange: "transform",
+            }}
+          >
+            <div className="p-3 sm:p-5 bg-white/75 backdrop-blur-xs rounded-2xl border border-slate-200/80 shadow-[0_15px_40px_rgba(6,29,48,0.06)]">
+              <LoungeSketch />
+            </div>
+          </div>
+
+          {/* Right: Basecamp Description & Editorial Coordinates */}
+          <div className="lg:col-span-5 space-y-4">
+            <span className="font-editorial-mono text-[10px] uppercase tracking-[0.25em] text-[#0284c7] font-bold block">
+              BASECAMP ARCHITECTURE // 03
+            </span>
+            <h4 className="text-2xl sm:text-3xl font-bold font-serif text-[#061d30] tracking-tight">
+              THE HEARTH & TERRACE
+            </h4>
+            <p className="text-xs sm:text-sm text-slate-600 font-serif leading-relaxed">
+              Whether you are chasing peaks with a heavy rucksack or taking a
+              quiet break from work, this is your basecamp. Wooden floors, hot
+              copper tea kettles, comfortable wicker armchairs, and wide-open
+              balconies bathed in morning light.
+            </p>
+            <div className="pt-3 border-t border-slate-200 font-editorial-mono text-[10px] text-slate-500 space-y-1">
+              <div>LOCATION: CHUMBONG RIDGE • WEST SIKKIM</div>
+              <div>CLIMATE: TEMPERATE ALPINE • CLEAR SKIES</div>
+            </div>
+          </div>
+        </div>
+
+        {/* =======================================================================
+            ZONE 6: SACRED RIDGE & MONASTERY PANORAMA (History + Monastery Sketch)
+           ======================================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-14 sm:my-20">
+          {/* Left: Monastic History & Heritage Narrative */}
+          <div className="lg:col-span-5 space-y-4 order-2 lg:order-1">
+            <span className="font-editorial-mono text-[10px] uppercase tracking-[0.25em] text-[#0284c7] font-bold block">
+              CULTURAL SURROUNDINGS // 04
+            </span>
+            <h4 className="text-2xl sm:text-3xl font-bold font-serif text-[#061d30] tracking-tight">
+              PEMAYANGTSE & THE SACRED RIDGE
+            </h4>
+            <p className="text-xs sm:text-sm text-slate-600 font-serif leading-relaxed">
+              Just minutes from our gates lie the mossy stone ruins of Rabdentse
+              Palace and the sacred 300-year-old Pemayangtse Monastery. Prayer
+              flags flutter across the pine slopes while Kanchenjunga watches
+              over the valley in golden amber silence.
+            </p>
+            <div className="pt-3 border-t border-slate-200 font-editorial-mono text-[10px] text-slate-500 space-y-1">
+              <div>ELEVATION: 7,200 FT // 2,195 M</div>
+              <div>COORDINATES: 27.3054° N • 88.2411° E</div>
+            </div>
+          </div>
+
+          {/* Right: Hand-Drawn Monastery Pagoda & Ridge Sketch with Parallax */}
+          <div
+            className="lg:col-span-7 order-1 lg:order-2 transition-transform duration-100 ease-out"
+            style={{
+              transform: `translate3d(0, ${monasteryY}px, 0)`,
+              willChange: "transform",
+            }}
+          >
+            <div className="p-3 sm:p-5 bg-white/75 backdrop-blur-xs rounded-2xl border border-slate-200/80 shadow-[0_15px_40px_rgba(6,29,48,0.06)]">
+              <MonasterySketch />
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
