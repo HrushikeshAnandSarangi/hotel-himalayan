@@ -22,6 +22,12 @@ export default function BookingInquirySection({ initialRoom }: BookingInquiryPro
   const [selectedRoom, setSelectedRoom] = useState(
     initialRoom || "Mountain-View Deluxe Double"
   );
+
+  React.useEffect(() => {
+    if (initialRoom) {
+      setSelectedRoom(initialRoom);
+    }
+  }, [initialRoom]);
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState("2 Guests");
