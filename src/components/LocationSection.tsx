@@ -23,9 +23,13 @@ export default function LocationSection() {
 
   return (
     <section id="location" className="py-24 bg-[#f8fbff] relative overflow-hidden">
+      {/* Delicate background ambient blue glows */}
+      <div className="absolute top-1/4 -left-48 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Symmetrical Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-900 text-xs uppercase tracking-widest mb-3 font-semibold shadow-sm">
             <MapPin className="w-3.5 h-3.5 text-blue-600" />
             <span>Transit & Directions</span>
@@ -35,16 +39,83 @@ export default function LocationSection() {
             How to Reach Us
           </h2>
 
-          {/* Symmetrical Divider Line with Center Blue Anchor */}
+          {/* Symmetrical Ornamental Divider */}
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="h-px w-16 bg-gradient-to-r from-transparent to-blue-300" />
-            <div className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+            <div className="w-2 h-2 rotate-45 bg-blue-600" />
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-blue-300" />
           </div>
 
           <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-serif">
-            Hotel Himalayan is located along Chumbong Road, just a few minutes outside the main Pelling market area.
+            Hotel Himalayan is located along quiet Chumbong Road, just a few minutes outside the main Pelling market area.
           </p>
+        </div>
+
+        {/* Masterpiece Centerpiece: Blue Ornate Architectural Frame Card */}
+        <div className="relative mb-16 rounded-3xl overflow-hidden border border-blue-300/60 shadow-[0_24px_55px_rgba(14,28,64,0.18)] bg-[#0e1c40]">
+          {/* Authentic Ornate Blue Pattern Backdrop (matching reference architecture) */}
+          <div
+            className="absolute inset-0 w-full h-full pointer-events-none bg-[length:100%_auto] md:bg-cover bg-top bg-no-repeat opacity-95"
+            style={{ backgroundImage: `url('/patterns/blue-ornate-frame@2x.jpg')` }}
+          />
+
+          {/* Content Layer with generous breathing room */}
+          <div className="relative z-10 px-6 sm:px-12 md:px-16 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 text-center max-w-4xl mx-auto flex flex-col items-center">
+            {/* Top pill */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-300/40 bg-blue-950/80 text-blue-200 text-[11px] sm:text-xs uppercase tracking-widest font-medium mb-5 backdrop-blur-md shadow-inner">
+              <Navigation className="w-3.5 h-3.5 text-blue-300" />
+              <span>Chumbong Road • Pelling, West Sikkim • 7,200 ft</span>
+            </div>
+
+            {/* Grand Condensed Uppercase Headline */}
+            <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase text-white tracking-tight leading-[1.08] mb-4 font-serif">
+              PELLING IS ON A RIDGE.
+              <br />
+              <span className="text-blue-100">GETTING HERE IS EFFORTLESS.</span>
+            </h3>
+
+            {/* Subtitle */}
+            <p className="text-sm sm:text-base md:text-lg text-blue-100/90 max-w-2xl mx-auto font-serif mb-8 leading-relaxed font-light">
+              Located along scenic Chumbong Road, just 5 minutes outside the main Pelling market area.
+            </p>
+
+            {/* Rectangular Outlined Action Buttons (matching [ PLAN YOUR VISIT ] style) */}
+            <div className="flex flex-wrap items-center justify-center gap-4 w-full">
+              <a
+                href={gmapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 border border-blue-200/80 bg-white/10 hover:bg-white hover:text-[#0e1c40] text-white font-semibold text-xs sm:text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgba(255,255,255,0.4)] backdrop-blur-md cursor-pointer"
+              >
+                <MapPin className="w-4 h-4 text-blue-300 group-hover:text-[#0e1c40] transition-colors" />
+                <span>Open in Google Maps</span>
+                <ExternalLink className="w-3.5 h-3.5 text-blue-300 group-hover:text-[#0e1c40] transition-colors" />
+              </a>
+
+              <a
+                href={directionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 border border-blue-300/60 bg-blue-600/30 hover:bg-blue-600 text-white font-semibold text-xs sm:text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_4px_20px_rgba(37,99,235,0.25)] hover:shadow-[0_8px_30px_rgba(37,99,235,0.5)] backdrop-blur-md cursor-pointer"
+              >
+                <Navigation className="w-4 h-4 text-blue-300 group-hover:text-white transition-colors" />
+                <span>Get Directions</span>
+              </a>
+            </div>
+
+            {/* Coordinates & Taxi Tip Bar */}
+            <div className="mt-8 pt-6 border-t border-blue-300/20 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-blue-200/90 font-serif">
+              <span className="flex items-center gap-1.5 font-mono">
+                <Compass className="w-3.5 h-3.5 text-blue-300" />
+                27.305437° N, 88.241066° E
+              </span>
+              <span className="hidden sm:inline-block text-blue-400/50">•</span>
+              <span className="flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5 text-blue-300" />
+                Local Taxi: 5-minute ride from Pelling Taxi Stand
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* Bilateral Symmetrical 2-Column Map & Address Hub */}
@@ -78,7 +149,7 @@ export default function LocationSection() {
             </div>
           </div>
 
-          {/* Right Column: Symmetrical Coordinates & Action Hub */}
+          {/* Right Column: Symmetrical Coordinates & Verified Card */}
           <TiltCard
             maxTilt={6}
             perspective={1100}
@@ -155,6 +226,15 @@ export default function LocationSection() {
               </a>
             </div>
           </TiltCard>
+        </div>
+
+        {/* Decorative Delicate Filigree Ribbon Divider */}
+        <div className="w-full flex justify-center mb-10 overflow-hidden opacity-60">
+          <img
+            src="/patterns/blue-filigree-border.png"
+            alt=""
+            className="h-7 w-auto object-contain select-none pointer-events-none"
+          />
         </div>
 
         {/* Symmetrical 3-Column Transit Route Cards */}
