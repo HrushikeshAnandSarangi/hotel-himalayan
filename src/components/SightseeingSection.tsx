@@ -1,163 +1,134 @@
 "use client";
 
-import React from "react";
-import {
-  Compass,
-  MapPin,
-  Clock,
-  Sparkles,
-  Trees,
-  Droplets,
-  Eye,
-  PhoneCall,
-  CalendarCheck,
-} from "lucide-react";
-import TiltCard from "./TiltCard";
+import React, { useRef } from "react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight, Clock } from "lucide-react";
 
 export default function SightseeingSection() {
-  const attractions = [
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const spots = [
     {
       name: "Rabdentse Ruins",
       time: "15 mins away",
       desc: "Walk through mossy oak forests to find the stone remains of Sikkim’s 17th-century capital, framed against wide-open valley views.",
-      icon: Trees,
-      tag: "Ancient Capital",
+      image: "/spots/rabdentse-ruins.jpg",
     },
     {
       name: "Pemayangtse Monastery",
       time: "10 mins away",
       desc: "One of the oldest and most revered monasteries in the state, filled with ancient murals and wooden Buddhist sculptures.",
-      icon: Compass,
-      tag: "Historic Sanctuary",
+      image: "/spots/pemayangtse-monastery.jpg",
     },
     {
-      name: "Pelling Skywalk & Chenrezig Statue",
+      name: "Pelling Skywalk & Chenrezig",
       time: "20 mins away",
       desc: "Walk along a transparent glass walkway suspended over lush hills, leading to a massive seated statue of the deity Chenrezig.",
-      icon: Sparkles,
-      tag: "Glass Skywalk",
+      image: "/spots/pelling-skywalk.jpg",
     },
     {
-      name: "Rimbi & Kanchenjunga Waterfalls",
+      name: "Rimbi & Kanchenjunga Falls",
       time: "30 to 45 mins away",
       desc: "Roaring mountain streams cutting straight through sheer black rock faces, perfect for a day drive.",
-      icon: Droplets,
-      tag: "Glacial Cascades",
+      image: "/spots/kanchenjunga-waterfalls.jpg",
     },
     {
       name: "Khecheopalri Lake",
       time: "1 hour away",
       desc: "A sacred wish-fulfilling lake where local lore says the birds pick away every fallen leaf to keep the surface pristine.",
-      icon: Eye,
-      tag: "Sacred Wish Lake",
-    },
-    {
-      name: "Custom Day Trips & Trekking Trails",
-      time: "Basecamp Concierge",
-      desc: "Personalized circuit planning to Singshore Bridge, Yuksom, and quiet pine forest walks departing directly from Chumbong ridge.",
-      icon: CalendarCheck,
-      tag: "Front Desk Service",
+      image: "/spots/khecheopalri-lake.jpg",
     },
   ];
 
+  const handleScroll = (direction: "left" | "right") => {
+    if (!carouselRef.current) return;
+    const scrollAmount = direction === "left" ? -360 : 360;
+    carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  };
+
   return (
-    <section id="nearby" className="py-24 bg-[#f8fbff] relative overflow-hidden">
-      {/* Symmetrical Ambient Glows */}
-      <div className="absolute top-1/4 left-[-80px] w-80 h-80 bg-blue-100/30 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-[-80px] w-80 h-80 bg-blue-100/30 rounded-full blur-[100px] pointer-events-none" />
-
+    <section id="nearby" className="py-20 sm:py-24 bg-white relative overflow-hidden select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Symmetrical Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-900 text-xs uppercase tracking-widest mb-3 font-semibold shadow-sm">
-            <Compass className="w-3.5 h-3.5 text-blue-600" />
-            <span>Nearby Spots & Things to Do</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-950 tracking-tight mb-4 font-serif">
-            The trails around Pelling are worth stepping out for.
+        {/* =====================================================================
+            CLEAN CENTERED TITLE (NO TAG, NO SUBTITLE, NO EXTRA CLUTTER)
+           ===================================================================== */}
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-950 tracking-tight font-serif">
+            Nearby Spots & Things to Do
           </h2>
-
-          {/* Symmetrical Divider Line with Center Blue Anchor */}
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-blue-300" />
-            <div className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-            <div className="h-px w-16 bg-gradient-to-l from-transparent to-blue-300" />
-          </div>
-
-          <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-serif">
-            The peaks might keep you glued to the balcony all morning, but the trails
-            around Pelling are worth stepping out for.
-          </p>
         </div>
 
-        {/* Symmetrical 3x2 Grid (6 Cards, Equal Height & Proportions) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 mb-14">
-          {attractions.map((spot, idx) => {
-            const Icon = spot.icon;
-            return (
-              <TiltCard
+        {/* =====================================================================
+            CIRCULAR CAROUSEL SLIDER (MATCHING ATTACHED IMAGE)
+            - Horizontal row of circular cards
+            - Left and right navigation chevron buttons
+           ===================================================================== */}
+        <div className="relative flex items-center justify-center">
+          {/* Left Arrow Button */}
+          <button
+            onClick={() => handleScroll("left")}
+            className="absolute left-0 sm:-left-3 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/95 hover:bg-white text-blue-900 shadow-[0_8px_25px_rgba(30,58,138,0.18)] border border-blue-200/90 hover:border-blue-500 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer"
+            aria-label="Scroll nearby spots left"
+          >
+            <ChevronLeft className="w-6 h-6 text-blue-900" />
+          </button>
+
+          {/* Circular Cards Carousel Track */}
+          <div
+            ref={carouselRef}
+            className="flex items-center gap-6 sm:gap-8 lg:gap-10 overflow-x-auto scroll-smooth py-6 px-12 sm:px-14 lg:px-16 w-full justify-start sm:justify-center no-scrollbar snap-x snap-mandatory"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}
+          >
+            {spots.map((spot, idx) => (
+              <div
                 key={idx}
-                maxTilt={6}
-                perspective={1000}
-                className="bg-white p-7 sm:p-8 rounded-3xl border border-blue-200/90 hover:border-blue-500 shadow-[0_14px_35px_rgba(30,58,138,0.06),0_0_0_1px_rgba(255,255,255,1)_inset] transition-all duration-300 group flex flex-col justify-between"
+                className="w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full aspect-square shrink-0 overflow-hidden relative border-2 border-blue-200/90 hover:border-blue-600 shadow-[0_16px_40px_rgba(30,58,138,0.14)] hover:shadow-[0_24px_55px_rgba(37,99,235,0.25)] hover:scale-105 transition-all duration-500 group cursor-pointer snap-center flex items-center justify-center text-center"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center group-hover:bg-blue-600 transition-all shadow-sm">
-                      <Icon className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors" />
-                    </div>
-                    <span className="text-[10px] tracking-wider uppercase font-bold px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-900">
-                      {spot.tag}
-                    </span>
+                {/* Full-bleed Photo */}
+                <Image
+                  src={spot.image}
+                  alt={spot.name}
+                  fill
+                  sizes="(max-width: 640px) 256px, (max-width: 1024px) 288px, 320px"
+                  className="object-cover group-hover:scale-115 transition-transform duration-700 ease-out"
+                />
+
+                {/* Dark Vignette Overlay for High Legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/60 to-slate-950/40 group-hover:via-slate-950/50 transition-colors duration-300" />
+
+                {/* Circular Content Overlay */}
+                <div className="relative z-10 px-5 sm:px-6 flex flex-col items-center justify-center text-center max-w-[85%]">
+                  {/* Time Distance Badge */}
+                  <div className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-bold text-blue-300 mb-2 font-serif">
+                    <Clock className="w-3 h-3 text-blue-400" />
+                    <span>{spot.time}</span>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-bold text-slate-950 font-serif mb-2.5 leading-snug">
+                  {/* Spot Name */}
+                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-white font-serif tracking-tight mb-2 leading-snug drop-shadow-md">
                     {spot.name}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-serif mb-6">
+
+                  {/* Spot Description */}
+                  <p className="text-[11px] sm:text-xs text-slate-200 font-serif leading-relaxed line-clamp-3 drop-shadow">
                     {spot.desc}
                   </p>
                 </div>
-
-                <div className="pt-4 border-t border-blue-100 flex items-center justify-between text-xs text-blue-900 font-medium">
-                  <span className="flex items-center gap-1.5 font-bold text-blue-950">
-                    <MapPin className="w-3.5 h-3.5 text-blue-600" />
-                    Pelling Circuit
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-700 font-semibold">
-                    <Clock className="w-3.5 h-3.5 text-blue-600" />
-                    {spot.time}
-                  </span>
-                </div>
-              </TiltCard>
-            );
-          })}
-        </div>
-
-        {/* Symmetrical Centered Sightseeing & Taxi Support Banner */}
-        <div className="p-6 sm:p-7 rounded-3xl bg-white border border-blue-200/90 flex flex-col sm:flex-row items-center justify-between gap-5 max-w-4xl mx-auto shadow-[0_12px_35px_rgba(30,58,138,0.06)] text-center sm:text-left">
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <div className="p-3.5 rounded-2xl bg-blue-50 border border-blue-200 text-blue-600 shrink-0 shadow-sm">
-              <Compass className="w-6 h-6" />
-            </div>
-            <div>
-              <span className="text-base font-bold text-slate-950 block font-serif">
-                Local Sightseeing & Taxi Arrangements
-              </span>
-              <span className="text-xs sm:text-sm text-slate-600 font-serif">
-                Let us know the evening before, and our desk can organize reliable local drivers for day trips to Khecheopalri Lake, Yuksom, local waterfalls, and the Skywalk.
-              </span>
-            </div>
+              </div>
+            ))}
           </div>
 
-          <a
-            href="tel:+919304957835"
-            className="shrink-0 px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-xs uppercase tracking-wider font-semibold transition-all shadow-[0_6px_20px_rgba(37,99,235,0.3)] flex items-center justify-center gap-2"
+          {/* Right Arrow Button */}
+          <button
+            onClick={() => handleScroll("right")}
+            className="absolute right-0 sm:-right-3 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/95 hover:bg-white text-blue-900 shadow-[0_8px_25px_rgba(30,58,138,0.18)] border border-blue-200/90 hover:border-blue-500 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer"
+            aria-label="Scroll nearby spots right"
           >
-            <PhoneCall className="w-4 h-4" />
-            <span>Arrange Local Taxi</span>
-          </a>
+            <ChevronRight className="w-6 h-6 text-blue-900" />
+          </button>
         </div>
       </div>
     </section>
