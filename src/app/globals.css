@@ -229,6 +229,77 @@ h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
   animation: cloudDriftSlow 38s ease-in-out infinite;
 }
 
+/* Lottie Motion Skill: Papercut Cloud Drift & Ambient Motion System */
+@keyframes paperCloudDrift1 {
+  0% {
+    transform: translate3d(-55px, 0px, 0) scale(1, 1);
+  }
+  50% {
+    transform: translate3d(65px, -12px, 0) scale(1.02, 0.98);
+  }
+  100% {
+    transform: translate3d(-55px, 0px, 0) scale(1, 1);
+  }
+}
+
+@keyframes paperCloudDrift2 {
+  0% {
+    transform: translate3d(55px, -8px, 0) scale(1, 1);
+  }
+  50% {
+    transform: translate3d(-65px, 10px, 0) scale(0.98, 1.02);
+  }
+  100% {
+    transform: translate3d(55px, -8px, 0) scale(1, 1);
+  }
+}
+
+@keyframes snowflakeSwaySlow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(10px, -8px, 0);
+  }
+}
+
+@keyframes alpineBirdGlideArc {
+  0% {
+    transform: translate3d(-80px, 18px, 0) rotate(-3deg);
+    opacity: 0.25;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  75% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(140px, -24px, 0) rotate(2deg);
+    opacity: 0.25;
+  }
+}
+
+.animate-paper-cloud-1 {
+  animation: paperCloudDrift1 26s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-paper-cloud-2 {
+  animation: paperCloudDrift2 32s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-snowflake-sway {
+  animation: snowflakeSwaySlow 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-alpine-birds {
+  animation: alpineBirdGlideArc 22s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+}
+
 .animate-cloud-continuous {
   animation: cloudDriftContinuous 55s linear infinite alternate;
 }
