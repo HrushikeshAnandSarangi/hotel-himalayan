@@ -117,9 +117,10 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             </linearGradient>
 
             {/* =========================================================
-                SHADES OF BLUE FOR MOUNTAIN ROCK DETAILING (NO BROWN)
+                NATURAL ALPINE EARTHY BROWN & SLATE MOUNTAIN ROCK STRATA
+                (Crags, couloirs, and cliffs with razor-sharp icy tips)
                ========================================================= */}
-            {/* Sunlit Rock Ridge: Vibrant Mountain Blue / Cobalt */}
+            {/* Sunlit Rock Ridge: Warm Rocky Sienna / Earthy Umber */}
             <linearGradient
               id="rockBlueLit"
               x1="0.3"
@@ -128,13 +129,13 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               y2="1"
               colorInterpolation="linearRGB"
             >
-              <stop offset="0%" stopColor="#60a5fa" />
-              <stop offset="35%" stopColor="#3b82f6" />
-              <stop offset="75%" stopColor="#2563eb" />
-              <stop offset="100%" stopColor="#1d4ed8" />
+              <stop offset="0%" stopColor="#7a5c48" />
+              <stop offset="35%" stopColor="#634836" />
+              <stop offset="75%" stopColor="#4d3627" />
+              <stop offset="100%" stopColor="#38261b" />
             </linearGradient>
 
-            {/* Shaded Rock Ridge: Deep Alpine Navy / Midnight Cobalt */}
+            {/* Shaded Rock Ridge: Deep Alpine Slate-Brown & Shadow Stone */}
             <linearGradient
               id="rockBlueDark"
               x1="0"
@@ -143,13 +144,13 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               y2="1"
               colorInterpolation="linearRGB"
             >
-              <stop offset="0%" stopColor="#1e40af" />
-              <stop offset="40%" stopColor="#1e3a8a" />
-              <stop offset="75%" stopColor="#172554" />
-              <stop offset="100%" stopColor="#0f172a" />
+              <stop offset="0%" stopColor="#4a372c" />
+              <stop offset="40%" stopColor="#36261d" />
+              <stop offset="75%" stopColor="#241913" />
+              <stop offset="100%" stopColor="#1a1e28" />
             </linearGradient>
 
-            {/* Secondary Blue Strata (Crags & Couloirs) */}
+            {/* Secondary Rock Strata (Crags & Couloirs) */}
             <linearGradient
               id="rockBlueStrata"
               x1="0"
@@ -158,12 +159,12 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               y2="1"
               colorInterpolation="linearRGB"
             >
-              <stop offset="0%" stopColor="#93c5fd" />
-              <stop offset="50%" stopColor="#2563eb" />
-              <stop offset="100%" stopColor="#1e3a8a" />
+              <stop offset="0%" stopColor="#8c6a53" />
+              <stop offset="50%" stopColor="#543c2d" />
+              <stop offset="100%" stopColor="#2c1e16" />
             </linearGradient>
 
-            {/* Midground Ridge Slopes: Rich Royal Blue-Navy */}
+            {/* Midground Ridge Slopes: Earthy Alpine Ridge & Foothills */}
             <linearGradient
               id="midRidgeBlue"
               x1="0"
@@ -172,10 +173,10 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               y2="1"
               colorInterpolation="linearRGB"
             >
-              <stop offset="0%" stopColor="#3b82f6" />
-              <stop offset="35%" stopColor="#2563eb" />
-              <stop offset="70%" stopColor="#1e40af" />
-              <stop offset="100%" stopColor="#172554" />
+              <stop offset="0%" stopColor="#5a4233" />
+              <stop offset="35%" stopColor="#443023" />
+              <stop offset="70%" stopColor="#312219" />
+              <stop offset="100%" stopColor="#1e1814" />
             </linearGradient>
 
             {/* Seamless Lower Valley Fade into Pure White (Zero Gray Patch) */}
@@ -187,9 +188,9 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               y2="1"
               colorInterpolation="linearRGB"
             >
-              <stop offset="0%" stopColor="#1e3a8a" stopOpacity="0.85" />
-              <stop offset="30%" stopColor="#2563eb" stopOpacity="0.5" />
-              <stop offset="70%" stopColor="#93c5fd" stopOpacity="0.2" />
+              <stop offset="0%" stopColor="#3d2c22" stopOpacity="0.8" />
+              <stop offset="30%" stopColor="#574235" stopOpacity="0.5" />
+              <stop offset="70%" stopColor="#94a3b8" stopOpacity="0.2" />
               <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
             </linearGradient>
 
