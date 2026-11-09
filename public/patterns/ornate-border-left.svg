@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 431" width="100%" height="100%" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="blueGradV" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a193b" />
+      <stop offset="50%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#0a193b" />
+    </linearGradient>
+  </defs>
+  <rect width="50" height="431" fill="#dcecf9" />
+  <g fill="url(#blueGradV)" fill-rule="evenodd">
+    <path d="M 39 392 L 37 394 L 35 400 L 37 406 L 43 411 L 49 411 L 49 406 L 46 405 L 48 403 L 49 394 L 47 392 L 44 391 Z" />
+    <path d="M 11 385 L 7 389 L 3 398 L 3 412 L 4 416 L 9 425 L 15 430 L 49 430 L 49 418 L 43 421 L 34 421 L 31 420 L 24 414 L 20 406 L 20 395 L 22 391 L 27 386 L 31 384 L 34 384 L 32 382 L 29 381 L 20 381 L 16 382 Z" />
+    <path d="M 49 344 L 39 347 L 24 349 L 12 349 L 0 347 L 0 367 L 20 366 L 37 363 L 49 359 Z" />
+    <path d="M 4 294 L 4 298 L 9 310 L 17 318 L 26 323 L 32 325 L 38 326 L 49 326 L 49 311 L 35 308 L 14 300 L 12 298 L 10 298 Z" />
+    <path d="M 49 284 L 49 262 L 28 270 L 14 273 L 29 276 L 44 281 Z" />
+    <path d="M 49 220 L 36 220 L 23 224 L 18 227 L 11 233 L 7 239 L 4 247 L 4 251 L 13 246 L 25 241 L 37 237 L 49 235 Z" />
+    <path d="M 0 179 L 0 198 L 27 197 L 49 201 L 48 186 L 28 181 L 11 179 Z" />
+    <path d="M 49 134 L 42 135 L 38 138 L 35 146 L 36 150 L 38 153 L 40 154 L 46 154 L 48 153 L 49 143 L 47 141 Z" />
+    <path d="M 49 114 L 41 111 L 36 111 L 35 110 L 25 111 L 16 115 L 8 122 L 5 127 L 3 134 L 3 147 L 6 155 L 11 161 L 21 165 L 28 165 L 34 162 L 29 161 L 22 155 L 20 151 L 20 140 L 23 133 L 31 126 L 34 125 L 44 125 L 49 128 Z" />
+    <path d="M 39 49 L 35 55 L 35 58 L 37 63 L 43 68 L 49 68 L 49 63 L 46 62 L 49 59 L 49 51 L 47 49 L 44 48 Z" />
+    <path d="M 14 40 L 7 46 L 3 56 L 3 69 L 7 79 L 10 83 L 20 90 L 27 92 L 40 92 L 48 89 L 49 75 L 43 78 L 35 78 L 28 75 L 23 70 L 20 63 L 20 52 L 22 48 L 30 41 L 34 41 L 32 39 L 29 38 L 20 38 Z" />
+    <path d="M 49 1 L 39 4 L 23 6 L 14 6 L 0 4 L 0 24 L 8 24 L 9 23 L 26 22 L 37 20 L 49 16 Z" />
+  </g>
+</svg>
