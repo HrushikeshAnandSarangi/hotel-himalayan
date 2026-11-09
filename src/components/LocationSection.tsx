@@ -18,42 +18,23 @@ export default function LocationSection() {
 
   return (
     <section id="location" className="py-28 bg-[#f8fbff] relative overflow-hidden">
-      {/* =========================================================================
-          AMBIENT MOTION LAYER: Ornate Blue SVG Pattern Spread Throughout Section
-          ========================================================================= */}
-      
-      {/* 1. Full-Section Top Architectural Filigree Frieze */}
-      <div className="absolute top-0 inset-x-0 w-full h-12 sm:h-16 md:h-20 overflow-hidden pointer-events-none select-none z-0 opacity-80 border-b border-blue-200/50">
+      {/* 1. Full-Section Top Architectural Filigree Frieze (Crisp, Static, No White Overlay) */}
+      <div className="absolute top-0 inset-x-0 w-full h-12 sm:h-16 md:h-20 overflow-hidden pointer-events-none select-none z-0 border-b border-blue-200/50">
         <img
           src="/patterns/ornate-border-top.svg"
           alt=""
-          className="w-full h-full object-fill opacity-90"
+          className="w-full h-full object-fill"
         />
       </div>
 
-      {/* 2. Full-Section Bottom Architectural Filigree Frieze */}
-      <div className="absolute bottom-0 inset-x-0 w-full h-12 sm:h-16 md:h-20 overflow-hidden pointer-events-none select-none z-0 opacity-80 border-t border-blue-200/50">
+      {/* 2. Full-Section Bottom Architectural Filigree Frieze (Crisp, Static, No White Overlay) */}
+      <div className="absolute bottom-0 inset-x-0 w-full h-12 sm:h-16 md:h-20 overflow-hidden pointer-events-none select-none z-0 border-t border-blue-200/50">
         <img
           src="/patterns/ornate-border-bottom.svg"
           alt=""
-          className="w-full h-full object-fill opacity-90"
+          className="w-full h-full object-fill"
         />
       </div>
-
-      {/* 3. Repeating Ambient Motif Backdrop across the entire section width with slow breathing motion */}
-      <div
-        className="absolute inset-0 w-full h-full pointer-events-none select-none z-0 opacity-[0.06] mix-blend-multiply"
-        style={{
-          backgroundImage: `url('/patterns/ornate-border-top.svg')`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "680px auto",
-          animation: "patternDrift 60s linear infinite",
-        }}
-      />
-
-      {/* 4. Subtle Crystalline Ambient Glows */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-blue-200/35 rounded-full blur-3xl pointer-events-none animate-pulse duration-10000" />
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl pointer-events-none animate-pulse duration-10000 delay-1000" />
 
       {/* =========================================================================
           CONTENT LAYER
@@ -78,7 +59,7 @@ export default function LocationSection() {
         </div>
 
         {/* Masterpiece Architectural Centerpiece: Framed on ALL Sides by the Blue Ornate Pattern */}
-        <div className="relative rounded-3xl overflow-hidden border border-blue-200/90 shadow-[0_20px_50px_rgba(10,25,59,0.08)] bg-white transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:shadow-[0_28px_60px_rgba(10,25,59,0.13)]">
+        <div className="relative rounded-3xl overflow-hidden border border-blue-200/90 shadow-[0_20px_50px_rgba(10,25,59,0.08)] bg-white">
           {/* Card Top Ornate SVG Border */}
           <div className="w-full h-14 sm:h-18 md:h-20 bg-[#dcecf9] border-b border-blue-200/70 overflow-hidden relative select-none flex items-center justify-center">
             <img

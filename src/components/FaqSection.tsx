@@ -10,7 +10,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
-  Camera,
 } from "lucide-react";
 
 export default function FaqSection() {
@@ -168,9 +167,8 @@ export default function FaqSection() {
           {/* Gallery Header */}
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-slate-950 font-serif mb-2 flex items-center gap-2.5">
-                <Camera className="w-5 h-5 text-blue-600" />
-                <span>Atmosphere & Vistas</span>
+              <h3 className="text-2xl sm:text-3xl font-bold text-slate-950 font-serif mb-2">
+                Atmosphere & Vistas
               </h3>
               <p className="text-sm text-slate-600 font-serif">
                 A glimpse into life, sunrises, and mountain quietude at Hotel Himalayan.

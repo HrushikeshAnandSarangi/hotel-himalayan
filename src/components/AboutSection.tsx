@@ -103,12 +103,6 @@ export default function AboutSection() {
       className="relative h-[340vh] sm:h-[380vh] bg-white select-none"
     >
       {/* =====================================================================
-          TOPOGRAPHICAL MOUNTAIN SEAM FROM HERO SECTION
-          - Seamlessly bridges the deep midnight foothill (#0b192c) into About
-         ===================================================================== */}
-      <div className="absolute top-0 inset-x-0 h-12 bg-gradient-to-b from-[#0b192c] via-[#0b192c]/40 to-transparent pointer-events-none z-30" />
-
-      {/* =====================================================================
           FULL-SCREEN LOCKED VIEWPORT
           - Pinned at top-0 while the user scrolls through the 340vh runway
           - 50/50 split on desktop: Left = Full-bleed Slider, Right = Traced Text

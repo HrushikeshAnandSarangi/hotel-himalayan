@@ -225,33 +225,11 @@ export default function RoomsSection({ onSelectRoom }: RoomsSectionProps) {
         </div>
 
         {/* =========================================================================
-            CALENDAR & AVAILABILITY HUB (Framed with Blue Ornate SVG Patterns)
+            CALENDAR & AVAILABILITY HUB (Zero Clutter, Pure Architecture)
             ========================================================================= */}
-        <div className="relative rounded-3xl overflow-hidden border border-blue-200/90 shadow-[0_24px_55px_rgba(14,28,64,0.08)] bg-white mb-20">
-          {/* Top Ornate SVG Pattern Border */}
-          <div className="w-full h-12 sm:h-16 md:h-18 bg-[#dcecf9] border-b border-blue-200/70 overflow-hidden relative select-none">
-            <img
-              src="/patterns/ornate-border-top.svg"
-              alt=""
-              className="w-full h-full object-fill pointer-events-none"
-            />
-          </div>
-
-          {/* Middle Body with Left and Right Ornate SVG Borders */}
-          <div className="relative flex flex-row items-stretch">
-            {/* Left Ornate SVG Border */}
-            <div className="w-3 sm:w-5 md:w-8 shrink-0 bg-[#dcecf9] border-r border-blue-200/70 overflow-hidden relative select-none">
-              <img
-                src="/patterns/ornate-border-left.svg"
-                alt=""
-                className="w-full h-full object-fill pointer-events-none"
-              />
-            </div>
-
-            {/* Calendar + Status Card Body */}
-            <div className="flex-1 p-4 sm:p-7 lg:p-10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
-              {/* ================= LEFT COLUMN: BIG INTERACTIVE CALENDAR ================= */}
+        <div className="relative rounded-3xl overflow-hidden border border-blue-200/80 shadow-[0_20px_50px_rgba(14,28,64,0.06)] bg-white p-6 sm:p-9 lg:p-12 mb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+            {/* ================= LEFT COLUMN: BIG INTERACTIVE CALENDAR ================= */}
               <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl border border-blue-200/80 p-5 sm:p-7 bg-white shadow-sm">
                 <div>
                   {/* Calendar Month Navigation Header */}
@@ -460,26 +438,6 @@ export default function RoomsSection({ onSelectRoom }: RoomsSectionProps) {
               </div>
             </div>
           </div>
-
-          {/* Right Ornate SVG Border */}
-          <div className="w-3 sm:w-5 md:w-8 shrink-0 bg-[#dcecf9] border-l border-blue-200/70 overflow-hidden relative select-none">
-            <img
-              src="/patterns/ornate-border-right.svg"
-              alt=""
-              className="w-full h-full object-fill pointer-events-none"
-            />
-          </div>
-        </div>
-
-          {/* Bottom Ornate SVG Pattern Border */}
-          <div className="w-full h-12 sm:h-16 md:h-18 bg-[#dcecf9] border-t border-blue-200/70 overflow-hidden relative select-none">
-            <img
-              src="/patterns/ornate-border-bottom.svg"
-              alt=""
-              className="w-full h-full object-fill pointer-events-none"
-            />
-          </div>
-        </div>
 
         {/* =========================================================================
             AMENITIES SHOWCASE (Extracted Directly from Google Maps & Reviews)

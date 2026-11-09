@@ -7,6 +7,7 @@ import {
   CalendarCheck,
   BedDouble,
 } from "lucide-react";
+import CloudDivider from "@/components/CloudDivider";
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -559,6 +560,12 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             d="M0,1080 L0,880 Q320,830 720,870 T1480,840 T1920,880 L1920,1080 Z"
             fill="#0b192c"
           />
+
+          {/* 11. Billowing Low-Altitude White Cloud Bank at Foothill Base */}
+          <path
+            d="M0,1080 L0,985 Q120,945 240,975 Q380,925 520,965 Q660,915 820,955 Q980,905 1140,950 Q1300,895 1460,945 Q1600,905 1740,955 Q1840,925 1920,965 L1920,1080 Z"
+            fill="#ffffff"
+          />
         </svg>
       </div>
 
@@ -629,8 +636,10 @@ export default function Hero({ onOpenBooking }: HeroProps) {
         </div>
       </div>
 
-      {/* Topographical Mountain Foothill Seam to About Section */}
-      <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-b from-transparent to-[#0b192c] pointer-events-none z-20" />
+      {/* Billowing SVG Cloud Bank across the bottom of Hero transitioning into clean white space */}
+      <div className="absolute bottom-0 inset-x-0 w-full overflow-hidden pointer-events-none select-none z-20">
+        <CloudDivider fillColor="#ffffff" accentColor="#e2effc" />
+      </div>
     </section>
   );
 }
