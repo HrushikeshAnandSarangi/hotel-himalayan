@@ -1,15 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Star,
-  ExternalLink,
-  CalendarCheck,
-  BedDouble,
-} from "lucide-react";
+import { Star, ExternalLink } from "lucide-react";
 
 interface HeroProps {
-  onOpenBooking: () => void;
+  onOpenBooking?: () => void;
   onOpenBookingWithRoom?: (roomName: string) => void;
 }
 
@@ -36,7 +31,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
       id="hero"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative h-screen w-full overflow-hidden flex flex-col justify-end items-center bg-[#548fae] select-none pb-12 sm:pb-16"
+      className="relative h-screen w-full overflow-hidden flex flex-col justify-start bg-[#548fae] select-none"
     >
       {/* =========================================================================
           LAYERED 3D PAPERCUT HIMALAYAN ALPINE SCENE
@@ -636,77 +631,115 @@ export default function Hero({ onOpenBooking }: HeroProps) {
       </div>
 
       {/* =========================================================================
-          CONTENT: AUTHORITATIVE TYPOGRAPHY & INTERACTIVE ACTIONS
-          - High-contrast Plantin Pro serif with soft paper shadow
-          - Vibrant alpine cerulean action button (#0284c7)
-          - Crisp cardstock off-white button for Rooms (#ffffff)
-          - Verified Google rating subscript
+          MARGIN INDICATOR: VERTICAL SCROLL EXPLORATION (Left Edge)
          ========================================================================= */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
-        {/* Exact Layout Hook Line */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 max-w-3xl leading-[1.15] font-serif text-white drop-shadow-[0_2px_8px_rgba(2,15,26,0.95)]">
-          Experience the Himalayas up close, right from your morning tea.
-        </h1>
+      <div className="hidden md:flex absolute left-4 sm:left-6 lg:left-8 top-1/2 -translate-y-1/2 flex-col items-center gap-3 z-30 pointer-events-none select-none">
+        <div className="w-[1px] h-10 bg-[#08233a]/25" />
+        <span
+          className="font-editorial-mono text-[9px] tracking-[0.3em] uppercase text-[#08233a]/75 font-semibold"
+          style={{ writingMode: "vertical-rl" }}
+        >
+          SCROLL TO EXPLORE
+        </span>
+        <span className="text-xs text-[#1472d2] animate-bounce">↓</span>
+        <div className="w-[1px] h-10 bg-[#08233a]/25" />
+      </div>
 
-        {/* Exact Layout Sub-Lines */}
-        <p className="text-base sm:text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed mb-8 font-serif text-sky-100 drop-shadow-[0_2px_6px_rgba(2,15,26,0.9)]">
-          Out on this ridge in Pelling, Kanchenjunga doesn&apos;t feel like a
-          distant backdrop. She sits right in front of you, shedding her coat
-          of morning mist and catching the first amber light while the rest of
-          the valley is still asleep.
-        </p>
-
-        {/* Symmetrical Dual Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
-          {/* Primary Action Button: Vibrant Alpine Sapphire / Cerulean */}
-          <button
-            onClick={onOpenBooking}
-            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl bg-[#0284c7] hover:bg-[#0369a1] active:scale-95 text-white font-bold text-xs uppercase tracking-widest shadow-[0_8px_25px_rgba(2,132,199,0.45)] border border-[#38bdf8]/50 transition-all duration-300 cursor-pointer hover:shadow-[0_12px_32px_rgba(2,132,199,0.6)] flex items-center justify-center gap-2"
-          >
-            <CalendarCheck className="w-4 h-4 text-white" />
-            <span>Check Availability</span>
-          </button>
-
-          {/* Secondary Action Button: Crisp Off-White Cardstock */}
-          <a
-            href="#rooms"
-            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl border-2 border-[#124a72] bg-white hover:bg-slate-50 active:scale-95 text-[#072d47] font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_6px_20px_rgba(0,0,0,0.18)] hover:border-[#072d47] flex items-center justify-center gap-2"
-          >
-            <BedDouble className="w-4 h-4 text-[#0284c7]" />
-            <span>View Rooms</span>
-          </a>
+      {/* =========================================================================
+          ARCHITECTURAL & EXPEDITION ANNOTATION (Upper Right Sky)
+         ========================================================================= */}
+      <div className="hidden lg:block absolute top-24 right-8 xl:right-14 z-20 pointer-events-none font-editorial-mono text-[11px] text-[#061d30]/85 tracking-wider leading-relaxed select-none">
+        <div className="flex items-center gap-1.5 text-[#1472d2] font-bold text-[10px] uppercase mb-1">
+          <span>+</span>
+          <span>EXPEDITION NOTE</span>
+          <span className="w-8 h-[1px] bg-[#1472d2]/40" />
         </div>
+        <p className="font-bold text-[#061d30]">KANCHENJUNGA RANGE • 8,586 M</p>
+        <p className="text-[#08233a]/80">CHUMBONG RIDGE • ELEV. 7,200 FT</p>
+        <p className="text-[#08233a]/70">FIRST LIGHT: 05:42 AM IST</p>
+      </div>
 
-        {/* Small Subscript Google Rating Mention (Directly Below Buttons) */}
-        <div className="mt-4 pt-1">
+      {/* =========================================================================
+          VISTA & CONDITIONS CARD (Bottom Right)
+         ========================================================================= */}
+      <div className="hidden md:block absolute bottom-8 right-6 lg:right-12 z-20 pointer-events-none bg-white/75 backdrop-blur-md border border-[#124a72]/20 rounded-xl p-3.5 font-editorial-mono text-[10px] sm:text-[11px] text-[#061d30] shadow-sm select-none">
+        <div className="flex items-center justify-between text-[#1472d2] font-bold uppercase mb-1.5 border-b border-[#124a72]/15 pb-1">
+          <span>VISTA CONDITIONS</span>
+          <span>+</span>
+        </div>
+        <div className="space-y-0.5 text-[#08233a]/85 font-medium">
+          <div>ELEVATION: <span className="font-bold text-[#061d30]">7,200 FT</span></div>
+          <div>RANGE: <span className="font-bold text-[#061d30]">180° UNBROKEN PEAKS</span></div>
+          <div>AIR: <span className="font-bold text-[#061d30]">CRISP ALPINE HIGH</span></div>
+          <div className="text-[10px] text-[#08233a]/70 pt-0.5">27.3054° N • 88.2411° E</div>
+        </div>
+      </div>
+
+      {/* =========================================================================
+          INDIGENOUS FLORA CARD (Bottom Left)
+         ========================================================================= */}
+      <div className="hidden lg:block absolute bottom-8 left-20 xl:left-24 z-20 pointer-events-none bg-white/70 backdrop-blur-md border border-[#124a72]/20 rounded-xl p-3 font-editorial-mono text-[10px] text-[#061d30] shadow-sm select-none">
+        <div className="flex items-center justify-between text-[#1472d2] font-bold uppercase mb-1 border-b border-[#124a72]/15 pb-1">
+          <span>INDIGENOUS FLORA</span>
+          <span>+</span>
+        </div>
+        <div className="space-y-0.5 text-[#08233a]/80">
+          <div>• RHODODENDRON ARBOREUM</div>
+          <div>• EAST HIMALAYAN BLUE PINE</div>
+          <div>• WILD ALPINE JUNIPER</div>
+        </div>
+      </div>
+
+      {/* =========================================================================
+          MAIN EDITORIAL HOOK LINE: BLENDED INTO THE SCENE (Left Aligned)
+          - Tall condensed woodblock / letterpress lettering (Reference Style)
+          - "THE" highlighted in vivid sky blue (#1472d2)
+          - Delicate sub-line note & quiet accent
+          - Zero noisy marketing CTA buttons or paragraphs
+         ========================================================================= */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pt-28 sm:pt-32 lg:pt-36 flex flex-col items-start select-none">
+        {/* Subtle Verified Google Rating Tag */}
+        <div className="mb-4 sm:mb-5">
           <a
             href={gmapsLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs transition-colors cursor-pointer group font-serif text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] font-semibold"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-[#124a72]/20 text-xs text-[#061d30] hover:bg-white transition-all shadow-sm group"
           >
-            <div className="flex text-amber-400">
+            <div className="flex text-amber-500">
               {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className="w-3.5 h-3.5 fill-amber-400 text-amber-400 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
-                />
+                <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
               ))}
             </div>
-            <span className="font-bold ml-0.5">
-              4.2 / 5.0 on Google Maps
-            </span>
-            <span>•</span>
-            <span className="group-hover:underline">
-              100+ verified traveler reviews
-            </span>
-            <ExternalLink className="w-3 h-3 text-white ml-0.5" />
+            <span className="font-bold text-[11px]">4.2 / 5.0</span>
+            <span className="text-[#08233a]/75 text-[11px] font-sans">• 100+ Google Reviews</span>
+            <ExternalLink className="w-3 h-3 text-[#1472d2] group-hover:translate-x-0.5 transition-transform" />
           </a>
         </div>
-      </div>
 
-      {/* Gentle Bottom Transition into Clean White Space */}
-      <div className="absolute bottom-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-b from-transparent via-white/50 to-white pointer-events-none z-20" />
+        {/* Tall Condensed Letterpress Headline */}
+        <h1 className="font-hero-condensed uppercase tracking-tight">
+          <span className="block text-[15vw] sm:text-[12vw] md:text-[10vw] lg:text-[102px] xl:text-[118px] leading-[0.88] text-[#061d30] drop-shadow-[0_2px_4px_rgba(255,255,255,0.4)]">
+            EXPERIENCE
+          </span>
+          <span className="flex flex-wrap items-baseline gap-x-3 sm:gap-x-4 text-[15vw] sm:text-[12vw] md:text-[10vw] lg:text-[102px] xl:text-[118px] leading-[0.88]">
+            <span className="text-[#1472d2] drop-shadow-[0_2px_5px_rgba(255,255,255,0.5)]">
+              THE
+            </span>
+            <span className="text-[#061d30] drop-shadow-[0_2px_4px_rgba(255,255,255,0.4)]">
+              HIMALAYAS
+            </span>
+          </span>
+        </h1>
+
+        {/* Quiet Subtitle Note & Accent Rule */}
+        <div className="mt-4 sm:mt-5 max-w-md">
+          <p className="text-xs sm:text-sm md:text-base font-serif italic text-[#08233a] font-semibold leading-relaxed tracking-wide drop-shadow-[0_1px_2px_rgba(255,255,255,0.4)]">
+            Up close from your morning tea • Chumbong, West Sikkim
+          </p>
+          <div className="w-12 h-[2px] bg-[#1472d2] mt-2.5 rounded-full" />
+        </div>
+      </div>
     </section>
   );
 }

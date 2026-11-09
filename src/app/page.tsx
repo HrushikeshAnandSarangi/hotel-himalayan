@@ -41,10 +41,7 @@ export default function Home() {
           onOpenBookingWithRoom={handleOpenBookingWithRoom}
         />
 
-        {/* Generous White Space After Hero Section */}
-        <div className="w-full h-14 sm:h-20 lg:h-28 bg-white" />
-
-        {/* 2. About the Hotel */}
+        {/* 2. About the Hotel - Continuous alpine theme with scroll-driven screen takeover */}
         <AboutSection />
 
         {/* 3. Nearby Spots & Things to Do */}

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @font-face {
@@ -64,6 +65,19 @@ body {
 /* Ensure Plantin Pro is applied globally */
 h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
   font-family: var(--font-plantin) !important;
+}
+
+/* Tall condensed woodblock / letterpress font for Hero Hook Line (media reference) */
+.font-hero-condensed,
+.font-hero-condensed * {
+  font-family: 'Bebas Neue', 'Barlow Condensed', 'Impact', sans-serif !important;
+  letter-spacing: 0.01em;
+}
+
+/* Technical architectural & expedition field notes */
+.font-editorial-mono,
+.font-editorial-mono * {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
 }
 
 /* 3D and Spatial Depth Utilities */
