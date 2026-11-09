@@ -25,10 +25,10 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
 
   const navLinks = [
     { label: "ABOUT", href: "#about" },
-    { label: "ROOMS & ACCOMMODATIONS", href: "#rooms" },
-    { label: "NEARBY SPOTS", href: "#nearby" },
-    { label: "WHAT GUESTS SAY", href: "#reviews" },
-    { label: "HOW TO REACH", href: "#location" },
+    { label: "ROOMS", href: "#rooms" },
+    { label: "SIGHTSEEING", href: "#nearby" },
+    { label: "REVIEWS", href: "#reviews" },
+    { label: "LOCATION", href: "#location" },
     { label: "FAQS", href: "#faq" },
   ];
 
@@ -152,34 +152,23 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
       </div>
 
       {/* =====================================================================
-          TIER 3: PRIMARY NAVIGATION LINKS & LIVE STATUS STRIP
-          - Left: Wide uppercase tracked navigation links (About, Rooms & Accommodations...)
-          - Right: Institutional live status indicator (Today's Hours / Sightlines)
+          TIER 3: PRIMARY NAVIGATION LINKS (Centered & Symmetrical)
+          - Single-word uppercase tracked tabs centered along the axis
          ===================================================================== */}
       <div className="w-full bg-[#fcfdff] border-b border-blue-100/90 py-2.5 px-4 sm:px-6 lg:px-8 hidden md:block">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Navigation Links */}
-          <nav className="flex items-center gap-6 lg:gap-8 font-serif">
+        <div className="max-w-7xl mx-auto flex items-center justify-center">
+          {/* Centered Symmetrical Navigation Links */}
+          <nav className="flex items-center justify-center gap-8 lg:gap-14 font-serif">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-[12px] tracking-[0.18em] font-semibold text-slate-800 hover:text-blue-600 uppercase transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all"
+                className="text-[12px] tracking-[0.22em] font-semibold text-slate-800 hover:text-blue-600 uppercase transition-colors py-1 relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all"
               >
                 {link.label}
               </a>
             ))}
           </nav>
-
-          {/* Right Status Indicator (Matching Philbrook's "TODAY'S HOURS" note) */}
-          <div className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.16em] text-blue-950 uppercase font-serif">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-slate-600 font-medium">TODAY:</span>
-            <span>FRONT-ROW PEAK SIGHTLINES • OPEN 24/7</span>
-          </div>
         </div>
       </div>
 
@@ -188,14 +177,14 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
          ===================================================================== */}
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-blue-200 bg-white shadow-xl px-5 py-6 space-y-5 animate-fadeIn">
-          {/* Mobile Navigation Links */}
-          <div className="flex flex-col space-y-3 font-serif">
+          {/* Mobile Navigation Links (Centered) */}
+          <div className="flex flex-col space-y-3 font-serif text-center">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-1 text-sm font-semibold tracking-[0.14em] text-slate-800 hover:text-blue-600 uppercase transition-colors border-b border-blue-50 pb-2"
+                className="py-1 text-sm font-semibold tracking-[0.16em] text-slate-800 hover:text-blue-600 uppercase transition-colors border-b border-blue-50 pb-2 text-center"
               >
                 {link.label}
               </a>
