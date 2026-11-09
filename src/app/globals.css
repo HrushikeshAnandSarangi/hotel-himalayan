@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Plantin Pro';
+  src: url('https://db.onlinewebfonts.com/t/c8b39fed03f94d04076e43085def7a5e.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/c8b39fed03f94d04076e43085def7a5e.woff') format('woff'),
+       url('https://db.onlinewebfonts.com/t/c8b39fed03f94d04076e43085def7a5e.ttf') format('truetype');
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Plantin';
+  src: url('https://db.onlinewebfonts.com/t/c8b39fed03f94d04076e43085def7a5e.woff2') format('woff2');
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-plantin: 'Plantin Pro', 'Plantin', 'Newsreader', 'EB Garamond', Georgia, serif;
+  --bg-primary: #ffffff;
+  --bg-subtle: #f8fafc;
+  --bg-ice: #f0f7ff;
+  --text-main: #020617;
+  --text-muted: #1e293b;
+  --blue-primary: #1e40af;
+  --blue-vibrant: #2563eb;
+  --blue-light: #93c5fd;
+  --blue-border: #bfdbfe;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-plantin);
+  background-color: #ffffff;
+  color: #020617;
+}
+
+body {
+  background-color: #ffffff;
+  color: #020617;
+  font-family: var(--font-plantin);
+  overflow-x: hidden;
+}
+
+/* Custom delicate blue scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+::-webkit-scrollbar-thumb {
+  background: #93c5fd;
+  border-radius: 5px;
+  border: 2px solid #ffffff;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
+/* Ensure Plantin Pro is applied globally */
+h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
+  font-family: var(--font-plantin) !important;
+}
+
+/* 3D and Spatial Depth Utilities */
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.translate-z-10 {
+  transform: translateZ(10px);
+}
+
+.translate-z-20 {
+  transform: translateZ(20px);
+}
+
+.translate-z-30 {
+  transform: translateZ(30px);
+}
+
+.translate-z-40 {
+  transform: translateZ(40px);
+}
+
+/* Glassmorphism on White Surface */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(191, 219, 254, 0.7);
+  box-shadow: 0 20px 50px -10px rgba(30, 58, 138, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.95) inset;
+}
+
+.glass-card-interactive {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(191, 219, 254, 0.65);
+  box-shadow: 0 16px 40px -8px rgba(30, 58, 138, 0.07), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-interactive:hover {
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 25px 60px -10px rgba(37, 99, 235, 0.14), 0 0 0 1px rgba(219, 234, 254, 1) inset;
+  transform: translateY(-6px) translateZ(15px);
+}
+
+/* Smooth Weightless Levitation Keyframes */
+@keyframes levitate {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.4deg);
+  }
+}
+
+@keyframes levitate-reverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(8px) rotate(-0.4deg);
+  }
+}
+
+@keyframes pulse-subtle-glow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.animate-levitate {
+  animation: levitate 6s ease-in-out infinite;
+}
+
+.animate-levitate-delay {
+  animation: levitate-reverse 7s ease-in-out infinite 1s;
+}
+
+.animate-pulse-glow {
+  animation: pulse-subtle-glow 8s ease-in-out infinite;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
