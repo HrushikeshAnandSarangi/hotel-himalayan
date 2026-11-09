@@ -43,6 +43,40 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap"
           rel="stylesheet"
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Hotel",
+              name: "Hotel Himalayan",
+              description:
+                "Scenic Hilltop Retreat in Chumbong, Pelling, West Sikkim overlooking Mt. Kanchenjunga.",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Chumbong Road",
+                addressLocality: "Pelling",
+                addressRegion: "West Sikkim",
+                postalCode: "737113",
+                addressCountry: "IN",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 27.305437,
+                longitude: 88.241066,
+              },
+              telephone: "+919304957835",
+              priceRange: "₹1999 - ₹3499",
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.2",
+                reviewCount: "104",
+              },
+              hasMap:
+                "https://www.google.com/maps/place/Hotel+Himalayan/@27.3053852,88.2382925,17z/data=!4m9!3m8!1s0x39e6867ddebfa319:0xb0fe9695a65fb77d!5m2!4m1!1i2!8m2!3d27.305437!4d88.241066!16s%2Fg%2F1ptx4vh9y",
+            }),
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col bg-white text-[#020617] selection:bg-blue-600 selection:text-white">
         {children}
