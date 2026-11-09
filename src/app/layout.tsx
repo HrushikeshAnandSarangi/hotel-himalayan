@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://hotelhimalayan.com"),
   title: "Hotel Himalayan | Scenic Hilltop Retreat in Pelling, West Sikkim",
   description:
     "Overlooking the majestic Mt. Kanchenjunga range in Chumbong, Pelling. Experience tranquil Himalayan serenity, home-style mountain cuisine, and front-row balcony views.",
