@@ -14,7 +14,7 @@ interface HeroProps {
 }
 
 export default function Hero({ onOpenBooking }: HeroProps) {
-  // Mouse position normalized (-1 to 1) for physics-based parallax window view
+  // Mouse position normalized (-1 to 1) for tactile 3D paper shadowbox parallax
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -36,546 +36,520 @@ export default function Hero({ onOpenBooking }: HeroProps) {
       id="hero"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative h-screen w-full overflow-hidden flex flex-col justify-end items-center bg-[#f0f7ff] select-none pb-12 sm:pb-16"
+      className="relative h-screen w-full overflow-hidden flex flex-col justify-end items-center bg-[#ede7dc] select-none pb-12 sm:pb-16"
     >
       {/* =========================================================================
-          FULL 100VH MOUNTAIN & CLOUD ANIMATION
-          - Fills the ENTIRE 100vh space from top to bottom (no empty white gaps)
-          - Textured purely in SHADES OF BLUE with ICY TIPS (zero brown)
-          - Multiple layers of moving clouds (high wisps, volumetric cumulus, valley mist)
-          - Foothills and ridges extend all the way down to y=1080 (bottom of screen)
+          LAYERED 3D PAPERCUT / PAPER CRAFT SHADOWBOX SCENE
+          - Tactile physical cardstock layers with directional drop-shadows
+          - Warm oatmeal/parchment background (#ede7dc)
+          - Vibrant terracotta/vermillion circular paper sun (#ee6926)
+          - Symmetrical snow-capped paper mountain with center fold & jagged snow cuts
+          - Flat-bottomed floating paper clouds casting shadows onto the sun
+          - Layered rolling blue papercut foothills/waves at the base
+          - Framed by perimeter cloud arches
          ========================================================================= */}
       <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
         <svg
           viewBox="0 0 1920 1080"
-          preserveAspectRatio="none"
+          preserveAspectRatio="xMidYMid slice"
           className="absolute inset-0 w-full h-full"
         >
           <defs>
-            {/* Full 100vh Sky: Morning Dawn Blue Gradient */}
-            <linearGradient
-              id="fullSkyBlue"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#bfdbfe" />
-              <stop offset="35%" stopColor="#dbeafe" />
-              <stop offset="70%" stopColor="#eff6ff" />
-              <stop offset="100%" stopColor="#f8fbff" />
-            </linearGradient>
+            {/* 1. Standard Paper Cutout Drop Shadow */}
+            <filter id="paperShadow" x="-20%" y="-20%" width="140%" height="150%">
+              <feDropShadow
+                dx="0"
+                dy="8"
+                stdDeviation="6"
+                floodColor="#1a1612"
+                floodOpacity="0.22"
+              />
+            </filter>
 
-            {/* Morning Sun Disc & Amber Radiance behind central Kanchenjunga */}
-            <radialGradient
-              id="sunAura"
-              cx="0.5"
-              cy="0.22"
-              r="0.45"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#fef3c7" stopOpacity="0.6" />
-              <stop offset="30%" stopColor="#fed7aa" stopOpacity="0.3" />
-              <stop offset="65%" stopColor="#dbeafe" stopOpacity="0.15" />
-              <stop offset="100%" stopColor="#eff6ff" stopOpacity="0" />
-            </radialGradient>
+            {/* 2. Deep Paper Cutout Drop Shadow (for Sun & Main Mountain) */}
+            <filter id="deepPaperShadow" x="-25%" y="-25%" width="150%" height="160%">
+              <feDropShadow
+                dx="0"
+                dy="14"
+                stdDeviation="11"
+                floodColor="#14110d"
+                floodOpacity="0.28"
+              />
+            </filter>
 
-            {/* =========================================================
-                ICE & SNOW GRADIENTS FOR SUMMIT PEAKS
-               ========================================================= */}
-            <linearGradient
-              id="iceCapLit"
-              x1="0.2"
-              y1="0"
-              x2="0.8"
-              y2="1"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="35%" stopColor="#f0fdff" />
-              <stop offset="70%" stopColor="#cffafe" />
-              <stop offset="100%" stopColor="#a5f3fc" />
-            </linearGradient>
+            {/* 3. Soft Paper Cutout Drop Shadow (for Floating Clouds & Snow Cap) */}
+            <filter id="softPaperShadow" x="-20%" y="-20%" width="140%" height="150%">
+              <feDropShadow
+                dx="0"
+                dy="5"
+                stdDeviation="4"
+                floodColor="#181410"
+                floodOpacity="0.18"
+              />
+            </filter>
 
-            <linearGradient
-              id="iceCapShade"
-              x1="0"
-              y1="0"
-              x2="1"
-              y2="1"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#cffafe" />
-              <stop offset="40%" stopColor="#7dd3fc" />
-              <stop offset="80%" stopColor="#38bdf8" />
-              <stop offset="100%" stopColor="#0284c7" />
-            </linearGradient>
+            {/* 4. Mountain Drop Shadow onto Sun & Sky */}
+            <filter id="mountainShadow" x="-25%" y="-25%" width="150%" height="160%">
+              <feDropShadow
+                dx="0"
+                dy="16"
+                stdDeviation="12"
+                floodColor="#06121e"
+                floodOpacity="0.35"
+              />
+            </filter>
 
-            {/* =========================================================
-                SHADES OF BLUE FOR MOUNTAIN ROCK FACES & CRAGS (NO BROWN)
-               ========================================================= */}
-            {/* Sunlit Rock Ridge: Brilliant Royal Blue / Cobalt */}
-            <linearGradient
-              id="rockCobaltLit"
-              x1="0.3"
-              y1="0"
-              x2="0.7"
-              y2="1"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#60a5fa" />
-              <stop offset="35%" stopColor="#3b82f6" />
-              <stop offset="70%" stopColor="#2563eb" />
-              <stop offset="100%" stopColor="#1d4ed8" />
-            </linearGradient>
-
-            {/* Shaded Rock Ridge: Deep Alpine Navy / Midnight Blue */}
-            <linearGradient
-              id="rockNavyDark"
-              x1="0"
-              y1="0"
-              x2="1"
-              y2="1"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#1e40af" />
-              <stop offset="40%" stopColor="#1e3a8a" />
-              <stop offset="75%" stopColor="#172554" />
-              <stop offset="100%" stopColor="#0f172a" />
-            </linearGradient>
-
-            {/* Mountain Strata & Couloir Infill */}
-            <linearGradient
-              id="rockStrataBlue"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#93c5fd" />
-              <stop offset="45%" stopColor="#2563eb" />
-              <stop offset="100%" stopColor="#1e3a8a" />
-            </linearGradient>
-
-            {/* Midground Ridge: Cobalt to Deep Navy */}
-            <linearGradient
-              id="midRidgeCobalt"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#3b82f6" />
-              <stop offset="30%" stopColor="#2563eb" />
-              <stop offset="70%" stopColor="#1e40af" />
-              <stop offset="100%" stopColor="#172554" />
-            </linearGradient>
-
-            {/* Foreground Slopes: Deep Midnight Blue extending to y=1080 */}
-            <linearGradient
-              id="foregroundDeepBlue"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#1e3a8a" />
-              <stop offset="35%" stopColor="#172554" />
-              <stop offset="75%" stopColor="#0f172a" />
-              <stop offset="100%" stopColor="#080e1a" />
-            </linearGradient>
-
-            {/* Volumetric Cloud Gradients */}
-            <linearGradient
-              id="cloudPureWhite"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-              <stop offset="60%" stopColor="#f0f9ff" stopOpacity="0.85" />
-              <stop offset="100%" stopColor="#dbeafe" stopOpacity="0.65" />
-            </linearGradient>
-
-            <linearGradient
-              id="cloudAmberTouch"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#fef3c7" stopOpacity="0.9" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#dbeafe" stopOpacity="0.6" />
-            </linearGradient>
-
-            <linearGradient
-              id="mistWaveGrad"
-              x1="0"
-              y1="0"
-              x2="1"
-              y2="0"
-              colorInterpolation="linearRGB"
-            >
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0" />
-              <stop offset="25%" stopColor="#e0f2fe" stopOpacity="0.45" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="0.75" />
-              <stop offset="75%" stopColor="#f0f9ff" stopOpacity="0.45" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-            </linearGradient>
-
-            {/* Cloud Soft Shadow */}
-            <filter id="cloudShadowSoft" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="8" />
-              <feOffset dx="0" dy="8" />
-              <feComponentTransfer>
-                <feFuncA type="linear" slope="0.08" />
-              </feComponentTransfer>
-              <feMerge>
-                <feMergeNode />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
+            {/* 5. Wave Paper Drop Shadow */}
+            <filter id="waveShadow" x="-20%" y="-20%" width="140%" height="150%">
+              <feDropShadow
+                dx="0"
+                dy="9"
+                stdDeviation="7"
+                floodColor="#071524"
+                floodOpacity="0.25"
+              />
             </filter>
           </defs>
 
-          {/* 1. Full 100vh Sky Canvas */}
-          <rect width="1920" height="1080" fill="url(#fullSkyBlue)" />
+          {/* -----------------------------------------------------------------
+              LAYER 0: Canvas Base (Warm Oatmeal / Craft Paper Parchment)
+             ----------------------------------------------------------------- */}
+          <rect width="1920" height="1080" fill="#ede7dc" />
 
-          {/* 2. Morning Sun Glow behind the Central Kanchenjunga Summit */}
-          <circle cx="960" cy="220" r="420" fill="url(#sunAura)" />
-
-          {/* =========================================================
-              3. HIGH-ALTITUDE MOVING CLOUDS (DRIFTING SLOW)
-             ========================================================= */}
-          <g className="animate-cloud-slow opacity-85">
-            <g filter="url(#cloudShadowSoft)" transform="translate(180, 50)">
-              <ellipse cx="260" cy="90" rx="145" ry="44" fill="url(#cloudPureWhite)" />
-              <ellipse cx="340" cy="75" rx="115" ry="54" fill="url(#cloudPureWhite)" />
-              <ellipse cx="190" cy="95" rx="95" ry="38" fill="url(#cloudPureWhite)" />
-              <ellipse cx="420" cy="98" rx="85" ry="34" fill="url(#cloudPureWhite)" />
-            </g>
-
-            <g filter="url(#cloudShadowSoft)" transform="translate(1120, 70)">
-              <ellipse cx="240" cy="85" rx="155" ry="46" fill="url(#cloudAmberTouch)" />
-              <ellipse cx="320" cy="68" rx="125" ry="56" fill="url(#cloudPureWhite)" />
-              <ellipse cx="160" cy="90" rx="98" ry="40" fill="url(#cloudPureWhite)" />
-              <ellipse cx="410" cy="94" rx="88" ry="34" fill="url(#cloudPureWhite)" />
-            </g>
-          </g>
-
-          {/* =========================================================
-              4. CONTINUOUS VOLUMETRIC CUMULUS CLOUDS (DRIFTING RIGHT)
-             ========================================================= */}
-          <g className="animate-cloud-continuous opacity-90">
-            <g filter="url(#cloudShadowSoft)" transform="translate(680, 120)">
-              <ellipse cx="120" cy="70" rx="90" ry="40" fill="url(#cloudPureWhite)" />
-              <ellipse cx="185" cy="55" rx="100" ry="48" fill="url(#cloudAmberTouch)" />
-              <ellipse cx="255" cy="62" rx="85" ry="42" fill="url(#cloudPureWhite)" />
-              <ellipse cx="320" cy="72" rx="70" ry="34" fill="url(#cloudPureWhite)" />
-            </g>
-
-            <g filter="url(#cloudShadowSoft)" transform="translate(-70, 140)">
-              <ellipse cx="160" cy="65" rx="115" ry="44" fill="url(#cloudPureWhite)" />
-              <ellipse cx="245" cy="50" rx="130" ry="54" fill="url(#cloudPureWhite)" />
-              <ellipse cx="340" cy="62" rx="100" ry="42" fill="url(#cloudAmberTouch)" />
-            </g>
-
-            <g filter="url(#cloudShadowSoft)" transform="translate(1440, 130)">
-              <ellipse cx="140" cy="60" rx="105" ry="40" fill="url(#cloudPureWhite)" />
-              <ellipse cx="215" cy="48" rx="115" ry="50" fill="url(#cloudPureWhite)" />
-              <ellipse cx="295" cy="62" rx="90" ry="38" fill="url(#cloudAmberTouch)" />
-            </g>
-          </g>
-
-          {/* =========================================================================
-              5. THE HIGH KANCHENJUNGA ALPINE MASSIF (8,586m)
-              - Textured in pure SHADES OF BLUE with ICY TIPS
-              - Continuous mountain ridges spanning the width
-              - Parallax tracking (0.02x)
-             ========================================================================= */}
+          {/* -----------------------------------------------------------------
+              LAYER 1: Rear Framing Clouds (Deepest Paper Cutout Tier)
+              Parallax Rate: 3px
+             ----------------------------------------------------------------- */}
           <g
+            filter="url(#paperShadow)"
             style={{
-              transform: `translate3d(${mouseOffset.x * 12}px, ${
-                mouseOffset.y * 6
-              }px, 0)`,
-              transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+              transform: `translate3d(${mouseOffset.x * 4}px, ${mouseOffset.y * 3}px, 0)`,
+              transition: "transform 0.4s ease-out",
             }}
           >
-            {/* Western Satellite Flank (Yalung Kang & Kabru: x=0 to 760) */}
-            <polygon
-              points="0,850 0,620 180,510 320,380 480,560 620,340 780,620 780,850"
-              fill="url(#rockCobaltLit)"
-            />
-            <polygon
-              points="320,380 480,560 440,850 320,850"
-              fill="url(#rockNavyDark)"
-            />
-            <polygon
-              points="620,340 780,620 720,850 620,850"
-              fill="url(#rockNavyDark)"
-            />
-
-            {/* Blue Strata Couloirs & Arrêtes on Western Ridge */}
-            <polyline
-              points="320,380 300,500 260,650 210,850"
-              stroke="#0f172a"
-              strokeWidth="4.5"
-              fill="none"
-              strokeLinecap="round"
-            />
-            <polyline
-              points="620,340 590,470 540,630 490,850"
-              stroke="#0f172a"
-              strokeWidth="5"
-              fill="none"
-            />
-            <polyline
-              points="620,340 650,490 690,660 730,850"
-              stroke="#1e3a8a"
-              strokeWidth="4"
-              fill="none"
-            />
-
-            {/* Icy Snow-Cap on Kabru Summit (x=620, y=340) */}
-            <polygon
-              points="530,440 620,340 690,420 660,410 630,450 590,410 560,440"
-              fill="url(#iceCapLit)"
-            />
-            <polygon
-              points="620,340 690,420 670,420 625,360"
-              fill="url(#iceCapShade)"
-            />
-            {/* Glacial Chute */}
-            <polygon
-              points="600,420 615,480 605,550 590,490"
-              fill="#e0f2fe"
-              opacity="0.9"
-            />
-
-            {/* Central Towering Kanchenjunga Main Summit (8,586m)
-                Rises majestically to (x: 960, y: 150) */}
-            <polygon
-              points="580,880 960,150 960,880"
-              fill="url(#rockCobaltLit)"
-            />
-            <polygon
-              points="960,150 1340,880 960,880"
-              fill="url(#rockNavyDark)"
-            />
-
-            {/* Intricate Blue Rock Strata on Central Face */}
-            <polygon
-              points="820,380 960,320 960,430 860,450"
-              fill="url(#rockStrataBlue)"
-            />
-            <polygon
-              points="960,320 1100,390 1060,460 960,430"
-              fill="#0f172a"
-            />
-            <polygon
-              points="760,530 960,460 960,580 810,600"
-              fill="url(#rockCobaltLit)"
-            />
-            <polygon
-              points="960,460 1160,540 1120,620 960,580"
-              fill="url(#rockNavyDark)"
-            />
-
-            {/* Central Razor Spine & Ridges */}
-            <polyline
-              points="960,150 955,320 965,480 960,650 960,880"
-              stroke="#020617"
-              strokeWidth="6"
-              fill="none"
-              strokeLinecap="round"
-            />
-            <polyline
-              points="960,150 870,360 770,550 680,850"
-              stroke="#1e3a8a"
-              strokeWidth="4"
-              fill="none"
-            />
-            <polyline
-              points="960,150 1050,370 1150,570 1240,850"
-              stroke="#0f172a"
-              strokeWidth="4.5"
-              fill="none"
-            />
-
-            {/* GLISTENING ICY TIPS & SUMMIT SNOW-CAP (MAIN PEAK) */}
-            <polygon
-              points="810,360 960,150 960,320 920,295 885,350 845,330"
-              fill="url(#iceCapLit)"
-            />
-            <polygon
-              points="960,150 1110,350 1070,340 1040,370 990,320 960,320"
-              fill="url(#iceCapShade)"
-            />
-
-            {/* Gleaming Razor Crest Tip */}
-            <polygon
-              points="960,150 925,210 960,205 995,210"
-              fill="#ffffff"
-            />
-
-            {/* Cascading Snow Couloirs running down the blue rock face */}
-            <polygon
-              points="910,320 930,410 915,500 895,420"
-              fill="#ffffff"
-              opacity="0.95"
-            />
-            <polygon
-              points="980,330 1010,430 995,520 975,420"
-              fill="#bae6fd"
-              opacity="0.85"
-            />
-            <polygon
-              points="850,450 880,540 860,620 835,530"
-              fill="#f0f9ff"
-              opacity="0.9"
-            />
-
-            {/* Eastern Satellite Flank (Pandim & Siniolchu: x=1160 to 1920) */}
-            <polygon
-              points="1140,850 1330,280 1540,540 1660,350 1820,530 1920,460 1920,850"
-              fill="url(#rockCobaltLit)"
-            />
-            <polygon
-              points="1330,280 1540,540 1480,850 1330,850"
-              fill="url(#rockNavyDark)"
-            />
-            <polygon
-              points="1660,350 1820,530 1760,850 1660,850"
-              fill="url(#rockNavyDark)"
-            />
-
-            {/* Pandim Peak Icy Snow-Cap (x=1330, y=280) */}
-            <polygon
-              points="1250,380 1330,280 1410,370 1375,360 1340,400 1300,360"
-              fill="url(#iceCapLit)"
-            />
-            <polygon
-              points="1330,280 1410,370 1385,370 1335,300"
-              fill="url(#iceCapShade)"
-            />
-
-            {/* Siniolchu Needle Icy Snow-Cap (x=1660, y=350) */}
-            <polygon
-              points="1590,440 1660,350 1720,420 1690,410 1660,450 1625,420"
-              fill="url(#iceCapLit)"
-            />
-            <polygon
-              points="1660,350 1720,420 1700,420 1665,370"
-              fill="url(#iceCapShade)"
-            />
-          </g>
-
-          {/* =========================================================
-              6. ATMOSPHERIC MID-PASS MIST DRIFT (ANIMATED LAYER)
-             ========================================================= */}
-          <g className="animate-mist-slow opacity-80">
+            {/* Top-left rear cloud cluster */}
             <path
-              d="M-200,560 Q260,510 740,550 T1680,520 T2200,570 L2200,700 L-200,700 Z"
-              fill="url(#mistWaveGrad)"
+              d="M-40,-30 L-40,240 Q40,250 90,200 Q150,220 220,170 Q300,190 390,130 Q470,120 520,60 Q560,0 540,-30 Z"
+              fill="#dfd7c8"
+            />
+            {/* Top-right rear cloud cluster */}
+            <path
+              d="M1960,-30 L1960,240 Q1880,250 1830,200 Q1770,220 1700,170 Q1620,190 1530,130 Q1450,120 1400,60 Q1360,0 1380,-30 Z"
+              fill="#dfd7c8"
             />
           </g>
 
-          {/* =========================================================
-              7. MIDGROUND SINGALILA & PELLING RIDGES (SHADES OF BLUE)
-              - Parallax factor (0.05x)
-              - Rugged continuous mountain ridgelines
-             ========================================================= */}
+          {/* -----------------------------------------------------------------
+              LAYER 2: Middle Framing Clouds (Intermediate Paper Cutout Tier)
+              Parallax Rate: 6px
+             ----------------------------------------------------------------- */}
           <g
+            filter="url(#paperShadow)"
             style={{
-              transform: `translate3d(${mouseOffset.x * 20}px, ${
-                mouseOffset.y * 10
-              }px, 0)`,
-              transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+              transform: `translate3d(${mouseOffset.x * 6}px, ${mouseOffset.y * 4}px, 0)`,
+              transition: "transform 0.4s ease-out",
             }}
           >
-            <polygon
-              points="0,960 0,640 280,550 580,670 860,540 1080,660 1340,530 1620,650 1920,560 1920,960"
-              fill="url(#midRidgeCobalt)"
-              fillOpacity="0.95"
-            />
-            {/* Shaded Mountain Ridge Creases */}
-            <polygon
-              points="860,540 1080,660 1020,960 860,960"
-              fill="url(#rockNavyDark)"
-              fillOpacity="0.8"
-            />
-            <polygon
-              points="1340,530 1620,650 1560,960 1340,960"
-              fill="url(#rockNavyDark)"
-              fillOpacity="0.8"
-            />
-            {/* Mountain Ridge Rim Lighting */}
-            <polyline
-              points="0,640 280,550 580,670 860,540 1080,660 1340,530 1620,650 1920,560"
-              fill="none"
-              stroke="#93c5fd"
-              strokeWidth="2.5"
-              strokeOpacity="0.75"
-            />
-          </g>
-
-          {/* =========================================================
-              8. LOW DRIFTING VALLEY CLOUDS (ANIMATED LAYER)
-             ========================================================= */}
-          <g className="animate-cloud-opposite opacity-85">
+            {/* Top-left intermediate clouds */}
             <path
-              d="M-300,680 Q240,630 740,670 T1660,640 T2280,690 L2280,820 L-300,820 Z"
-              fill="url(#mistWaveGrad)"
+              d="M-20,-20 L-20,180 Q30,190 80,150 Q130,170 190,130 Q260,150 340,90 Q400,90 440,30 Q470,-10 450,-20 Z"
+              fill="#e7e0d3"
+            />
+            {/* Top-right intermediate clouds */}
+            <path
+              d="M1940,-20 L1940,180 Q1890,190 1840,150 Q1790,170 1730,130 Q1660,150 1580,90 Q1520,90 1480,30 Q1450,-10 1470,-20 Z"
+              fill="#e7e0d3"
+            />
+            {/* Top center arch billow */}
+            <path
+              d="M600,-20 Q700,60 820,40 Q960,85 1100,40 Q1220,60 1320,-20 Z"
+              fill="#ece5d8"
+            />
+            {/* Left side billows */}
+            <path
+              d="M-20,260 Q50,280 60,340 Q110,380 90,440 Q140,490 80,550 Q30,590 -20,580 Z"
+              fill="#ebe4d6"
+            />
+            {/* Right side billows */}
+            <path
+              d="M1940,260 Q1870,280 1860,340 Q1810,380 1830,440 Q1780,490 1840,550 Q1890,590 1940,580 Z"
+              fill="#ebe4d6"
             />
           </g>
 
-          {/* =========================================================
-              9. FOREGROUND CHUMBONG SLOPES EXTENDING TO Y=1080
-              - Fills the ENTIRE bottom space (no empty white gaps)
-              - Textured in deep midnight blue & navy
-             ========================================================= */}
-          <path
-            d="M0,1080 L0,740 Q220,690 480,730 T1040,690 T1580,730 Q1780,690 1920,740 L1920,1080 Z"
-            fill="url(#foregroundDeepBlue)"
-          />
-          {/* Ridge Rim Accent */}
-          <path
-            d="M0,740 Q220,690 480,730 T1040,690 T1580,730 Q1780,690 1920,740"
+          {/* -----------------------------------------------------------------
+              LAYER 3: The Big Sun (Vibrant Terracotta / Vermillion Paper Circle)
+              Center: (960, 360), Radius: 300
+              Parallax Rate: 8px
+             ----------------------------------------------------------------- */}
+          <g
+            filter="url(#deepPaperShadow)"
+            style={{
+              transform: `translate3d(${mouseOffset.x * 8}px, ${mouseOffset.y * 5}px, 0)`,
+              transition: "transform 0.45s ease-out",
+            }}
+          >
+            <circle cx="960" cy="360" r="300" fill="#ee6926" />
+          </g>
+
+          {/* -----------------------------------------------------------------
+              LAYER 4: Floating Horizontal Cutout Clouds Across Sun & Sky
+              Flat bottoms with scalloped rounded tops, casting soft paper shadows
+              Parallax Rate: 12px
+             ----------------------------------------------------------------- */}
+          <g
+            filter="url(#softPaperShadow)"
+            style={{
+              transform: `translate3d(${mouseOffset.x * 12}px, ${mouseOffset.y * 7}px, 0)`,
+              transition: "transform 0.4s ease-out",
+            }}
+          >
+            {/* Cloud 1: Upper Left (Intersects sun's left perimeter) */}
+            {/* Base: y=250, x from 520 to 760 */}
+            <path
+              d="M520,250 L760,250 
+                 Q755,225 730,225 
+                 Q715,195 675,195 
+                 Q640,175 600,195 
+                 Q560,190 545,220 
+                 Q525,225 520,250 Z"
+              fill="#faf7f1"
+            />
+
+            {/* Cloud 2: Lower Left (Below Cloud 1, intersects mountain slope) */}
+            {/* Base: y=380, x from 420 to 720 */}
+            <path
+              d="M420,380 L720,380 
+                 Q715,350 685,350 
+                 Q665,315 620,315 
+                 Q575,290 530,315 
+                 Q485,310 460,345 
+                 Q430,350 420,380 Z"
+              fill="#faf7f1"
+            />
+
+            {/* Cloud 3: Upper Right (Small shelf, high above sun's shoulder) */}
+            {/* Base: y=160, x from 1160 to 1380 */}
+            <path
+              d="M1160,160 L1380,160 
+                 Q1375,135 1350,135 
+                 Q1330,110 1295,110 
+                 Q1260,95 1225,110 
+                 Q1195,110 1180,135 
+                 Q1165,140 1160,160 Z"
+              fill="#faf7f1"
+            />
+
+            {/* Cloud 4: Mid Right (Major cloud across right side of the sun) */}
+            {/* Base: y=270, x from 1120 to 1460 */}
+            <path
+              d="M1120,270 L1460,270 
+                 Q1455,240 1420,240 
+                 Q1395,200 1345,200 
+                 Q1295,170 1240,200 
+                 Q1190,195 1160,235 
+                 Q1130,240 1120,270 Z"
+              fill="#faf7f1"
+            />
+
+            {/* Cloud 5: Lower Right (Hovering near right slope of mountain) */}
+            {/* Base: y=390, x from 1200 to 1500 */}
+            <path
+              d="M1200,390 L1500,390 
+                 Q1495,365 1465,365 
+                 Q1440,335 1395,335 
+                 Q1355,315 1315,335 
+                 Q1275,330 1250,360 
+                 Q1220,365 1200,390 Z"
+              fill="#faf7f1"
+            />
+          </g>
+
+          {/* -----------------------------------------------------------------
+              LAYER 5: Symmetrical Snow-Capped Mountain (Mount Kanchenjunga)
+              Peak Tip: (960, 420) overlapping the lower half of the sun
+              Base: y=940, spreading wide from x=320 to x=1600
+              Parallax Rate: 16px
+             ----------------------------------------------------------------- */}
+          <g
+            filter="url(#mountainShadow)"
+            style={{
+              transform: `translate3d(${mouseOffset.x * 15}px, ${mouseOffset.y * 9}px, 0)`,
+              transition: "transform 0.4s ease-out",
+            }}
+          >
+            {/* Mountain Body: Dark Blue Shadow Facet (Left Face) */}
+            <path
+              d="M960,420 
+                 L320,960 
+                 L960,960 
+                 Z"
+              fill="#0a3d64"
+            />
+
+            {/* Mountain Body: Medium Cerulean Facet (Right Face) */}
+            <path
+              d="M960,420 
+                 L1600,960 
+                 L960,960 
+                 Z"
+              fill="#165a88"
+            />
+
+            {/* Mountain Internal Paper Fold Ridge Line (Deep Indigo Shadow) */}
+            <path
+              d="M960,420 
+                 L952,560 
+                 L968,660 
+                 L950,780 
+                 L960,960 
+                 L946,960 
+                 L938,780 
+                 L954,660 
+                 L938,560 
+                 Z"
+              fill="#062b48"
+              opacity="0.8"
+            />
+
+            {/* Mountain Secondary Right Facet Shade (Adding 3D Paper Form) */}
+            <path
+              d="M960,420 
+                 L1280,960 
+                 L1600,960 
+                 Z"
+              fill="#226e9c"
+              opacity="0.55"
+            />
+
+            {/* -------------------------------------------------------------
+                LAYER 5.5: Cut-Paper Snow Cap
+                Folded paper look: Left face pure white (#ffffff), right face
+                slightly shaded (#ede7dc) with authentic jagged geometric snow lines
+               ------------------------------------------------------------- */}
+            <g filter="url(#softPaperShadow)">
+              {/* Left Snow Slope (Pure Bright White #ffffff) */}
+              <path
+                d="M960,420 
+                   L960,740 
+                   L940,710 
+                   L920,740 
+                   L880,680 
+                   L860,710 
+                   L820,640 
+                   L790,670 
+                   L740,610 
+                   L700,640 
+                   L660,590 
+                   L610,630 
+                   L560,580 
+                   Z"
+                fill="#ffffff"
+              />
+
+              {/* Right Snow Slope (Soft Tinted White #f2ece2) */}
+              <path
+                d="M960,420 
+                   L1360,580 
+                   L1310,630 
+                   L1260,590 
+                   L1220,640 
+                   L1170,610 
+                   L1140,670 
+                   L1100,640 
+                   L1060,710 
+                   L1040,680 
+                   L1000,740 
+                   L980,710 
+                   L960,740 
+                   Z"
+                fill="#f2ece2"
+              />
+
+              {/* Center Crease / Paper Fold Line on Snow */}
+              <path
+                d="M960,420 
+                   L956,540 
+                   L964,640 
+                   L954,710 
+                   L960,740 
+                   L964,710 
+                   L972,640 
+                   L964,540 
+                   Z"
+                fill="#d8d0c2"
+                opacity="0.7"
+              />
+            </g>
+          </g>
+
+          {/* -----------------------------------------------------------------
+              LAYER 6: Rolling Paper Waves / Foothills (Layer 1 - Rear Blue)
+              Color: #4e8cb4 (Cornflower Blue Cardstock)
+              Parallax Rate: 18px
+             ----------------------------------------------------------------- */}
+          <g
+            filter="url(#waveShadow)"
+            style={{
+              transform: `translate3d(${mouseOffset.x * 17}px, ${mouseOffset.y * 10}px, 0)`,
+              transition: "transform 0.38s ease-out",
+            }}
+          >
+            {/* Left Rear Wave */}
+            <path
+              d="M-40,760 
+                 Q180,690 380,740 
+                 Q580,790 760,730 
+                 L760,980 
+                 L-40,980 
+                 Z"
+              fill="#4e8cb4"
+            />
+            {/* Right Rear Wave */}
+            <path
+              d="M1960,760 
+                 Q1740,690 1540,740 
+                 Q1340,790 1160,730 
+                 L1160,980 
+                 L1960,980 
+                 Z"
+              fill="#4e8cb4"
+            />
+          </g>
+
+          {/* -----------------------------------------------------------------
+              LAYER 7: Rolling Paper Waves / Foothills (Layer 2 - Deep Navy Blue)
+              Color: #0e2e4a (Deep Navy Cardstock)
+              Parallax Rate: 21px
+             ----------------------------------------------------------------- */}
+          <g
+            filter="url(#waveShadow)"
+            style={{
+              transform: `translate3d(${mouseOffset.x * 20}px, ${mouseOffset.y * 12}px, 0)`,
+              transition: "transform 0.35s ease-out",
+            }}
+          >
+            {/* Sweeping deep crest across left and center */}
+            <path
+              d="M-40,840 
+                 Q220,770 460,820 
+                 Q720,870 960,790 
+                 Q1220,870 1480,810 
+                 Q1720,770 1960,830 
+                 L1960,1080 
+                 L-40,1080 
+                 Z"
+              fill="#0e2e4a"
+            />
+          </g>
+
+          {/* -----------------------------------------------------------------
+              LAYER 8: Rolling Paper Waves / Foothills (Layer 3 - Cerulean Blue)
+              Color: #1b5680 (Slate Blue Cardstock)
+              Parallax Rate: 24px
+             ----------------------------------------------------------------- */}
+          <g
+            filter="url(#waveShadow)"
+            style={{
+              transform: `translate3d(${mouseOffset.x * 23}px, ${mouseOffset.y * 13}px, 0)`,
+              transition: "transform 0.35s ease-out",
+            }}
+          >
+            <path
+              d="M-40,910 
+                 Q180,840 440,900 
+                 Q680,950 940,880 
+                 Q1220,950 1480,870 
+                 Q1720,840 1960,910 
+                 L1960,1080 
+                 L-40,1080 
+                 Z"
+              fill="#1b5680"
+            />
+          </g>
+
+          {/* -----------------------------------------------------------------
+              LAYER 9: Rolling Paper Waves / Foothills (Layer 4 - Soft Cyan Blue)
+              Color: #6d9ebf (Soft Ocean Cyan Cardstock)
+              Parallax Rate: 26px
+             ----------------------------------------------------------------- */}
+          <g
+            filter="url(#waveShadow)"
+            style={{
+              transform: `translate3d(${mouseOffset.x * 26}px, ${mouseOffset.y * 14}px, 0)`,
+              transition: "transform 0.32s ease-out",
+            }}
+          >
+            <path
+              d="M-40,970 
+                 Q260,900 560,960 
+                 Q840,1010 1100,940 
+                 Q1380,990 1660,920 
+                 Q1840,910 1960,960 
+                 L1960,1080 
+                 L-40,1080 
+                 Z"
+              fill="#6d9ebf"
+            />
+          </g>
+
+          {/* -----------------------------------------------------------------
+              LAYER 10: Foreground Base Wave (Layer 5 - Midnight Navy)
+              Color: #081a2e (Grounding Foothill Layer down to 1080)
+              Parallax Rate: 28px
+             ----------------------------------------------------------------- */}
+          <g
+            filter="url(#waveShadow)"
+            style={{
+              transform: `translate3d(${mouseOffset.x * 28}px, ${mouseOffset.y * 15}px, 0)`,
+              transition: "transform 0.3s ease-out",
+            }}
+          >
+            <path
+              d="M-40,1020 
+                 Q320,960 680,1010 
+                 Q1040,1060 1400,990 
+                 Q1680,960 1960,1020 
+                 L1960,1080 
+                 L-40,1080 
+                 Z"
+              fill="#081a2e"
+            />
+          </g>
+
+          {/* -----------------------------------------------------------------
+              LAYER 11: Outer Paper Shadowbox Border Frame
+              Color: #0e2a47 (Refined dark border framing the art piece)
+             ----------------------------------------------------------------- */}
+          <rect
+            x="0"
+            y="0"
+            width="1920"
+            height="1080"
             fill="none"
-            stroke="#60a5fa"
-            strokeWidth="3"
-            strokeOpacity="0.5"
-          />
-
-          {/* Secondary Foothill Layer down to 1080 */}
-          <path
-            d="M0,1080 L0,880 Q320,830 720,870 T1480,840 T1920,880 L1920,1080 Z"
-            fill="#0b192c"
+            stroke="#0e2a47"
+            strokeWidth="16"
+            className="hidden sm:block"
           />
         </svg>
       </div>
 
       {/* =========================================================================
-          CONTENT: DIRECTLY ON SCENE (ZERO GLASS EFFECT, ZERO OVERLAY BOX, ZERO GLOW)
-          - Starts from mid-mountain level down
-          - Symmetrical typography: White fill outlined with solid black
-          - Action buttons and small subscript rating directly below
+          CONTENT: AUTHORITATIVE TYPOGRAPHY & INTERACTIVE ACTIONS
+          - Positioned gracefully in the lower third
+          - High-contrast Plantin Pro serif with subtle paper shadow
+          - Terracotta Action Button matching the papercut Sun (#ee6926)
+          - Off-white paper button for Rooms (#faf7f0)
+          - Verified Google rating subscript
          ========================================================================= */}
       <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
-        {/* Exact Layout Hook Line: White fill with solid black outline */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 max-w-3xl leading-[1.15] font-serif text-outlined-black">
+        {/* Exact Layout Hook Line */}
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 max-w-3xl leading-[1.15] font-serif text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
           Experience the Himalayas up close, right from your morning tea.
         </h1>
 
-        {/* Exact Layout Sub-Lines: White fill with solid black outline */}
-        <p className="text-base sm:text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed mb-8 font-serif text-outlined-black-sub">
+        {/* Exact Layout Sub-Lines */}
+        <p className="text-base sm:text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed mb-8 font-serif text-blue-50 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">
           Out on this ridge in Pelling, Kanchenjunga doesn&apos;t feel like a
           distant backdrop. She sits right in front of you, shedding her coat
           of morning mist and catching the first amber light while the rest of
@@ -584,19 +558,21 @@ export default function Hero({ onOpenBooking }: HeroProps) {
 
         {/* Symmetrical Dual Action Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+          {/* Primary Action Button: Vibrant Papercut Terracotta matching the Sun */}
           <button
             onClick={onOpenBooking}
-            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs uppercase tracking-widest shadow-[0_8px_25px_rgba(37,99,235,0.4)] border border-blue-500 transition-all duration-300 cursor-pointer hover:shadow-[0_12px_32px_rgba(37,99,235,0.5)] flex items-center justify-center gap-2"
+            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl bg-[#ee6926] hover:bg-[#d85515] active:scale-95 text-white font-bold text-xs uppercase tracking-widest shadow-[0_8px_25px_rgba(238,105,38,0.45)] border border-[#ff8547]/60 transition-all duration-300 cursor-pointer hover:shadow-[0_12px_32px_rgba(238,105,38,0.6)] flex items-center justify-center gap-2"
           >
             <CalendarCheck className="w-4 h-4 text-white" />
             <span>Check Availability</span>
           </button>
 
+          {/* Secondary Action Button: Crisp Off-White Cardstock */}
           <a
             href="#rooms"
-            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl border-2 border-blue-600 bg-white hover:bg-blue-50 active:scale-95 text-blue-900 font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md hover:border-blue-700 flex items-center justify-center gap-2"
+            className="w-full sm:w-56 py-3.5 px-6 rounded-2xl border-2 border-[#165a88] bg-[#faf7f0] hover:bg-white active:scale-95 text-[#0a3d64] font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_6px_20px_rgba(0,0,0,0.2)] hover:border-[#0a3d64] flex items-center justify-center gap-2"
           >
-            <BedDouble className="w-4 h-4 text-blue-600" />
+            <BedDouble className="w-4 h-4 text-[#165a88]" />
             <span>View Rooms</span>
           </a>
         </div>
@@ -607,13 +583,13 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             href={gmapsLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs transition-colors cursor-pointer group font-serif text-outlined-black-sub font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs transition-colors cursor-pointer group font-serif text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)] font-semibold"
           >
-            <div className="flex text-blue-400">
+            <div className="flex text-amber-400">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className="w-3.5 h-3.5 fill-blue-500 text-blue-500 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+                  className="w-3.5 h-3.5 fill-amber-400 text-amber-400 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
                 />
               ))}
             </div>
@@ -629,8 +605,8 @@ export default function Hero({ onOpenBooking }: HeroProps) {
         </div>
       </div>
 
-      {/* Soft gradient fade into pure white space */}
-      <div className="absolute bottom-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-b from-transparent via-white/40 to-white pointer-events-none z-20" />
+      {/* Gentle Bottom Transition into Clean White Space */}
+      <div className="absolute bottom-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-b from-transparent via-[#081a2e]/40 to-white pointer-events-none z-20" />
     </section>
   );
 }
