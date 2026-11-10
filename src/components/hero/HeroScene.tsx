@@ -2,6 +2,10 @@
 
 import React, { useMemo } from "react";
 
+interface HeroSceneProps {
+  mouseOffset: { x: number; y: number };
+}
+
 interface PineConfig {
   id: string;
   cx: number;
@@ -32,33 +36,33 @@ const TWINKLE_DOTS = [
 ];
 
 const ICE_DUST_MOTES = [
-  { cx: 210, cy: 195, r: 5.5, op: 0.72 },
-  { cx: 410, cy: 255, r: 4.0, op: 0.55 },
-  { cx: 590, cy: 168, r: 6.5, op: 0.65 },
-  { cx: 750, cy: 295, r: 4.8, op: 0.75 },
-  { cx: 920, cy: 188, r: 5.2, op: 0.58 },
-  { cx: 1110, cy: 148, r: 4.4, op: 0.68 },
-  { cx: 1270, cy: 315, r: 6.8, op: 0.62 },
-  { cx: 1490, cy: 210, r: 4.5, op: 0.72 },
-  { cx: 1665, cy: 285, r: 6.0, op: 0.58 },
-  { cx: 1815, cy: 172, r: 4.2, op: 0.65 },
-  { cx: 335, cy: 495, r: 5.2, op: 0.55 },
-  { cx: 645, cy: 525, r: 4.5, op: 0.65 },
-  { cx: 960, cy: 455, r: 5.8, op: 0.52 },
-  { cx: 1390, cy: 515, r: 4.8, op: 0.58 },
-  { cx: 1585, cy: 470, r: 5.6, op: 0.55 },
+  { cx: 210, cy: 195, r: 3.2, op: 0.65 },
+  { cx: 410, cy: 255, r: 2.2, op: 0.5 },
+  { cx: 590, cy: 168, r: 3.8, op: 0.58 },
+  { cx: 750, cy: 295, r: 2.6, op: 0.7 },
+  { cx: 920, cy: 188, r: 3.0, op: 0.5 },
+  { cx: 1110, cy: 148, r: 2.4, op: 0.62 },
+  { cx: 1270, cy: 315, r: 4.0, op: 0.55 },
+  { cx: 1490, cy: 210, r: 2.5, op: 0.68 },
+  { cx: 1665, cy: 285, r: 3.6, op: 0.52 },
+  { cx: 1815, cy: 172, r: 2.3, op: 0.6 },
+  { cx: 335, cy: 495, r: 3.0, op: 0.48 },
+  { cx: 645, cy: 525, r: 2.4, op: 0.58 },
+  { cx: 960, cy: 455, r: 3.5, op: 0.45 },
+  { cx: 1390, cy: 515, r: 2.8, op: 0.52 },
+  { cx: 1585, cy: 470, r: 3.4, op: 0.5 },
 ];
 
 const BOKEH_SNOW_FLAKES = [
-  { cx: 170, cy: 615, r: 9.0, op: 0.48 },
-  { cx: 490, cy: 735, r: 10.5, op: 0.42 },
-  { cx: 810, cy: 660, r: 7.5, op: 0.52 },
-  { cx: 1020, cy: 805, r: 11.0, op: 0.38 },
-  { cx: 1340, cy: 695, r: 8.5, op: 0.48 },
-  { cx: 1715, cy: 625, r: 9.8, op: 0.42 },
-  { cx: 710, cy: 885, r: 8.0, op: 0.55 },
-  { cx: 1190, cy: 905, r: 9.0, op: 0.5 },
-  { cx: 930, cy: 945, r: 7.2, op: 0.45 },
+  { cx: 170, cy: 615, r: 5.5, op: 0.35 },
+  { cx: 490, cy: 735, r: 6.5, op: 0.32 },
+  { cx: 810, cy: 660, r: 4.5, op: 0.42 },
+  { cx: 1020, cy: 805, r: 7.0, op: 0.28 },
+  { cx: 1340, cy: 695, r: 5.2, op: 0.38 },
+  { cx: 1715, cy: 625, r: 6.0, op: 0.32 },
+  { cx: 710, cy: 885, r: 4.8, op: 0.45 },
+  { cx: 1190, cy: 905, r: 5.5, op: 0.42 },
+  { cx: 930, cy: 945, r: 4.2, op: 0.38 },
 ];
 
 const HERO_PINES: PineConfig[] = [
@@ -131,14 +135,12 @@ function buildOrganicForestPath(
 ): string {
   const pts: string[] = [`M-40,${bottomY}`, `L-40,${ridgeY}`];
   for (let x = -30; x <= 1950; x += spacing) {
-    const n =
-      Math.sin((x + seedOffset) * 0.017) * 0.6 +
-      Math.cos((x + seedOffset) * 0.043) * 0.4;
+    const n = Math.sin((x + seedOffset) * 0.017) * 0.6 + Math.cos((x + seedOffset) * 0.043) * 0.4;
     const h = 44 + Math.abs(Math.sin((x + seedOffset) * 0.091)) * heightVar;
-    const w =
-      spacing * (0.58 + Math.abs(Math.cos((x + seedOffset) * 0.05)) * 0.28);
+    const w = spacing * (0.58 + Math.abs(Math.cos((x + seedOffset) * 0.05)) * 0.28);
     const base = ridgeY + n * 16;
 
+    // 3 stepped conifer tiers per tree instead of a sharp robotic triangle
     pts.push(`L${(x - w * 0.85).toFixed(1)},${(base - h * 0.22).toFixed(1)}`);
     pts.push(`L${(x - w * 0.45).toFixed(1)},${(base - h * 0.28).toFixed(1)}`);
     pts.push(`L${(x - w * 0.58).toFixed(1)},${(base - h * 0.56).toFixed(1)}`);
@@ -168,7 +170,7 @@ function SnowPine({
   return (
     <g transform={`translate(${cx}, ${baseY}) scale(${mirror}, ${scale})`}>
       {/* Soft Indigo-Blue Snow Ground Contact Shadow */}
-      <ellipse cx="0" cy="4" rx="88" ry="12" fill="url(#hero-ground-shadow)" />
+      <ellipse cx="0" cy="4" rx="84" ry="11" fill="#8fb8d4" opacity="0.45" />
 
       {/* Natural Tapered Trunk */}
       <path d="M-10,-46 L10,-46 L12,4 L-12,4 Z" fill="#3a2920" />
@@ -227,30 +229,31 @@ function SnowPine({
   );
 }
 
-/** Zero-filter glowing cloud built strictly with pre-baked smooth radial gradients */
+/** Layered glowing soft dream cloud built from blurred translucent puffs */
 function DreamCloud({
   cx,
   cy,
   scale = 1,
-  warm = false,
+  tint = "#ffffff",
+  underTint = "#cfe6f5",
 }: {
   cx: number;
   cy: number;
   scale?: number;
-  warm?: boolean;
+  tint?: string;
+  underTint?: string;
 }) {
-  const fill = warm ? "url(#hero-cloud-warm)" : "url(#hero-cloud-radial)";
   return (
     <g transform={`translate(${cx}, ${cy}) scale(${scale})`}>
-      <ellipse cx="0" cy="18" rx="165" ry="26" fill="url(#hero-mist-radial)" opacity="0.65" />
-      <ellipse cx="-62" cy="8" rx="82" ry="28" fill={fill} />
-      <ellipse cx="56" cy="9" rx="88" ry="26" fill={fill} />
-      <ellipse cx="-6" cy="-6" rx="100" ry="36" fill={fill} />
+      <ellipse cx="0" cy="18" rx="140" ry="22" fill={underTint} opacity="0.55" filter="url(#hero-mist-soft)" />
+      <ellipse cx="-55" cy="6" rx="68" ry="24" fill={tint} opacity="0.88" filter="url(#hero-cloud-soft)" />
+      <ellipse cx="48" cy="8" rx="74" ry="22" fill={tint} opacity="0.86" filter="url(#hero-cloud-soft)" />
+      <ellipse cx="-6" cy="-6" rx="82" ry="30" fill={tint} opacity="0.94" filter="url(#hero-cloud-soft)" />
     </g>
   );
 }
 
-const HeroScene = React.memo(function HeroScene() {
+export default function HeroScene({ mouseOffset }: HeroSceneProps) {
   const distantForest = useMemo(
     () => buildOrganicForestPath(830, 682, 130, 42, 34),
     []
@@ -288,20 +291,22 @@ const HeroScene = React.memo(function HeroScene() {
             <stop offset="100%" stopColor="#fff7ea" />
           </linearGradient>
 
-          {/* 2. Atmospheric Aurora Mist Ribbon (Feathered 0-opacity ends, zero blur cost) */}
-          <radialGradient
-            id="hero-aurora-radial"
-            cx="50%"
-            cy="50%"
-            r="50%"
+          {/* 2. Atmospheric Aurora Mist Ribbon */}
+          <linearGradient
+            id="hero-aurora-veil"
+            x1="0"
+            y1="0"
+            x2="1"
+            y2="0.4"
             colorInterpolation="linearRGB"
           >
-            <stop offset="0%" stopColor="#e0f2fe" stopOpacity="0.42" />
-            <stop offset="50%" stopColor="#fef3c7" stopOpacity="0.22" />
+            <stop offset="0%" stopColor="#bae6fd" stopOpacity="0" />
+            <stop offset="35%" stopColor="#e0f2fe" stopOpacity="0.45" />
+            <stop offset="65%" stopColor="#fef3c7" stopOpacity="0.3" />
             <stop offset="100%" stopColor="#bae6fd" stopOpacity="0" />
-          </radialGradient>
+          </linearGradient>
 
-          {/* 3. Celestial Dawn Orb & Soft Core (Pre-baked Radial Halo, zero blur pass) */}
+          {/* 3. Celestial Dawn Orb & Concentric Dream Halos */}
           <radialGradient
             id="hero-sun-halo"
             cx="50%"
@@ -309,79 +314,26 @@ const HeroScene = React.memo(function HeroScene() {
             r="50%"
             colorInterpolation="linearRGB"
           >
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.98" />
-            <stop offset="12%" stopColor="#fffbeb" stopOpacity="0.92" />
-            <stop offset="22%" stopColor="#fef3c7" stopOpacity="0.6" />
-            <stop offset="48%" stopColor="#e0f2fe" stopOpacity="0.3" />
-            <stop offset="76%" stopColor="#bae6fd" stopOpacity="0.08" />
+            <stop offset="0%" stopColor="#fffef8" stopOpacity="0.95" />
+            <stop offset="16%" stopColor="#fef3c7" stopOpacity="0.65" />
+            <stop offset="42%" stopColor="#e0f2fe" stopOpacity="0.34" />
+            <stop offset="72%" stopColor="#bae6fd" stopOpacity="0.1" />
             <stop offset="100%" stopColor="#bae6fd" stopOpacity="0" />
           </radialGradient>
 
-          {/* 4. Zero-Cost Mist & Cloud Radial Gradients */}
           <radialGradient
-            id="hero-mist-radial"
+            id="hero-sun-core"
             cx="50%"
             cy="50%"
             r="50%"
             colorInterpolation="linearRGB"
           >
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.72" />
-            <stop offset="42%" stopColor="#eef7fd" stopOpacity="0.45" />
-            <stop offset="75%" stopColor="#e0f2fe" stopOpacity="0.16" />
-            <stop offset="100%" stopColor="#e0f2fe" stopOpacity="0" />
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+            <stop offset="62%" stopColor="#fffbeb" stopOpacity="0.92" />
+            <stop offset="100%" stopColor="#fde68a" stopOpacity="0" />
           </radialGradient>
 
-          <radialGradient
-            id="hero-cloud-radial"
-            cx="50%"
-            cy="45%"
-            r="50%"
-            colorInterpolation="linearRGB"
-          >
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-            <stop offset="55%" stopColor="#f8fcff" stopOpacity="0.82" />
-            <stop offset="82%" stopColor="#e6f3fb" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="#e6f3fb" stopOpacity="0" />
-          </radialGradient>
-
-          <radialGradient
-            id="hero-cloud-warm"
-            cx="50%"
-            cy="45%"
-            r="50%"
-            colorInterpolation="linearRGB"
-          >
-            <stop offset="0%" stopColor="#fffef8" stopOpacity="0.96" />
-            <stop offset="55%" stopColor="#fffaf0" stopOpacity="0.82" />
-            <stop offset="82%" stopColor="#e6f3fb" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="#e6f3fb" stopOpacity="0" />
-          </radialGradient>
-
-          <radialGradient
-            id="hero-bokeh-grad"
-            cx="50%"
-            cy="50%"
-            r="50%"
-            colorInterpolation="linearRGB"
-          >
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-            <stop offset="45%" stopColor="#ffffff" stopOpacity="0.45" />
-            <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-          </radialGradient>
-
-          <radialGradient
-            id="hero-ground-shadow"
-            cx="50%"
-            cy="50%"
-            r="50%"
-            colorInterpolation="linearRGB"
-          >
-            <stop offset="0%" stopColor="#7ca8c7" stopOpacity="0.48" />
-            <stop offset="70%" stopColor="#9ec2db" stopOpacity="0.18" />
-            <stop offset="100%" stopColor="#9ec2db" stopOpacity="0" />
-          </radialGradient>
-
-          {/* 5. Volumetric Dawn Light Rays */}
+          {/* 4. Volumetric Dawn Light Rays */}
           <linearGradient
             id="hero-ray-grad"
             x1="0.7"
@@ -390,12 +342,12 @@ const HeroScene = React.memo(function HeroScene() {
             y2="1"
             colorInterpolation="linearRGB"
           >
-            <stop offset="0%" stopColor="#fffbeb" stopOpacity="0.38" />
-            <stop offset="50%" stopColor="#e0f2fe" stopOpacity="0.14" />
+            <stop offset="0%" stopColor="#fffbeb" stopOpacity="0.42" />
+            <stop offset="50%" stopColor="#e0f2fe" stopOpacity="0.16" />
             <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
           </linearGradient>
 
-          {/* 6. Mountain Aerial-Perspective Gradients */}
+          {/* 5. Mountain Aerial-Perspective Gradients */}
           <linearGradient
             id="hero-peak-shadow"
             x1="0"
@@ -435,7 +387,7 @@ const HeroScene = React.memo(function HeroScene() {
             <stop offset="100%" stopColor="#528eb5" />
           </linearGradient>
 
-          {/* 7. Alpenglow Lit Glacier & Cool Ice Shadow Sheets */}
+          {/* 6. Alpenglow Lit Glacier & Cool Ice Shadow Sheets */}
           <linearGradient
             id="hero-glacier-lit"
             x1="1"
@@ -476,7 +428,7 @@ const HeroScene = React.memo(function HeroScene() {
             <stop offset="100%" stopColor="#cfe3f2" />
           </linearGradient>
 
-          {/* 8. Soft Warm Cabin Window Glow */}
+          {/* 7. Soft Warm Cabin Window Glow */}
           <radialGradient
             id="hero-warm-lantern"
             cx="50%"
@@ -489,21 +441,7 @@ const HeroScene = React.memo(function HeroScene() {
             <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
           </radialGradient>
 
-          {/* 9. Inter-Ridge Soft Mist Fade */}
-          <linearGradient
-            id="hero-inter-ridge-haze"
-            x1="0"
-            y1="0"
-            x2="0"
-            y2="1"
-            colorInterpolation="linearRGB"
-          >
-            <stop offset="0%" stopColor="#dff0fa" stopOpacity="0" />
-            <stop offset="50%" stopColor="#e8f5fc" stopOpacity="0.42" />
-            <stop offset="100%" stopColor="#dff0fa" stopOpacity="0" />
-          </linearGradient>
-
-          {/* 10. Sculpted Foreground Snowfield Gradients */}
+          {/* 8. Sculpted Foreground Snowfield Gradients */}
           <linearGradient
             id="hero-meadow-mid"
             x1="0"
@@ -529,6 +467,90 @@ const HeroScene = React.memo(function HeroScene() {
             <stop offset="48%" stopColor="#ffffff" />
             <stop offset="100%" stopColor="#fafbfd" />
           </linearGradient>
+
+          {/* 9. Atmospheric Blur & Grain Filters (LinearRGB) */}
+          <filter
+            id="hero-mist-deep"
+            x="-20%"
+            y="-40%"
+            width="140%"
+            height="180%"
+            colorInterpolationFilters="linearRGB"
+          >
+            <feGaussianBlur stdDeviation="28" />
+          </filter>
+
+          <filter
+            id="hero-mist-soft"
+            x="-20%"
+            y="-40%"
+            width="140%"
+            height="180%"
+            colorInterpolationFilters="linearRGB"
+          >
+            <feGaussianBlur stdDeviation="14" />
+          </filter>
+
+          <filter
+            id="hero-cloud-soft"
+            x="-15%"
+            y="-25%"
+            width="130%"
+            height="150%"
+            colorInterpolationFilters="linearRGB"
+          >
+            <feGaussianBlur stdDeviation="3.2" />
+          </filter>
+
+          <filter
+            id="hero-glow-soft"
+            x="-40%"
+            y="-40%"
+            width="180%"
+            height="180%"
+            colorInterpolationFilters="linearRGB"
+          >
+            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+          <filter
+            id="hero-paper-depth"
+            x="-15%"
+            y="-15%"
+            width="130%"
+            height="135%"
+            colorInterpolationFilters="linearRGB"
+          >
+            <feDropShadow
+              dx="0"
+              dy="10"
+              stdDeviation="8"
+              floodColor="#072238"
+              floodOpacity="0.2"
+            />
+          </filter>
+
+          <filter
+            id="hero-dream-grain"
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+            colorInterpolationFilters="linearRGB"
+          >
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.75"
+              numOctaves="3"
+              stitchTiles="stitch"
+              result="noise"
+            />
+            <feColorMatrix type="saturate" values="0" />
+          </filter>
         </defs>
 
         {/* =================================================================
@@ -536,14 +558,12 @@ const HeroScene = React.memo(function HeroScene() {
            ================================================================= */}
         <rect width="1920" height="1080" fill="url(#hero-sky-dream)" />
 
-        {/* Ethereal Diagonal Aurora Wash (Zero blur shader pass) */}
-        <ellipse
-          cx="960"
-          cy="280"
-          rx="980"
-          ry="170"
-          fill="url(#hero-aurora-radial)"
-          transform="rotate(-4 960 280)"
+        {/* Ethereal Diagonal Atmospheric Aurora Veil */}
+        <path
+          d="M-100,260 Q480,140 1050,240 T2020,160 L2020,390 Q1440,340 880,410 T-100,450 Z"
+          fill="url(#hero-aurora-veil)"
+          filter="url(#hero-mist-deep)"
+          opacity="0.7"
         />
 
         {/* Twinkling Stars & 4-Point Diamond Celestial Sparkles */}
@@ -570,18 +590,19 @@ const HeroScene = React.memo(function HeroScene() {
           ))}
         </g>
 
-        {/* Veiled Dawn Celestial Orb & Volumetric Light Rays (GPU CSS Variable Parallax) */}
+        {/* Veiled Dawn Celestial Orb & Volumetric Light Rays */}
         <g
           style={{
-            transform: "translate3d(calc(var(--mx, 0) * 2px), calc(var(--my, 0) * 1.5px), 0)",
-            willChange: "transform",
+            transform: `translate3d(${mouseOffset.x * 2}px, ${mouseOffset.y * 1.5}px, 0)`,
+            transition: "transform 0.5s ease-out",
           }}
         >
           <circle cx="1445" cy="240" r="460" fill="url(#hero-sun-halo)" />
           <circle cx="1445" cy="240" r="245" fill="none" stroke="#ffffff" strokeWidth="1" opacity="0.16" />
           <circle cx="1445" cy="240" r="145" fill="none" stroke="#fef3c7" strokeWidth="1.2" opacity="0.22" />
+          <circle cx="1445" cy="240" r="54" fill="url(#hero-sun-core)" filter="url(#hero-glow-soft)" />
 
-          <g className="animate-ray-shimmer">
+          <g className="animate-ray-shimmer" style={{ mixBlendMode: "screen" }}>
             <polygon points="1445,240 810,760 970,760" fill="url(#hero-ray-grad)" />
             <polygon points="1445,240 1050,770 1230,770" fill="url(#hero-ray-grad)" />
             <polygon points="1445,240 1330,770 1550,770" fill="url(#hero-ray-grad)" />
@@ -594,8 +615,8 @@ const HeroScene = React.memo(function HeroScene() {
            ================================================================= */}
         <g
           style={{
-            transform: "translate3d(calc(var(--mx, 0) * 4px), calc(var(--my, 0) * 2.5px), 0)",
-            willChange: "transform",
+            transform: `translate3d(${mouseOffset.x * 4}px, ${mouseOffset.y * 2.5}px, 0)`,
+            transition: "transform 0.45s ease-out",
           }}
         >
           <path
@@ -607,20 +628,21 @@ const HeroScene = React.memo(function HeroScene() {
             cx="960"
             cy="525"
             rx="1160"
-            ry="135"
-            fill="url(#hero-mist-radial)"
-            opacity="0.7"
+            ry="105"
+            fill="#ebf6fd"
+            opacity="0.48"
+            filter="url(#hero-mist-deep)"
             className="animate-mist-slow"
           />
         </g>
 
         {/* =================================================================
-            LAYER 2: SOFT DREAMSCAPE CLOUDS & ALPINE BIRDS
+            LAYER 2: SOFT BLURRED DREAMSCAPE CLOUDS & ALPINE BIRDS
            ================================================================= */}
         <g
           style={{
-            transform: "translate3d(calc(var(--mx, 0) * 6px), calc(var(--my, 0) * 3.5px), 0)",
-            willChange: "transform",
+            transform: `translate3d(${mouseOffset.x * 6}px, ${mouseOffset.y * 3.5}px, 0)`,
+            transition: "transform 0.45s ease-out",
           }}
         >
           <g className="animate-alpine-birds" fill="#103854" opacity="0.72">
@@ -630,13 +652,13 @@ const HeroScene = React.memo(function HeroScene() {
             <path d="M1312,225 Q1318,220 1325,223 Q1331,220 1338,225 Q1331,227 1325,225 Q1318,227 1312,225 Z" />
           </g>
 
-          <g className="animate-paper-cloud-1" opacity="0.88">
+          <g className="animate-paper-cloud-1" opacity="0.82">
             <DreamCloud cx={870} cy={175} scale={0.95} />
           </g>
-          <g className="animate-paper-cloud-2" opacity="0.94">
-            <DreamCloud cx={1675} cy={150} scale={1.08} warm />
+          <g className="animate-paper-cloud-2" opacity="0.9">
+            <DreamCloud cx={1675} cy={150} scale={1.08} tint="#fffef9" underTint="#dbeefa" />
           </g>
-          <g className="animate-cloud-slow" opacity="0.68">
+          <g className="animate-cloud-slow" opacity="0.58">
             <DreamCloud cx={560} cy={265} scale={0.72} />
             <DreamCloud cx={1195} cy={310} scale={0.84} />
           </g>
@@ -644,11 +666,14 @@ const HeroScene = React.memo(function HeroScene() {
 
         {/* =================================================================
             LAYER 3: SWEEPING KANCHENJUNGA MASSIF (SHADED & SCULPTED)
+            - Upper-left ridge gently slopes lower for calm open-sky typography
+            - Towering Kanchenjunga Main Summit rises majestically at x=1110
            ================================================================= */}
         <g
+          filter="url(#hero-paper-depth)"
           style={{
-            transform: "translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 6px), 0)",
-            willChange: "transform",
+            transform: `translate3d(${mouseOffset.x * 10}px, ${mouseOffset.y * 6}px, 0)`,
+            transition: "transform 0.42s ease-out",
           }}
         >
           {/* 3A. Main Massif Body */}
@@ -685,7 +710,7 @@ const HeroScene = React.memo(function HeroScene() {
 
           {/* 3C. Cascading Sculpted Snow Caps & Ice Crevasses */}
           <g>
-            {/* Eastern Lit Glacier Sheet (2px underlap seals ridge seam) */}
+            {/* Eastern Lit Glacier Sheet (slight 2px underlap prevents subpixel seam) */}
             <path
               d="M1110,192 Q1190,262 1265,315 L1385,258 Q1475,326 1555,362 L1675,310 Q1785,390 1880,440 L1950,492 L1865,472 L1798,505 L1735,442 L1682,478 L1675,412 L1608,456 L1540,418 L1475,456 L1415,398 L1385,368 L1328,418 L1268,384 L1202,438 L1150,388 L1088,418 Z"
               fill="url(#hero-glacier-lit)"
@@ -697,44 +722,48 @@ const HeroScene = React.memo(function HeroScene() {
               fill="url(#hero-glacier-cool)"
             />
 
-            {/* Wind-Blown Summit Snow Plume Drifting Eastward */}
+            {/* Wind-Blown Summit Snow Plume Drifting Softly Eastward */}
             <path
-              d="M1110,192 Q1148,172 1198,182 Q1226,189 1248,186 Q1202,199 1152,202 Z"
-              fill="url(#hero-cloud-radial)"
-              opacity="0.85"
+              d="M1110,192 Q1145,172 1195,182 Q1225,190 1245,186 Q1200,198 1152,202 Z"
+              fill="#ffffff"
+              opacity="0.65"
+              filter="url(#hero-cloud-soft)"
             />
           </g>
         </g>
 
         {/* =================================================================
-            LAYER 4: SILKY SEA OF VALLEY CLOUDS (ZERO BLUR FILTER PASSES)
+            LAYER 4: SILKY SEA OF VALLEY CLOUDS BETWEEN PEAKS & PINES
            ================================================================= */}
         <g id="dreamy-valley-mist">
           <ellipse
             cx="410"
             cy="655"
-            rx="620"
-            ry="105"
-            fill="url(#hero-mist-radial)"
-            opacity="0.85"
+            rx="580"
+            ry="72"
+            fill="#eef7fd"
+            opacity="0.68"
+            filter="url(#hero-mist-deep)"
             className="animate-mist-slow"
           />
           <ellipse
             cx="1440"
             cy="635"
-            rx="660"
-            ry="112"
-            fill="url(#hero-mist-radial)"
-            opacity="0.88"
+            rx="620"
+            ry="78"
+            fill="#f4faff"
+            opacity="0.72"
+            filter="url(#hero-mist-deep)"
             className="animate-mist-fast"
           />
           <ellipse
             cx="960"
             cy="676"
-            rx="840"
-            ry="82"
-            fill="url(#hero-mist-radial)"
-            opacity="0.72"
+            rx="790"
+            ry="54"
+            fill="#ffffff"
+            opacity="0.54"
+            filter="url(#hero-mist-soft)"
             className="animate-mist-slow"
           />
         </g>
@@ -744,8 +773,8 @@ const HeroScene = React.memo(function HeroScene() {
            ================================================================= */}
         <g
           style={{
-            transform: "translate3d(calc(var(--mx, 0) * 14px), calc(var(--my, 0) * 8px), 0)",
-            willChange: "transform",
+            transform: `translate3d(${mouseOffset.x * 14}px, ${mouseOffset.y * 8}px, 0)`,
+            transition: "transform 0.38s ease-out",
           }}
         >
           {/* Distant Misty Pine Canopy */}
@@ -754,17 +783,20 @@ const HeroScene = React.memo(function HeroScene() {
           {/* Inter-Ridge Veil */}
           <rect
             x="-40"
-            y="665"
+            y="675"
             width="2000"
-            height="100"
-            fill="url(#hero-inter-ridge-haze)"
+            height="88"
+            fill="#dff0fa"
+            opacity="0.32"
+            filter="url(#hero-mist-soft)"
           />
 
           {/* Near Foothill Pine Canopy */}
           <path d={nearForest} fill="#0c304b" />
 
-          {/* Cozy Chumbong Ridge Cabin + Morning Tea Hearth Smoke + Prayer Flags */}
+          {/* Cozy Chumbong Ridge Cabin + Morning Tea Hearth Smoke + Prayer Flags (x=1040, well centered for Desktop & Mobile) */}
           <g id="chumbong-sanctuary-cabin" transform="translate(1038, 658)">
+            {/* Prayer Flag Poles & Gently Fluttering Strings */}
             <line x1="-88" y1="64" x2="-88" y2="14" stroke="#082438" strokeWidth="2" />
             <line x1="108" y1="60" x2="108" y2="18" stroke="#082438" strokeWidth="2" />
             <g className="animate-prayer-flags">
@@ -791,6 +823,7 @@ const HeroScene = React.memo(function HeroScene() {
                 strokeWidth="4"
                 strokeLinecap="round"
                 opacity="0.55"
+                filter="url(#hero-glow-soft)"
               />
               <path
                 d="M66,4 Q72,-12 62,-28"
@@ -806,6 +839,7 @@ const HeroScene = React.memo(function HeroScene() {
             <rect x="61" y="4" width="10" height="22" fill="#072236" />
             <polygon points="-6,28 42,4 90,28 90,62 -6,62" fill="#072236" />
             <path d="M-14,30 L42,0 L98,30 L92,33 L42,6 L-8,33 Z" fill="#eef6fc" />
+            {/* Cantilevered Morning Tea Deck */}
             <rect x="-26" y="46" width="24" height="3.5" fill="#092a42" />
             <line x1="-24" y1="49" x2="-24" y2="62" stroke="#092a42" strokeWidth="2" />
 
@@ -830,36 +864,42 @@ const HeroScene = React.memo(function HeroScene() {
            ================================================================= */}
         <g
           style={{
-            transform: "translate3d(calc(var(--mx, 0) * 19px), calc(var(--my, 0) * 10px), 0)",
-            willChange: "transform",
+            transform: `translate3d(${mouseOffset.x * 19}px, ${mouseOffset.y * 10}px, 0)`,
+            transition: "transform 0.35s ease-out",
           }}
         >
+          {/* Upper Glacial Snow Bank */}
           <path
             d="M-40,795 Q280,740 620,785 Q980,835 1360,760 Q1680,715 1960,770 L1960,960 L-40,960 Z"
             fill="#cde1ef"
           />
 
+          {/* Flowing Mist Ribbon Skimming Foothills */}
           <ellipse
             cx="780"
             cy="788"
-            rx="680"
-            ry="52"
-            fill="url(#hero-mist-radial)"
-            opacity="0.72"
+            rx="640"
+            ry="36"
+            fill="#ffffff"
+            opacity="0.52"
+            filter="url(#hero-mist-soft)"
             className="animate-mist-fast"
           />
 
+          {/* Middle Rolling Snow Meadow */}
           <path
             d="M-40,860 Q360,795 760,854 Q1150,906 1540,826 Q1760,786 1960,836 L1960,1045 L-40,1045 Z"
             fill="url(#hero-meadow-mid)"
           />
 
+          {/* Delicate Winding Snow Footpath Leading Upward Toward Cabin */}
           <path
             d="M1032,782 Q985,845 900,908 Q815,968 765,1085 L872,1085 Q915,968 975,905 Q1025,842 1046,782 Z"
             fill="#bfd8ea"
             opacity="0.58"
           />
 
+          {/* Snow-Dusted Alpine Boulders for Natural Scale */}
           <g fill="#45718f">
             <path d="M770,895 Q785,876 812,882 Q832,886 838,900 Z" opacity="0.65" />
             <path d="M775,888 Q792,874 818,882 Q800,888 775,888 Z" fill="#ffffff" />
@@ -867,6 +907,7 @@ const HeroScene = React.memo(function HeroScene() {
             <path d="M1120,912 Q1136,898 1162,906 Q1142,911 1120,912 Z" fill="#ffffff" />
           </g>
 
+          {/* Soft Pale-Blue Snow Contour Crests Across Lower Meadow */}
           <path
             d="M-40,942 Q280,884 680,930 Q1100,978 1500,906 Q1740,874 1960,922 L1960,1085 L-40,1085 Z"
             fill="url(#hero-meadow-front)"
@@ -884,9 +925,10 @@ const HeroScene = React.memo(function HeroScene() {
             LAYER 7: LUSH BOTANICAL HIMALAYAN CEDAR PINES (6 TREES ACROSS DEPTHS)
            ================================================================= */}
         <g
+          filter="url(#hero-paper-depth)"
           style={{
-            transform: "translate3d(calc(var(--mx, 0) * 24px), calc(var(--my, 0) * 13px), 0)",
-            willChange: "transform",
+            transform: `translate3d(${mouseOffset.x * 24}px, ${mouseOffset.y * 13}px, 0)`,
+            transition: "transform 0.32s ease-out",
           }}
         >
           {HERO_PINES.map((pine) => (
@@ -895,7 +937,7 @@ const HeroScene = React.memo(function HeroScene() {
         </g>
 
         {/* =================================================================
-            LAYER 8: DREAMY ICE-CRYSTAL BOKEH MOTES (ZERO BLUR FILTER PASSES)
+            LAYER 8: DREAMY ICE-CRYSTAL DIAMOND DUST & FINE PAPER GRAIN
            ================================================================= */}
         <g className="animate-snowflake-sway">
           {ICE_DUST_MOTES.map((mote, i) => (
@@ -904,8 +946,9 @@ const HeroScene = React.memo(function HeroScene() {
               cx={mote.cx}
               cy={mote.cy}
               r={mote.r}
-              fill="url(#hero-bokeh-grad)"
+              fill="#ffffff"
               opacity={mote.op}
+              filter="url(#hero-glow-soft)"
             />
           ))}
         </g>
@@ -917,14 +960,22 @@ const HeroScene = React.memo(function HeroScene() {
               cx={flake.cx}
               cy={flake.cy}
               r={flake.r}
-              fill="url(#hero-bokeh-grad)"
+              fill="#ffffff"
               opacity={flake.op}
+              filter="url(#hero-glow-soft)"
             />
           ))}
         </g>
+
+        {/* Tactile Fine-Art Paper Grain Overlay */}
+        <rect
+          width="1920"
+          height="1080"
+          filter="url(#hero-dream-grain)"
+          opacity="0.045"
+          style={{ mixBlendMode: "overlay" }}
+        />
       </svg>
     </div>
   );
-});
-
-export default HeroScene;
+}

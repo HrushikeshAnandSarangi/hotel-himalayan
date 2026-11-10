@@ -201,16 +201,10 @@ export default function RoomsSection({ onSelectRoom }: RoomsSectionProps) {
   ];
 
   return (
-    <section id="rooms" className="section-deferred py-28 bg-[#fbfdff] relative overflow-hidden">
-      {/* Background Ambient Depth (GPU-free radial washes) */}
-      <div
-        className="absolute top-1/4 -right-40 w-96 h-96 rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(219,234,254,0.48) 0%, transparent 70%)" }}
-      />
-      <div
-        className="absolute bottom-1/4 -left-40 w-96 h-96 rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(219,234,254,0.4) 0%, transparent 70%)" }}
-      />
+    <section id="rooms" className="py-28 bg-[#fbfdff] relative overflow-hidden">
+      {/* Background Ambient Depth */}
+      <div className="absolute top-1/4 -right-40 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-40 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Editorial Section Header (Clean, No Pill Badges) */}

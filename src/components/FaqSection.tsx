@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import {
   ChevronDown,
   MountainSnow,
@@ -10,25 +9,13 @@ import {
   Compass,
   ChevronLeft,
   ChevronRight,
+  Sparkles,
 } from "lucide-react";
 
 export default function FaqSection() {
-  const sectionRef = useRef<HTMLElement>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { rootMargin: "150px 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
   const faqs = [
     {
@@ -87,14 +74,14 @@ export default function FaqSection() {
     },
   ];
 
-  // Auto-advance gallery slides only when visible & not hovered
+  // Auto-advance gallery slides with pause-on-hover
   useEffect(() => {
-    if (isPaused || !isInView) return;
+    if (isPaused) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % gallerySlides.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [isPaused, isInView, gallerySlides.length]);
+  }, [isPaused, gallerySlides.length]);
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? gallerySlides.length - 1 : prev - 1));
@@ -105,16 +92,10 @@ export default function FaqSection() {
   };
 
   return (
-    <section id="faq" ref={sectionRef} className="section-deferred py-28 bg-[#fbfdff] relative overflow-hidden">
-      {/* Background Ambient Depth (GPU-free radial washes) */}
-      <div
-        className="absolute top-1/3 -left-40 w-96 h-96 rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(219,234,254,0.45) 0%, transparent 70%)" }}
-      />
-      <div
-        className="absolute bottom-1/3 -right-40 w-96 h-96 rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(219,234,254,0.4) 0%, transparent 70%)" }}
-      />
+    <section id="faq" className="py-28 bg-[#fbfdff] relative overflow-hidden">
+      {/* Background Ambient Depth */}
+      <div className="absolute top-1/3 -left-40 w-96 h-96 bg-blue-100/35 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/3 -right-40 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* =========================================================================
@@ -224,13 +205,11 @@ export default function FaqSection() {
                     isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
                   }`}
                 >
-                  {/* Optimized Next.js Slide Image */}
-                  <Image
+                  {/* Slide Image */}
+                  <img
                     src={slide.src}
                     alt={slide.title}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 960px"
-                    className="object-cover select-none scale-100 hover:scale-105 transition-transform duration-1000 ease-out"
+                    className="w-full h-full object-cover select-none scale-100 hover:scale-105 transition-transform duration-1000 ease-out"
                   />
 
                   {/* Gradient Legibility Vignette */}
