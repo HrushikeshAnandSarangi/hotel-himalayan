@@ -47,10 +47,16 @@ export default function SightseeingSection() {
   };
 
   return (
-    <section id="nearby" className="py-28 lg:py-32 bg-white relative overflow-hidden select-none">
-      {/* Background Ambient Depth */}
-      <div className="absolute top-1/2 -left-48 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 -right-48 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
+    <section id="nearby" className="section-deferred py-28 lg:py-32 bg-white relative overflow-hidden select-none">
+      {/* Background Ambient Depth (GPU-free radial washes instead of blur-3xl) */}
+      <div
+        className="absolute top-1/2 -left-48 w-96 h-96 rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(219,234,254,0.48) 0%, transparent 70%)" }}
+      />
+      <div
+        className="absolute top-1/2 -right-48 w-96 h-96 rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(219,234,254,0.4) 0%, transparent 70%)" }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* =====================================================================

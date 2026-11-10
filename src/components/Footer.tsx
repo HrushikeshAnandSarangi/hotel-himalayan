@@ -19,7 +19,7 @@ export default function Footer() {
     "https://www.google.com/maps/place/Hotel+Himalayan/@27.3053852,88.2382925,17z/data=!4m9!3m8!1s0x39e6867ddebfa319:0xb0fe9695a65fb77d!5m2!4m1!1i2!8m2!3d27.305437!4d88.241066!16s%2Fg%2F1ptx4vh9y";
 
   return (
-    <footer className="relative bg-[#030d17] text-white overflow-hidden select-none">
+    <footer className="section-deferred relative bg-[#030d17] text-white overflow-hidden select-none">
       {/* =========================================================================
           THE ALPINE SKYLINE SILHOUETTE (Mountain Ridge + Lookout Tower + Dense Pines)
           - Emerges organically out of the white background above

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Star,
   Quote,
@@ -11,6 +11,26 @@ import {
 } from "lucide-react";
 
 export default function ReviewsSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.remove("hero-paused");
+        } else {
+          el.classList.add("hero-paused");
+        }
+      },
+      { rootMargin: "150px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
   const gmapsLink =
     "https://www.google.com/maps/place/Hotel+Himalayan/@27.3053852,88.2382925,17z/data=!4m9!3m8!1s0x39e6867ddebfa319:0xb0fe9695a65fb77d!5m2!4m1!1i2!8m2!3d27.305437!4d88.241066!16s%2Fg%2F1ptx4vh9y";
 
@@ -86,10 +106,16 @@ export default function ReviewsSection() {
   const duplicatedReviews = [...reviews, ...reviews];
 
   return (
-    <section id="reviews" className="py-28 lg:py-32 bg-white relative overflow-hidden select-none">
-      {/* Ethereal / Crystalline Ambient Glows (Taste Skill: Ethereal Divine Aura) */}
-      <div className="absolute top-1/4 left-[-140px] w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-[-140px] w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-[150px] pointer-events-none" />
+    <section id="reviews" ref={sectionRef} className="section-deferred hero-paused py-28 lg:py-32 bg-white relative overflow-hidden select-none">
+      {/* Ethereal / Crystalline Ambient Glows (GPU-free radial gradient replaces blur-[150px]) */}
+      <div
+        className="absolute top-1/4 left-[-140px] w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(219,234,254,0.48) 0%, transparent 70%)" }}
+      />
+      <div
+        className="absolute bottom-1/4 right-[-140px] w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(219,234,254,0.42) 0%, transparent 70%)" }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-12 sm:mb-14">
         {/* =====================================================================
@@ -171,12 +197,12 @@ export default function ReviewsSection() {
           - Automatically pauses on hover for comfortable reading
           - Fade mask on edges for soft crystalline fade
          ===================================================================== */}
-      <div className="w-full relative fade-mask-x overflow-hidden py-4">
+      <div className="w-full relative fade-mask-x overflow-hidden py-4" style={{ contain: "layout paint" }}>
         <div className="animate-infinite-scroll flex gap-6 sm:gap-7">
           {duplicatedReviews.map((rev, idx) => (
             <div
               key={`${rev.id}-${idx}`}
-              className="w-[330px] sm:w-[390px] lg:w-[420px] shrink-0 bg-white/95 rounded-3xl border border-blue-200/90 p-7 sm:p-8 shadow-[0_14px_35px_rgba(30,58,138,0.06),0_0_0_1px_rgba(255,255,255,1)_inset] hover:border-blue-500 hover:shadow-[0_20px_50px_rgba(37,99,235,0.14)] hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between group relative"
+              className="w-[330px] sm:w-[390px] lg:w-[420px] shrink-0 bg-white rounded-3xl border border-blue-200/90 p-7 sm:p-8 shadow-md hover:border-blue-500 hover:shadow-lg transition-colors duration-300 flex flex-col justify-between group relative"
             >
               {/* Subtle Quote Watermark */}
               <Quote className="w-8 h-8 text-blue-100 absolute top-6 right-6 pointer-events-none transition-colors group-hover:text-blue-200/60" />
@@ -223,7 +249,7 @@ export default function ReviewsSection() {
                     {[...Array(rev.rating)].map((_, i) => (
                       <Star
                         key={i}
-                        className="w-4 h-4 fill-amber-400 text-amber-400 drop-shadow-[0_1px_3px_rgba(251,191,36,0.5)]"
+                        className="w-4 h-4 fill-amber-400 text-amber-400"
                       />
                     ))}
                     <span className="ml-1.5 text-xs font-bold text-slate-900 font-serif">
