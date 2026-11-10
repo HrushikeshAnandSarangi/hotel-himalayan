@@ -30,18 +30,18 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white text-[#020617] flex flex-col font-serif selection:bg-blue-600 selection:text-white">
-      {/* Fixed Navigation at the very top */}
+      {/* Relative Navigation Bar at the very top */}
       <Navbar onOpenBooking={handleOpenBooking} />
 
       {/* Main Content Layout */}
       <main className="flex-1">
-        {/* 1. Hero Section - Full 100vh with moving mountain animation in pure shades of blue */}
+        {/* 1. Hero Section - Dreamlike Kanchenjunga landscape fitted cleanly beneath relative navbar */}
         <Hero
           onOpenBooking={handleOpenBooking}
           onOpenBookingWithRoom={handleOpenBookingWithRoom}
         />
 
-        {/* 2. About the Hotel - Continuous alpine theme with scroll-driven screen takeover */}
+        {/* 2. About the Hotel - Architectural editorial layout with multiplane parallax */}
         <AboutSection />
 
         {/* 3. Nearby Spots & Things to Do */}

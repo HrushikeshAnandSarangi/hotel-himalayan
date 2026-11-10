@@ -334,6 +334,114 @@ h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
   animation: windowReflectionFloat 12s ease-in-out infinite;
 }
 
+/* Dreamlike Alpine Hero Atmosphere Animations */
+@keyframes starTwinkleSoft {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes hearthSmokeRise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0px, 6px, 0) scale(0.85);
+  }
+  25% {
+    opacity: 0.42;
+  }
+  70% {
+    opacity: 0.24;
+    transform: translate3d(14px, -22px, 0) scale(1.25);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(24px, -42px, 0) scale(1.55);
+  }
+}
+
+@keyframes lanternWarmBreathe {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes rayShimmerSoft {
+  0%, 100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes snowFloatDriftAlt {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(-14px, 12px, 0);
+    opacity: 0.85;
+  }
+}
+
+@keyframes prayerFlagBreeze {
+  0%, 100% {
+    transform: skewY(0deg) translateY(0px);
+  }
+  50% {
+    transform: skewY(2.2deg) translateY(-1.5px);
+  }
+}
+
+.animate-star-twinkle {
+  animation: starTwinkleSoft 4.5s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.animate-smoke-rise {
+  animation: hearthSmokeRise 9s ease-out infinite;
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  will-change: transform, opacity;
+}
+
+.animate-lantern-glow {
+  animation: lanternWarmBreathe 4.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.animate-ray-shimmer {
+  animation: rayShimmerSoft 11s ease-in-out infinite;
+  will-change: opacity;
+}
+
+.animate-snow-float-2 {
+  animation: snowFloatDriftAlt 10s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-prayer-flags {
+  animation: prayerFlagBreeze 4.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: left center;
+  will-change: transform;
+}
+
 /* Crisp Typographic Black Outline with White Fill (Zero Glow, Zero Blur) */
 .text-outlined-black {
   color: #ffffff !important;

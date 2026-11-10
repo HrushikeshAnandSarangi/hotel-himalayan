@@ -7,7 +7,7 @@ export default function FooterSkyline() {
     <div className="w-full bg-white overflow-hidden leading-none select-none pointer-events-none">
       <svg
         viewBox="0 0 1920 460"
-        preserveAspectRatio="xMidYBottom slice"
+        preserveAspectRatio="xMidYMax slice"
         className="w-full h-auto block"
         xmlns="http://www.w3.org/2000/svg"
       >

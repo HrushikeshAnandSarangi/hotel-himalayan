@@ -47,7 +47,7 @@ export default function AboutSection() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative bg-[#fafbfd] text-[#061d30] py-20 sm:py-28 lg:py-36 overflow-hidden select-none border-t border-sky-100"
+      className="relative bg-[#fafbfd] text-[#061d30] py-20 sm:py-28 lg:py-36 overflow-hidden select-none"
     >
       {/* =========================================================================
           ARCHITECTURAL PERSPECTIVE GUIDE LINES (Dashed Blueprint Projection Lines)

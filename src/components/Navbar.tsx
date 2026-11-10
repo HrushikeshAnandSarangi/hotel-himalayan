@@ -176,7 +176,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
           MOBILE DRAWER / DROPDOWN
          ===================================================================== */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-blue-200 bg-white shadow-xl px-5 py-5 space-y-4 animate-fadeIn">
+        <div className="absolute left-0 right-0 top-full z-50 md:hidden border-b border-blue-200 bg-white shadow-xl px-5 py-5 space-y-4 animate-fadeIn">
           {/* Mobile Navigation Links (Centered) */}
           <div className="flex flex-col space-y-2.5 font-serif text-center">
             {navLinks.map((link) => (
